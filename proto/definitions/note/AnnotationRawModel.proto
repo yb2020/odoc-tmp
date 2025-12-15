@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package note;
+
+import "definitions/note/AnnotateTextBox.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/note";
+
+
+message AnnotationRawModel {
+    uint32 type = 1;
+    RectRawModel rect = 2;
+    CommentRawModel comment = 3;
+    string groupId = 4;
+    string userId = 5;
+    uint64 lastReadTime = 6;
+    DrawNoteRawModel drawNoteRawModel = 7;
+    TextBoxModel textBoxModel = 8;
+    uint64 updateTime = 9;
+    //是否为高亮内容
+    optional bool isHighlight = 10;
+}
+
+message TextBoxModel {
+
+    AnnotateTextBox annotateTextBox = 1;
+
+    uint32 page = 2;
+
+    string noteId = 3;
+
+    string id = 4;
+}
+
+message RectRawModel {
+    string id = 1;                        // 标注ID
+    string picUrl = 2;                    // 图片URL
+    bool isDelete = 3;                    // 是否删除了
+    string noteId = 4;                    // 笔记ID
+    string paperId = 5;                   // 论文ID
+    string type = 6;                      // 标记类型
+    string lineColor = 7;                 
+    string strokeDasharray = 8;
+    string fill = 9;
+    string fillOpacity = 10;
+    string color = 11;
+    repeated Rectangle rectangles = 12;
+    uint32 page = 13;
+    uint32 styleId = 14;
+    string pdfId = 15;
+    string idea = 16;
+    uint64 createDate = 17;
+    uint32 sort = 18;
+}
+
+message CommentRawModel {
+    string idea = 1;
+    string id = 2;
+    string noteId = 3;
+    string paperId = 4;
+    string type = 5;
+    string fill = 6;
+    string rectStr = 7;
+    repeated Rectangle rectangles = 8;
+    string annotateId = 9;
+    uint32 page = 10;
+    uint32 styleId = 11;
+    string pdfId = 12;
+    uint64 createDate = 13;
+    uint32 sort = 14;
+}
+
+message Rectangle {
+    double x = 1;
+    double y = 2;
+    double width = 3;
+    double height = 4;
+    uint32 pageNumber = 5;                  // 选区所在页数
+    double rotation = 6;                    // 旋转角度
+}
+
+message DrawNoteRawModel {
+
+    string drawNoteFileUrl = 1;
+
+    uint32 page = 2;
+
+    string noteId = 3;
+
+    string paperId = 4;
+
+    string id = 5;
+
+}

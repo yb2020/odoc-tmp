@@ -1,0 +1,174 @@
+.bbox-animation {
+  -webkit-animation: twinkling 1s infinite ease-in-out;
+  animation: twinkling 1s infinite ease-in-out;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+@keyframes twinkling {
+  0% {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    // -webkit-transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    // -webkit-transform: scale(1.12);
+  }
+  100% {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    // -webkit-transform: scale(1);
+  }
+}
+
+.idea-marker-layer {
+  .marker {
+    position: absolute;
+    background: #6f77bb;
+    opacity: 0.3;
+    cursor: pointer;
+    display: block;
+    z-index: 100;
+  }
+}
+
+.tippy-box[data-theme~='ref-paper'] {
+  background-color: transparent;
+  position: relative;
+  // height: 100%;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0px 4px 24px 0px rgba(0, 0, 0, 0.2);
+
+  .tippy-content {
+    // height: 100%;
+    width: 100%;
+    padding: 0;
+  }
+}
+
+// 客户端webview里面加载会有样式问题
+#app {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.ant-modal-confirm-body-wrapper {
+  position: relative;
+
+  .ant-modal-confirm-btns {
+    margin-top: 40px;
+
+    .ant-btn-primary {
+      background: #2f3440;
+      border-color: #2f3440;
+    }
+
+    .ant-btn-dangerous {
+      background: #e66045 !important;
+      border-color: #e66045 !important;
+    }
+  }
+}
+
+.ps .ps__rail-x:hover,
+.ps .ps__rail-y:hover,
+.ps .ps__rail-x:focus,
+.ps .ps__rail-y:focus,
+.ps .ps__rail-x.ps--clicking,
+.ps .ps__rail-y.ps--clicking {
+  background: transparent !important;
+}
+
+// .ps__rail-y:hover > .ps__thumb-y,
+// .ps__rail-y:focus > .ps__thumb-y,
+// .ps__rail-y.ps--clicking .ps__thumb-y {
+//   width: 6px !important;
+// }
+
+pre,
+code {
+  white-space: pre-wrap;
+}
+
+.pdf-dropdown-overlay {
+  background-color: #fff;
+}
+
+.thin-scroll,
+.metadata-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #898888 #fafbfc;
+  &::-webkit-scrollbar {
+    background-color: #fff;
+    &:vertical {
+      width: 10px;
+    }
+    &:horizontal {
+      height: 10px;
+    }
+  }
+  &:hover {
+    &::-webkit-scrollbar-track-piece {
+      background-color: #fff;
+      border-radius: 6px;
+    }
+  }
+  &::-webkit-scrollbar-thumb {
+    &:hover {
+      background-color: #c9cdd4;
+    }
+    background-color: #e5e6eb;
+    border-radius: 6px;
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+    border: 2px solid #fff;
+  }
+}
+
+[data-theme="dark"] {
+  .metadata-scroll,
+  .thin-scroll {
+    &:hover {
+      &::-webkit-scrollbar-track-piece {
+        background-color: rgb(50, 53, 56) !important;
+      }
+    }
+    &::-webkit-scrollbar-thumb {
+      &:hover {
+        background-color: #6C737A !important;
+      }
+      background-color: #6C737A !important;
+      outline: 2px solid rgb(50, 53, 56) !important;
+      outline-offset: -2px;
+      border: 2px solid rgb(50, 53, 56) !important;
+    }
+  }
+}
+
+.ant-message {
+  z-index: 10000 !important;
+}
+
+.ant-popover-message >.anticon {
+  top: 10px;
+}
+
+.redDot {
+  position: relative;
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FAAD14;
+  }
+}

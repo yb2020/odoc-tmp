@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package user;
+
+import "definitions/user/User.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/user";
+
+// UserService 定义用户服务的gRPC接口
+service UserService {
+  // GetProfile 获取当前用户信息
+  rpc GetProfile(user.GetProfileRequest) returns (user.GetProfileResponse) {}
+  
+  // CheckEmailExists 检查邮箱是否已被注册
+  rpc CheckEmailExists(user.GetExistsByEmailRequest) returns (user.GetExistsByEmailResponse) {}
+  
+  // Register 用户注册
+  rpc Register(user.RegisterRequest) returns (user.RegisterResponse) {}
+  
+  // UpdateProfile 更新用户信息
+  rpc UpdateProfile(user.UpdateProfileRequest) returns (user.UpdateProfileResponse) {}
+}

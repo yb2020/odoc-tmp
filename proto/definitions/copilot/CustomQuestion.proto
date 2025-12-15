@@ -1,0 +1,76 @@
+
+syntax = "proto3";
+package copilot;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/copilot";
+
+// @api_path: /api/customQuestion/getList
+// @method: GET
+// @content-type: application/json
+// @summary: 获取自定义问题列表
+message GetListReq {
+  CustomQuestionSortType sortType = 1;
+}
+
+message GetListResp {
+  repeated QuestionInfo questionList= 1;
+}
+
+message QuestionInfo {
+  string id = 1;
+  // 问题内容
+  string question = 2;
+  // 提问次数
+  int32 useCount = 3;
+  // 是否是系统默认
+  bool isSystemDefault = 4;
+}
+
+
+/**
+ *	接口描述:添加自定义问题
+ *	接口url:/customQuestion/add
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message AddQuestionReq {
+  //问题内容
+  string question = 1;
+}
+
+message AddQuestionResponse {
+  //自定义问题id
+  string questionId = 1;
+}
+
+
+/**
+ *	接口描述:删除自定义问题
+ *	接口url:/customQuestion/delete
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message DeleteQuestionReq {
+  //自定义问题id
+  string questionId = 1;
+}
+
+/**
+ *	接口描述:自定义问题提问计数
+ *	接口url:/customQuestion/useCount
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message QuestionUseCountReq {
+  //自定义问题id
+  string questionId = 1;
+}
+
+
+
+enum CustomQuestionSortType{
+  //最早添加
+  EARLIEST=0;
+  //最常使用
+  MOST_USE=1;
+}

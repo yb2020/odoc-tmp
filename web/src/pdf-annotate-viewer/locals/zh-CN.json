@@ -1,0 +1,10 @@
+{
+  "lang": "zh-CN",
+  "viewer": {
+    "findInDocument": "全文查找",
+    "page": "第{num}页"
+  },
+  "message": {
+    "totalMatches": "共出现{num}处{keyword}"
+  }
+}

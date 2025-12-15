@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/common";
+
+
+message AnnotationPointer {
+  string id = 1;
+  string groupId = 2;                     //群组id
+}

@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package translate;
+
+import "definitions/validate/Validate.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/translate";
+
+// @api_path: /api/glossary/add
+// @method: POST
+// @content-type: application/json
+// @summary: 添加术语
+message AddGlossaryReq {
+    // 原文
+    string originalText=1 [(validate.rules).string = {min_len: 1}];
+    // 译文
+    string translationText=2 [(validate.rules).string = {min_len: 1}];
+    //是否区分大小写
+    bool matchCase= 3;
+   //是否不翻译该术语
+    bool ignored= 4;
+ }
+
+message AddGlossaryResponse {
+  string id=1;
+}
+
+
+// @api_path: /api/glossary/update
+// @method: POST
+// @content-type: application/json
+// @summary: 编辑术语
+message UpdateGlossaryReq {
+  string id=1 [(validate.rules).string = {min_len: 1}];
+  // 原文
+  string originalText=2 [(validate.rules).string = {min_len: 1}];
+  // 译文
+  string translationText=3 [(validate.rules).string = {min_len: 1}];
+  //是否区分大小写
+  bool matchCase= 4;
+  //是否不翻译该术语
+  bool ignored= 5;
+
+}
+
+// @api_path: /api/glossary/delete
+// @method: POST
+// @content-type: application/json
+// @summary: 删除术语
+message DeleteGlossaryReq {
+  repeated string ids=1;
+}
+
+
+// @api_path: /api/glossary/list
+// @method: POST
+// @content-type: application/json
+// @summary: 术语列表
+message GetGlossaryListReq {
+  // 搜索术语
+  optional string searchText=1;
+  int32 currentPage = 2;
+  int32 pageSize = 3;
+
+}
+
+message GetGlossaryListResponse {
+  uint32 total=1;
+  repeated GlossaryItem items = 2;
+}
+
+message GlossaryItem {
+  string id=1;
+  // 原文
+  string originalText=2;
+  // 译文
+  string translationText=3;
+  //是否区分大小写
+  bool matchCase= 4;
+  //是否不翻译该术语
+  bool ignored= 5;
+}

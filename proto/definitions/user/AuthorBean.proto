@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package user;
+
+// import "definitions/validate/Validate.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/user";
+
+// 用户封禁信息
+message UserBanInfo {
+  bool banFlag = 1;      // 是否被封禁
+  string banReason = 2;  // 封禁原因
+  string banRemark = 3;  // 封禁备注
+  string banEndTime = 4; // 封禁结束时间
+}
+
+// 作者信息
+message AuthorBean {
+  string id = 1;                // 用户Id
+  string nickName = 2;         // 昵称
+  string description = 3;       // 描述
+  string usn = 4;               // 用户名
+  bool usnCanModify = 5;      // 用户名是否允许修改
+  string mobile = 6;            // 手机
+  string email = 7;             // 邮件
+  bool isWxPublicBind = 8;   // 公众号是否已绑定
+  bool self = 9;                // 作者是否本人
+  string showName = 10;        // 前端显示名称
+  string avatarUrl = 11;       // 头像URL
+  string tags = 12;             // 作者的标签
+  string authorId = 13;        // 作者id
+  string authorName = 14;      // 作者名称
+  bool isAuthentication = 15;  // 是否已readpaper认证
+  bool isCert = 16;            // 是否已认证
+  bool isPaperAuthor = 17;    // 是否是论文作者
+  string profession = 18;       // 职业
+  string researchField = 19;   // 研究领域
+  string schoolCompany = 20;   // 学校或公司
+  UserBanInfo banInfo = 21;    // 用户封禁信息
+}

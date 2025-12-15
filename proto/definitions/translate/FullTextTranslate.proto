@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+package translate;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/translate";
+
+import "definitions/validate/Validate.proto";
+
+
+// @api_path: /fullTextTranslate/getHistoryList
+// @method: GET
+// @content-type: application/json
+// @summary: 获取全文翻译历史记录
+message GetHistoryListReq {
+}
+message GetHistoryListResponse {
+  repeated HistoryInfo historyList = 1;
+}
+
+message HistoryInfo {
+  //翻译结果状态码,0=翻译中,1=翻译完成,2=翻译失败
+  FullTranslateFlowStatus status = 1;
+  //文件名
+  string docName=2;
+  //pdfId
+  optional string pdfId=3;
+  //翻译时间
+  uint64 translateTime=4;
+}
+
+
+
+// @api_path: /fullTextTranslate/getRightInfo
+// @method: GET
+// @content-type: application/json
+// @summary: 获取用户剩余翻译次数以及是否解锁权限
+message GetFullTextTranslateRightInfoReq {
+}
+
+message GetFullTextTranslateRightInfoResponse {
+  //剩余次数
+  optional int32 remainCount =1;
+  //是否解锁权限
+  bool unlockRight = 2;
+  //规则说明
+  string ruleDesc =3;
+}
+
+// @api_path: /fullTextTranslate/translate
+// @method: POST
+// @content-type: application/json
+// @summary: 全文翻译
+message FullTextTranslateRequest {
+  //需要翻译的文件url
+  string needTranslateFileUrl = 1 [(validate.rules).string = {min_len: 1}];
+  string pdfId = 2 [(validate.rules).string = {min_len: 1}];
+  optional string userId = 3;
+  optional bool takeoutTicketFlag = 4;
+}
+
+message FullTextTranslateResponse {
+  //译文url
+  optional string translationFileUrl =1;
+  //0=上传成功(等待翻译结果),非0=翻译失败
+  string errorCode = 2;
+  optional string message = 3;
+
+}
+
+
+// @api_path: /fullTextTranslate/getTranslateStatus
+// @method: GET
+// @content-type: application/json
+// @summary: 查询翻译状态
+message GetTranslateStatusReq {
+  //需要翻译的文件url
+  string needTranslateFileUrl = 1 [(validate.rules).string = {min_len: 1}];
+  string pdfId = 2 [(validate.rules).string = {min_len: 1}];
+  optional string userId = 3;
+}
+
+message GetTranslateStatusResponse {
+  //翻译结果状态码,0=翻译中,1=翻译完成,2=翻译失败,3=无翻译记录
+  FullTranslateFlowStatus status = 1;
+  //译文url
+  optional string translationFileUrl =2;
+  //翻译进度
+  optional string progressPercent = 3;
+  //原文/译文块对照信息
+  optional string alignment = 4;
+}
+
+// 全文翻译流程状态
+enum FullTranslateFlowStatus {
+  // 翻译中
+  TRANSLATING = 0;
+  // 翻译完成
+  TRANSLATE_FINISHED = 1;
+  // 翻译失败
+  TRANSLATE_FAIL = 2;
+  // 无翻译记录
+  WITHOUT_TRANSLATE_HISTORY = 3;
+}

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package translate;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/translate";
+
+// 翻译渠道
+enum TranslateChannel {
+  UNDEFINED_TRANSLATE_CHANNEL = 0;
+  GOOGLE = 1;
+  YOUDAO = 2;
+  AI = 3;
+}
+
+// 翻译源语言&目标语言
+enum TranslateLanguage {
+  UNDEFINED_TRANSLATE_LANGUAGE = 0;
+  EN_US = 1;
+  ZH_CN = 2;
+  JP = 3;
+  KR = 4;
+}

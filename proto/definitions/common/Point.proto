@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/common";
+
+message Point {
+
+  float x = 1;
+
+  float y = 2;
+
+  optional double altitude = 3;
+
+  optional Size size = 4;
+
+  optional double opacity = 5;
+
+  optional int64 time = 6;
+
+  optional double azimuth = 7;
+
+  optional double force = 8;
+
+}
+
+message Size {
+
+  float width = 1;
+
+  float height = 2;
+}
+
+message BasePoint {
+
+  float x = 1;
+
+  float y = 2;
+
+}
+
+message Erase {
+
+  repeated BasePoint points = 1;
+
+  double lineWidth = 2;
+  
+}

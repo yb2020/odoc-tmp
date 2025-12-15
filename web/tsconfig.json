@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "@/*": ["./src/*"],
+      "@common/*": ["./src/common/src/*"],
+      "@idea/pdf-annotate-core": ["./src/pdf-annotate-core"],
+      "@idea/pdf-annotate-viewer": ["./src/pdf-annotate-viewer"],
+      "@idea/pdf-annotate-core/dist/*": ["./src/pdf-annotate-core/*"],
+      "@idea/pdf-annotate-viewer/dist/*": ["./src/pdf-annotate-viewer/*"]
+    },
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "types": ["vite/client", "node"],
+    "skipLibCheck": true,
+    "noImplicitAny": false
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "postcss.config.ts"],
+  "exclude": ["node_modules"]
+}

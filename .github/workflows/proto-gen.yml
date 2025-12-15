@@ -1,0 +1,212 @@
+name: Generate Proto Code
+
+on:
+  push:
+    branches: [ master, main ]
+    paths:
+      - 'proto/definitions/**'
+  pull_request:
+    branches: [ master, main ]
+    paths:
+      - 'proto/definitions/**'
+  workflow_dispatch:
+
+# 添加这个权限配置
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # 设置 Go 环境
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24'
+
+      # 设置 Node.js 环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # 设置 Python 环境
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      # 安装 Protocol Buffers 编译器和插件
+      - name: Install Protoc and plugins
+        run: |
+          # 安装 protoc
+          PROTOC_VERSION=24.4
+          PROTOC_ZIP=protoc-$PROTOC_VERSION-linux-x86_64.zip
+          curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v$PROTOC_VERSION/$PROTOC_ZIP
+          sudo unzip -o $PROTOC_ZIP -d /usr/local bin/protoc
+          sudo unzip -o $PROTOC_ZIP -d /usr/local 'include/*'
+          rm -f $PROTOC_ZIP
+          
+          # 安装 Go 插件
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+          go install github.com/envoyproxy/protoc-gen-validate@latest
+          
+          # 安装 TypeScript 插件
+          npm install -g @protobuf-ts/plugin
+          
+          # 安装 Python gRPC 工具
+          pip install grpcio grpcio-tools
+
+      # 生成代码
+      - name: Generate code
+        working-directory: proto
+        run: |
+          make clean
+          make all || exit 1
+
+      # 确保 package.json 存在于 TypeScript 生成目录
+      - name: Ensure package.json exists
+        run: |
+          if [ ! -f proto/gen/ts/package.json ]; then
+            cat > proto/gen/ts/package.json << EOF
+          {
+            "name": "odoc-proto",
+            "version": "1.0.0",
+            "description": "Protocol Buffers definitions for odoc",
+            "main": "index.js",
+            "types": "index.d.ts",
+            "dependencies": {
+              "@protobuf-ts/runtime": "^2.9.0",
+              "@protobuf-ts/runtime-rpc": "^2.9.0"
+            }
+          }
+          EOF
+          fi
+
+      # 提交生成的代码到 proto-generated 分支
+      - name: Commit generated code to proto-generated branch
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: update generated proto code"
+          file_pattern: "proto/gen/**/*"
+          branch: proto-generated
+          create_branch: true
+          push_options: '--force'
+      
+      # 创建只包含 proto/gen 目录的临时 proto-version 分支
+      - name: Create clean proto-version branch
+        run: |
+          # 确保获取最新的远程分支信息
+          git fetch origin
+          
+          # 直接基于远程的 proto-generated 分支创建临时 proto-version 分支
+          git checkout -B proto-version origin/proto-generated
+          
+          # 保存 proto/gen 目录和配置文件到临时位置
+          mkdir -p /tmp/proto-gen-only
+          cp -r proto/gen /tmp/proto-gen-only/
+          cp proto/package.json /tmp/proto-gen-only/
+          cp proto/go.mod /tmp/proto-gen-only/
+          cp proto/pyproject.toml /tmp/proto-gen-only/
+          
+          # 清空工作目录（保留 .git 目录）
+          find . -mindepth 1 -maxdepth 1 -not -name '.git' -exec rm -rf {} \;
+          
+          # 只复制回 gen 目录和配置文件
+          cp -r /tmp/proto-gen-only/gen .
+          cp /tmp/proto-gen-only/package.json .
+          cp /tmp/proto-gen-only/go.mod .
+          cp /tmp/proto-gen-only/pyproject.toml .
+      
+      # 提交 proto-version 分支的更改
+      - name: Commit proto-version branch changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: clean version with only generated proto code"
+          file_pattern: "gen/**/* package.json go.mod pyproject.toml"
+          branch: proto-version
+          create_branch: false
+          push_options: '--force'
+
+      # 在 proto-version 分支上创建标签
+      - name: Bump version and push tag
+        id: bump_version
+        uses: phips28/gh-action-bump-version@v9.1.0
+        with:
+          tag-prefix: 'proto-v'
+          minor-wording: 'feature'
+          major-wording: 'MAJOR,BREAKING'
+          patch-wording: 'feat,fix,patch,chore,refactor'
+          rc-wording: 'version,alpha,beta,rc'
+          skip-tag: 'false'
+          default: 'patch'
+          commit-message: 'ci: bump proto version to {{version}}'
+          target-branch: 'proto-version'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: '.'
+          
+      # 同步版本号回 master 分支
+      - name: Sync version back to master
+        if: success()
+        run: |
+          # 获取新版本号
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "New proto version is: $NEW_VERSION"
+          
+          # 切换回 master 分支
+          git fetch origin master
+          git checkout master
+          
+          # 更新 master 分支上的 proto/package.json 版本号
+          if [ -f "proto/package.json" ]; then
+            jq ".version = \"$NEW_VERSION\"" proto/package.json > proto/package.json.tmp
+            mv proto/package.json.tmp proto/package.json
+          else
+            echo "proto/package.json not found in master branch, skipping version sync"
+          fi
+          
+          # 更新 master 分支上的 proto/pyproject.toml 版本号
+          if [ -f "proto/pyproject.toml" ]; then
+            sed -i "s/^version = \".*\"/version = \"$NEW_VERSION\"/" proto/pyproject.toml
+          else
+            echo "proto/pyproject.toml not found in master branch, skipping version sync"
+          fi
+      
+      # 提交版本号更新到 master 分支
+      - name: Commit version update to master
+        if: success()
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: update proto package.json version to ${{ steps.bump_version.outputs.newTag }} [skip ci]"
+          file_pattern: "proto/package.json proto/pyproject.toml"
+          branch: master
+          create_branch: false
+      
+      # 删除临时 proto-version 分支
+      - name: Delete temporary proto-version branch
+        if: success()
+        run: |
+          git checkout master
+          git branch -D proto-version
+          git push origin --delete proto-version
+          
+      # 删除 proto-generated 分支
+      - name: Delete proto-generated branch
+        if: success()
+        run: |
+          git branch -D proto-generated || true
+          git push origin --delete proto-generated || true
+
+      # 调试信息
+      - name: Debug info before version bump
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Files in current directory: $(ls -la)"
+          echo "Package.json content:"
+          cat package.json
+          echo "GitHub ref: ${{ github.ref }}"

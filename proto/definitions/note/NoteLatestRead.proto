@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package note;
+
+import "definitions/validate/Validate.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/note";
+
+// 笔记最近阅读模型
+message NoteLatestRead {
+  string id = 1;
+  string note_id = 2 [(validate.rules).string = {min_len: 1}];
+}
+
+// @api_path: /api/note/latest-read
+// @method: POST
+// @content-type: application/json
+// @summary: 创建笔记最近阅读
+message CreateNoteLatestReadRequest {
+  string note_id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message CreateNoteLatestReadResponse {
+  string id = 1;
+}
+
+// @api_path: /api/note/latest-read
+// @method: GET
+// @content-type: application/json
+// @summary: 获取笔记最近阅读
+message GetNoteLatestReadRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message GetNoteLatestReadResponse {
+  NoteLatestRead note_latest_read = 1;
+}
+
+// @api_path: /api/note/latest-read
+// @method: PUT
+// @content-type: application/json
+// @summary: 更新笔记最近阅读
+message UpdateNoteLatestReadRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message UpdateNoteLatestReadResponse {
+  bool success = 1;
+}
+
+// @api_path: /api/note/latest-read
+// @method: DELETE
+// @content-type: application/json
+// @summary: 删除笔记最近阅读
+message DeleteNoteLatestReadRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message DeleteNoteLatestReadResponse {
+  bool success = 1;
+}
+
+// @api_path: /api/note/latest-read/by-note
+// @method: GET
+// @content-type: application/json
+// @summary: 根据笔记ID获取笔记最近阅读
+message GetNoteLatestReadByNoteIdRequest {
+  string note_id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message GetNoteLatestReadByNoteIdResponse {
+  NoteLatestRead note_latest_read = 1;
+}

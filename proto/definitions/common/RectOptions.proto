@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/common";
+
+message RectOptions {
+  double x = 1;                           // 锚点横坐标
+  double y = 2;                           // 锚点纵坐标
+  double width = 3;                       // 选区宽度
+  double height = 4;                      // 选区高度
+  uint32 pageNumber = 5;                  // 选区所在页数
+  double rotation = 6;                    // 旋转角度
+}

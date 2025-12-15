@@ -1,0 +1,22 @@
+/* 修改导入路径，指向 src 目录中的文件 */
+/* 暂时注释掉不存在的样式文件引用，等待构建后再启用 */
+/* @import '@idea/pdf-annotate-viewer/dist/style.css'; */
+
+.rp-pdf-viewer-viewer {
+  .page {
+    border: none !important;
+    border-bottom: 1px solid #000 !important;
+  }
+  .annotationLayer {
+    * {
+      color: rgba(0,0,0, .85);
+    }
+  }
+
+  canvas {
+    -webkit-user-select: none;
+    user-select: none; /* 添加标准属性以解决 lint 警告 */
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}

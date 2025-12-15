@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package note;
+
+import "definitions/common/IDEAAnnotateType.proto";
+import "definitions/common/RectOptions.proto";
+import "definitions/common/AnnotateTag.proto";
+import "definitions/common/CommentatorInfoView.proto";
+import "definitions/common/Point.proto";
+import "definitions/common/DrawShapeType.proto";
+import "definitions/note/AnnotateTextBox.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/note";
+message WebNoteAnnotationModel {
+    common.IDEAAnnotateType type = 1;              // 标注类型
+    WebNoteRectAnnotation rect = 2;         // 图片选区标注
+    WebNoteSelectAnnotation select = 3;     // 文字选区标注
+    uint32 pageNumber = 4;                  // 标注所在页码
+    uint64 createDate = 5;                  // 标注创建时间
+    string paperId = 6;                     // 标注所属论文id
+    string paperTitle = 7;                  // 标注所属论文标题
+    string groupId = 8;                     // 群组id
+    common.CommentatorInfoView commentatorInfoView = 9;
+    bool deleteAuthority = 10;              // 当前用户是否拥有删除权限
+    string docName = 11;                    // 笔记所属文献名称
+    repeated string markIdsOfCurrentPage = 12;    //当前的笔记id，用来校验数据是否已过期
+    int32 position = 13;                    //新增笔记的排序,position是指在markIdsOfCurrentPage中的位置
+    repeated common.AnnotateTag tags = 14;         // 标签
+    WebNoteAnnotateDraw drawAnnotation = 15;
+    WebDrawV2 webDrawV2 = 16;
+    note.AnnotateTextBox textBox = 17; //文本框
+    //是否为高亮内容
+    optional bool isHighlight = 18;
+    string id = 19 ; // 当前 annotate ID
+    string pdfId = 20;                     // 标注所属论文id
+    string noteId = 21;                     // 标注所属noteId
+}
+
+message WebNoteRectAnnotation {
+    string uuid = 1;                        // 标注ID
+    string documentId = 2;                  // 笔记ID
+    uint32 styleId = 3;                     // 样式ID
+    common.RectOptions rectangle = 4;              // 选区
+    string idea = 5;                        // 用户文字标注
+    string picUrl = 6;                      // 图片链接
+}
+
+message WebNoteSelectAnnotation {
+    string uuid = 1;                        // 标注ID
+    string documentId = 2;                  // 笔记ID
+    repeated common.RectOptions rectangle = 3;     // 选区（多行）
+    string rectStr = 4;                     // 选中文字
+    string idea = 5;                        // 用户文字标注
+    uint32 styleId = 6;                     // 样式ID
+    uint32 score = 7;                       // 同样选中此处的人数
+}   
+
+message WebNoteAnnotateDraw {
+
+    string nsDataUrl = 1;                   // nsDataUrl 
+
+}
+
+message WebDrawV2 {
+
+    uint32 pageNumber = 1;
+
+    repeated WebDrawItem webDrawItems = 2;
+}
+
+message WebDrawItem {
+
+    string lineHexColor = 1;
+
+    float lineAlpha = 2;
+
+    repeated common.Point points = 3;
+
+    string id = 4;
+
+    float lineWidth = 5;
+    
+    common.ToolType tooltype = 6;
+
+    common.DrawShapeType drawShapeType = 7;
+
+    optional common.Erase erase = 8;
+    
+}

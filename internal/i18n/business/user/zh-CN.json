@@ -1,0 +1,33 @@
+{
+  "user": {
+    "errors": {
+      "not_found": "用户不存在",
+      "already_exists": "用户已存在",
+      "invalid_data": "无效的用户数据",
+      "auth_failed": "用户认证失败",
+      "create_failed": "创建用户失败",
+      "update_failed": "更新用户失败",
+      "delete_failed": "删除用户失败"
+    },
+    "success": {
+      "created": "用户创建成功",
+      "updated": "用户更新成功",
+      "deleted": "用户删除成功"
+    },
+    "profile": {
+      "fields": {
+        "username": "用户名",
+        "email": "电子邮箱",
+        "phone": "电话号码",
+        "address": "地址",
+        "birthday": "生日"
+      },
+      "validation": {
+        "required": "{{.Field}}不能为空",
+        "invalid_format": "{{.Field}}格式不正确",
+        "too_short": "{{.Field}}太短",
+        "too_long": "{{.Field}}太长"
+      }
+    }
+  }
+}

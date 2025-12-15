@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package note;
+
+import "definitions/common/AnnotateTag.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/note";
+
+/*
+ * @api_path: /api/pdf/marktag/tags
+ * @method: GET
+ * @content-type: application/json
+ * @summary: 获取笔记标签列表
+ */
+message GetAnnotateTagsRequest {
+  bool onlyUsed = 1;
+}
+
+message GetAnnotateTagsResponse {
+  repeated common.AnnotateTag tags = 1;
+}
+
+
+/**
+ * @api_path: /api/pdf/marktag/save
+ * @method: POST
+ * @content-type: application/json
+ * @summary: 创建标签信息
+ */
+message CreateAnnotateTagRequest {
+    string tagName = 1;  // 标签名称
+    string markId = 2;  // 笔记id
+}
+
+message CreateAnnotateTagResponse {
+    string tagId = 1;  // 标签id
+}
+
+/**
+ * @api_path: /api/pdf/marktag/update
+ * @method: POST
+ * @content-type: application/json
+ * @summary: 修改标签信息
+ */
+message RenameAnnotateTagRequest {
+    string tagId = 1;
+    string tagName = 2;
+}
+
+message RenameAnnotateTagResponse {
+    // empty
+}
+
+/**
+ * @api_path: /api/pdf/marktag/delete
+ * @method: POST
+ * @content-type: application/json
+ * @summary: 删除标签信息
+ */
+message DeleteAnnotateTagRequest {
+    string tagId = 1;
+}
+
+message DeleteAnnotateTagResponse {
+    // empty
+}
+
+/**
+ * @api_path: /api/pdf/marktag/relation/mark/save
+ * @method: POST
+ * @content-type: application/json
+ * @summary: 给批注添加标签信息
+ */
+ message AddTagToAnnotateRequest {
+    // 笔记id
+    string markId = 1;
+    // 标签id
+    repeated string tagIds = 2;
+}
+
+/**
+ * @api_path: /api/pdf/marktag/relation/mark/delete
+ * @method: POST
+ * @content-type: application/json
+ * @summary: 删除批注的标签信息
+ */
+ message DeleteTagToAnnotateRequest {
+    // 笔记id
+    string markId = 1;
+    // 标签id，tagId可能会有重复的，所以传几个就删除几个
+    repeated string tagIds = 2;
+}

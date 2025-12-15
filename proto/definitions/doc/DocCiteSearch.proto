@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package doc;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/doc";
+
+import "definitions/doc/CSL.proto";
+
+
+/**
+ *	接口描述: 英文检索(DOI/标题)
+ *	接口url: /userDoc/citeSearch/en
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message EnDocCiteSearchReq {
+  string searchContent = 1;
+}
+
+message EnDocCiteSearchResponse {
+  repeated doc.DocMetaInfoSimpleVo result =1;
+}
+
+/**
+ *	接口描述: 中文检索
+ *	接口url: /userDoc/citeSearch/zh
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message ZhDocCiteSearchReq {
+  string searchContent = 1;
+}
+
+message ZhDocCiteSearchResponse {
+  repeated doc.DocMetaInfoSimpleVo result =1;
+}
+
+

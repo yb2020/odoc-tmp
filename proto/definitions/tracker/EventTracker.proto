@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package tracker;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/tracker";
+
+import "definitions/validate/Validate.proto";
+
+// @api_path: /report/collection_tracking0?rd=67228096&timestamp=1746349723773&signature=cYefrnDJWITrL%2FDhe5e7u0az73vBwwc2xHUQXIgTx1E%3D
+// @method: POST
+// @content-type: application/json
+// @summary: 事件采集上报
+message EventTrackerEncodeRequest {
+    uint64 rd = 1 [(validate.rules).uint64 = {
+        gt: 0
+      }];
+    uint64 timestamp = 2 [(validate.rules).uint64 = {
+        gt: 0
+      }];
+    string signature = 3 [(validate.rules).string = {
+        min_len: 1
+      }];
+}
+
+message EventTrackerBodyRequest {
+    EventTrackerBaseInfo baseInfo = 1;
+    repeated EventTrackerEvent eventList = 2;
+}
+
+message EventTrackerBaseInfo {
+    uint64 report_time = 1;
+    string channel = 2;
+    string referer = 3;
+    string referer_detail = 4;
+    string platform = 5;
+    string os_name = 6;
+    string browser_type = 7;
+    string browser_version = 8;
+    string browser_language = 9;
+    string device_id = 10;
+    string session_id = 11;
+    string service_unique_code = 12;
+    string screen_size = 13;
+    string app_version = 14;
+    string uin = 15;
+    string language = 16;
+}
+
+message EventTrackerEvent {
+    EventTrackerEventInfo eventInfo = 1;
+    EventTrackerEventData eventData = 2;
+}
+
+message EventTrackerEventInfo {
+    string event_code = 1;
+    string touin = 2;
+    uint64 event_time = 3;
+    string url = 4;
+}
+    
+message EventTrackerEventData {
+    string page_type = 1;
+    string type_parameter = 2;
+    string tran_content = 3;
+    string sources = 4;
+    string memory = 5;
+}

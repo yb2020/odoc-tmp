@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package doc;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/doc";
+
+
+/**
+ *	描述: 用户上传文件状态码
+ */
+enum UserDocParsedStatusEnum {
+
+  // --- 其他状态 (0-5) ---
+  // 准备中
+  READY = 0;
+  // 重新发起解析
+  REPARSE = 1;
+
+  // --- 下载状态 (5-10) ---
+  // 开始下载
+  DOWNLOADING = 5;
+  // 下载完成
+  DOWNLOADED = 6;
+  // 下载失败
+  DOWNLOAD_FAILED = 7;
+  //文件已存在
+  FILE_EXISTS = 8;
+
+  // --- 上传状态 (11-20) ---
+  // 开始上传
+  UPLOADING = 11;
+  // 上传完成
+  UPLOADED = 12;
+  // 上传失败
+  UPLOAD_FAILED = 13;
+
+  // --- 解析状态 (21-40) ---
+  // 基础数据开始生成
+  GENERATING_BASE_DATA = 21;
+  // 基础数据生成完成
+  BASE_DATA_GENERATED = 22;
+  // 基础数据生成失败
+  BASE_DATA_GENERATE_FAILED = 23;
+  // 解析头部数据开始
+  PARSING_HEADER_DATA = 24;
+  // 解析头部数据完成
+  HEADER_DATA_PARSED = 25;
+  // 解析头部数据失败
+  HEADER_DATA_PARSE_FAILED = 26;
+  // 解析内容数据开始
+  PARSING_CONTENT_DATA = 27;
+  // 解析内容数据完成
+  CONTENT_DATA_PARSED = 28;
+  // 解析内容数据失败
+  CONTENT_DATA_PARSE_FAILED = 29;
+  // 未知错误导致解析失败
+  PARSE_FAILED = 40;
+
+  // --- Embedding状态 (50-60) ---
+  // Embedding完成
+  EMBEDDED = 50;
+  // Embedding失败
+  EMBEDDING_FAILED = 51;
+}
+
+// 用户上传文件状态对象
+message UserDocParsedStatusObj {
+  // 状态
+  UserDocParsedStatusEnum status = 1;
+
+  // 是否存在SHA256的文件
+  bool hasSha256File = 2;
+
+  // SHA256的value
+  string sha256Value = 3;
+}

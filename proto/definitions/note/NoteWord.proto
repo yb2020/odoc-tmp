@@ -1,0 +1,185 @@
+syntax = "proto3";
+
+package note;
+
+import "definitions/validate/Validate.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/note";
+
+// 笔记单词模型
+message NoteWord {
+  string id = 1;
+  string noteId = 2 [(validate.rules).string = {min_len: 1}];
+  string word = 3 [(validate.rules).string = {min_len: 1}];
+  string rectangle = 4;
+  string targetContent = 5;
+  string britishSymbol = 6;
+  string americaSymbol = 7;
+  string britishFormat = 8;
+  string britishPronunciation = 9;
+  string americaFormat = 10;
+  string americaPronunciation = 11;
+  string targetResp = 12;
+}
+
+// 矩形选项
+message RectOption {
+  double x = 1;
+  double y = 2;
+  double width = 3;
+  double height = 4;
+  int32 pageNumber = 5;
+  double rotation = 6;
+}
+
+//  
+message TargetResp {
+  string part = 1;
+  repeated string targetContent = 2;
+}
+
+// 单词信息INFO
+message WordInfo {
+  string id = 1;
+  string word = 2;
+  repeated RectOption rectangle = 3;
+  TranslateInfo translateInfo = 4;
+}
+
+
+// 翻译信息INFO
+message TranslateInfo {
+  string requestId = 1;
+  string britishSymbol = 2;
+  string americaSymbol = 3;
+  string britishFormat = 4;
+  string britishPronunciation = 5;
+  string americaFormat = 6;
+  string americaPronunciation = 7;
+  string ocrExtractText = 8;
+  string sseData = 9;
+  repeated string targetContent = 10;
+  repeated TargetResp targetResp = 11;
+}
+
+enum DISPLAY_MODE {
+    DEFAULT = 0; //单个高亮
+    GLOBAL = 1; //全局高亮
+    HIDDEN = 2; //不高亮
+}
+
+enum WordColor {
+  //极客蓝
+  BLUE = 0;
+  //青色
+  CYAN = 1;
+  //紫色
+  PURPLE = 2;
+  //金黄色
+  AURATUS = 3;
+  //玫瑰红
+  ROSE_RED = 4;
+}
+
+// @api_path: /api/note/word
+// @method: POST
+// @content-type: application/json
+// @summary: 创建笔记单词
+message CreateNoteWordRequest {
+  string noteId = 1 [(validate.rules).string = {min_len: 1}];
+  string word = 2 [(validate.rules).string = {min_len: 1}];
+  string rectangle = 3;
+  string targetContent = 4;
+  string britishSymbol = 5;
+  string americaSymbol = 6;
+  string britishFormat = 7;
+  string britishPronunciation = 8;
+  string americaFormat = 9;
+  string americaPronunciation = 10;
+  string targetResp = 11;
+}
+
+message CreateNoteWordResponse {
+  string id = 1;
+}
+
+// @api_path: /api/note/word
+// @method: GET
+// @content-type: application/json
+// @summary: 获取笔记单词
+message GetNoteWordRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message GetNoteWordResponse {
+  NoteWord noteWord = 1;
+}
+
+// @api_path: /api/note/paperNote/word/update
+// @method: POST
+// @content-type: application/json
+// @summary: 更新笔记单词
+message UpdateNoteWordRequest {
+  string wordId = 1;
+  //只支持更新解释部分
+  TranslateInfo wordInfo = 2;
+}
+
+message UpdateNoteWordResponse {
+  bool success = 1;
+}
+
+// @api_path: /api/note/paperNote/word/delete
+// @method: POST
+// @content-type: application/json
+// @summary: 删除笔记单词
+message DeleteNoteWordRequest {
+  string wordId = 1;
+}
+
+message DeleteNoteWordResponse {
+  bool success = 1;
+}
+
+// @api_path: /api/note/paperNote/word/getByNoteId
+// @method: POST
+// @content-type: application/json
+// @summary: 根据笔记ID获取笔记单词列表
+message GetNoteWordsByNoteIdRequest {
+  string noteId = 1 [(validate.rules).string = {min_len: 1}];
+  uint32 currentPage = 2 [(validate.rules).uint32 = {gt: 0}];
+  uint32 pageSize = 3 [(validate.rules).uint32 = {gt: 0}];
+  string minLoadedId = 4;
+}
+
+message GetNoteWordsByNoteIdResponse {
+  repeated WordInfo words = 1; // 笔记单词列表
+  uint32 total = 2; // 总数
+  WordColor color = 3; // 颜色 WordColor 枚举
+  DISPLAY_MODE displayMode = 4; // 显示模式 DISPLAY_MODE 枚举
+}
+
+// @api_path: /api/note/paperNote/word/config
+// @method: POST
+// @content-type: application/json
+// @summary: 单词配置
+message ChangeWordConfigRequest {
+  string noteId = 1;
+  WordColor color = 2;
+  DISPLAY_MODE displayMode = 3;
+}
+
+/**
+ * @api_path: /api/note/paperNote/word/save
+ * @method: POST
+ * @content-type: application/json
+ * @summary: 保存笔记单词
+ */
+message SaveNoteWordRequest {
+  string noteId = 1;
+  WordInfo wordInfo = 2;
+}
+
+message SaveNoteWordResponse {
+  string id = 1;
+}

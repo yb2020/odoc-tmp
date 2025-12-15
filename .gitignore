@@ -1,0 +1,139 @@
+# =========================
+# 1. 通用忽略规则
+# =========================
+# Mac 系统文件
+.DS_Store
+
+# IDE 配置
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# =========================
+# 2. Golang 标准忽略规则
+# =========================
+# 编译产物和库文件
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# 测试生成的二进制文件
+*.test
+
+# 覆盖率工具输出
+*.out
+
+# Go 工作区文件
+go.work
+go.work.sum
+
+# 依赖目录 (如果你不希望提交 vendor，请取消下面注释)
+# vendor/
+
+# =========================
+# 3. 项目构建产物 (Build)
+# =========================
+# 主要的可执行文件
+go-sea-server
+odoc-server
+
+# 其他常见的编译中间件
+*.bin
+__debug*
+bin/
+
+# =========================
+# 4. 环境变量与密钥 (安全!)
+# =========================
+.env
+.env.*
+*.local
+
+# =========================
+# 5. 数据库与数据文件
+# =========================
+*.db
+*.db-wal
+*.db-shm
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/pdf_storage
+
+# 临时文件目录
+cmd/server/temp/
+
+# =========================
+# 6. 日志文件 (Logs)
+# =========================
+logs/
+*.log
+
+# docker
+.docker
+
+# =========================
+# 7. Web 前端 (web/)
+# =========================
+# Runtime data
+web/pids
+web/*.pid
+web/*.seed
+
+# Coverage & Lint
+web/coverage
+web/.eslintcache
+
+# Node modules
+web/node_modules
+web/node_modules*
+
+# Build output
+web/dist
+web/dist-ssr
+web/dev-dist
+web/lib
+web/es
+web/typing
+web/*.tsbuildinfo
+web/packages/*/lib
+web/packages/*/dist
+
+# Bun
+web/.bun/
+web/node_modules/.bun
+web/bun.lockb
+web/~/
+
+# Lock files (选择性忽略)
+web/yarn.lock
+web/package-lock.json
+
+# Docs
+web/docs/.vitepress/cache
+web/docs/.vitepress/.temp/
+
+# Tauri
+web/src-tauri/binaries
+web/src-tauri/target/
+web/src-tauri/Cargo.lock
+web/src-tauri/gen/
+web/src-tauri/resources/config.*.yaml
+
+# Misc
+web/.lerna-debug.log
+web/web/browser/mock
+
+# =========================
+# 8. Proto (proto/)
+# =========================
+# 保留 .gitkeep 文件
+!proto/gen/.gitkeep
+!proto/gen/go/.gitkeep
+!proto/gen/ts/.gitkeep
+
+# 本地生成目录
+proto/local-gen/

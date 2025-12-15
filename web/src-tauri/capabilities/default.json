@@ -1,0 +1,39 @@
+{
+  "identifier": "default",
+  "description": "Default capabilities for Sea Reader",
+  "windows": ["main", "window-*"],
+  "permissions": [
+    "core:default",
+    "core:window:allow-create",
+    "core:webview:allow-create-webview-window",
+    "shell:default",
+    "shell:allow-open",
+    "shell:allow-execute",
+    "shell:allow-spawn",
+    "shell:allow-kill",
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [{ "name": "go-sea", "sidecar": true }]
+    },
+    "fs:default",
+    {
+      "identifier": "fs:allow-read-file",
+      "allow": [
+        { "path": "$HOME/**" },
+        { "path": "/Users/**" },
+        { "path": "/tmp/**" }
+      ]
+    },
+    {
+      "identifier": "fs:allow-read-dir",
+      "allow": [
+        { "path": "$HOME/**" },
+        { "path": "/Users/**" },
+        { "path": "/tmp/**" }
+      ]
+    },
+    "fs:allow-write",
+    "dialog:default",
+    "os:default"
+  ]
+}

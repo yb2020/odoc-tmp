@@ -1,0 +1,176 @@
+syntax = "proto3";
+
+package parsed;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/parsed";
+
+import "definitions/parsed/Document.proto";
+
+// MineruContentList 表示Mineru内容列表项
+message MineruContentList {
+  // 通用属性
+  string type = 1;      // 内容类型
+  string text = 2;      // 文本内容
+  int32 page_idx = 3;   // 页码索引
+  
+  // text类型属性
+  int32 text_level = 4; // 文本级别
+  
+  // equation类型属性
+  string text_format = 5; // 文本格式
+  
+  // table类型属性
+  repeated string table_caption = 6;  // 表格标题
+  repeated string table_footnote = 7; // 表格脚注
+  string table_body = 8;              // 表格内容
+  
+  // image类型属性
+  repeated string img_caption = 9;    // 图片标题
+  repeated string img_footnote = 10;  // 图片脚注
+  
+  // image类型和table类型 公共属性
+  string img_path = 11;               // 图片路径
+}
+
+// UploadProgressResponse 上传进度响应结构
+message UploadProgressResponse {
+  string msg = 1;        // 消息
+  string orig_name = 2;  // 原始文件名
+  int32 chunk_size = 3;  // 分块大小
+}
+
+// JoinResponse 合并结果响应结构
+message JoinResponse {
+  string event_id = 1;   // 事件ID
+}
+
+// ImageRecord 图片记录结构
+message ImageRecord {
+  string id = 1;           // 图片ID
+  string bucket_name = 2;  // 存储桶名称
+  string object_key = 3;   // 对象键
+  string file_name = 4;    // 文件名
+  int64 file_size = 5;     // 文件大小
+  string fileSHA256 = 6;          // SHA256校验和
+  string content_type = 7; // 内容类型
+  parsed.BBox ref_bbox = 8; //引用边界框
+  parsed.BBox bbox = 9; //边界框
+  int32 page_idx = 10; //页码
+  string section_id = 11; //所属章节id
+  string section_title = 12; //所属章节标题
+}
+
+// 公式记录结构
+message FormulaRecord {
+  string content = 1; // 公式内容
+  parsed.BBox bbox = 2; //边界框
+  int32 page_idx = 3; //页码
+  string section_id = 4; //所属章节id
+  string section_title = 5; //所属章节标题
+}
+
+// EventOutput 事件输出结构 - 数组内容为["全文内容","全文内容","解析的zip文件信息","PDF信息【path和url等】"]
+message EventOutput {
+  repeated string data = 1; // 使用string类型表示任意JSON数据
+}
+
+// ProcessCompletedEventMessage process_completed事件消息结构
+message ProcessCompletedEventMessage {
+  string msg = 1;                // 消息
+  string event_id = 2;           // 事件ID
+  EventOutput output = 3;        // 输出内容
+  bool success = 4;              // 是否成功
+  string title = 5;              // 标题
+}
+
+// PathInfo 路径信息结构
+message PathInfo {
+  string path = 1;                                // 路径
+  string url = 2;                                 // URL
+  int32 size = 3;                                 // 大小
+  string orig_name = 4;                           // 原始文件名
+  string mime_type = 5;                           // MIME类型
+  bool is_stream = 6;                             // 是否为流
+  map<string, string> meta = 7;                   // 元数据
+}
+
+message MineruPdfInfo {
+  repeated MineruPage pdf_info = 1; // pdf信息
+} 
+
+// MineruPage 表示Mineru页面结构
+message MineruPage {
+
+  // 需要解析的属性
+  int32 page_idx = 1;                // 页面索引
+  repeated double page_size = 2;    // 页面大小
+  repeated ImageAndTable images = 3; // 图片
+  repeated ImageAndTable tables = 4; // 表格
+  repeated Block para_blocks = 5;                     // 段落块
+
+  // 以下属性暂时没发现存在value 所以无法定义结构 暂时注释
+  // repeated string layout_bboxes = 6; // 布局框
+  // repeated string layout_tree = 7;   // 布局树
+  // repeated string drop_reason = 8;   // 丢弃原因
+  
+  // 下面属性过长，是否需要解析待定。。。  暂时注释
+  repeated Block preproc_blocks = 9; // 预处理块
+  // repeated InterlineEquation interline_equations = 10; // 行间公式
+  // repeated Block discarded_blocks = 11;                // 被丢弃的块
+  // bool need_drop = 12;                                 // 是否需要丢弃  
+}
+
+// Block 表示块结构
+message Block {
+  string type = 1;             // 类型
+  repeated double bbox = 2;    // 边界框
+  double index = 3;            // 索引
+  repeated Line lines = 4;     // 行
+  
+  // 下面这两个属性是para_blocks中独有的
+  int32 page_num = 5;          // 页码
+  repeated double page_size = 6; // 页面大小
+  
+  // 这两个属性是image中独有的
+  double group_id = 7;         // 组ID
+  repeated Line virtual_lines = 8; // 虚拟行
+
+  // 这两个属性是type = table or figure独有的
+	repeated Block blocks = 9; // 块
+  //是否删除行（这里的意思代表的是，当前块是属于第一页段落中的内容，内容跨页了，需要删除，这里的坐标代表了跨页的文本行）
+  bool lines_deleted = 10;
+}
+
+// Line 表示行结构
+message Line {
+  repeated double bbox = 1;    // 边界框
+  double index = 2;            // 索引
+  repeated Span spans = 3;     // 跨度
+}
+
+// Span 表示跨度结构
+message Span {
+  repeated double bbox = 1;    // 边界框
+  string source = 2;           // 源
+  string content = 3;          // 内容
+  string type = 4;             // 类型
+  string image_path = 5;       // 图片路径
+  bool cross_page = 6;         //是否跨页
+}
+
+// InterlineEquation 表示行间公式结构
+message InterlineEquation {
+  string type = 1;             // 类型
+  repeated double bbox = 2;    // 边界框
+  double line = 3;             // 行
+  double index = 4;            // 索引
+  repeated Line virtual_lines = 5; // 虚拟行
+}
+
+// ImageAndTable 表示图片和表格结构
+message ImageAndTable {
+  string type = 1;             // 类型
+  repeated double bbox = 2;    // 边界框
+  double index = 3;            // 索引
+  repeated Block blocks = 4;   // 块
+}

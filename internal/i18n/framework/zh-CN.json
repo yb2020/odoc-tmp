@@ -1,0 +1,50 @@
+{
+  "system": {
+    "error": "系统错误",
+    "database_error": "数据库错误",
+    "cache_error": "缓存错误",
+    "internal_server_error": "内部服务器错误",
+    "service_unavailable": "服务不可用"
+  },
+  
+  "request": {
+    "invalid": "无效的请求",
+    "timeout": "请求超时",
+    "too_many": "请求过多"
+  },
+  
+  "access": {
+    "unauthorized": "未授权",
+    "forbidden": "禁止访问",
+    "resource_not_found": "资源不存在",
+    "method_not_allowed": "方法不允许",
+    "resource_conflict": "资源冲突"
+  },
+  
+  "operation": {
+    "failed": "操作失败",
+    "successful": "操作成功"
+  },
+  
+  "auth": {
+    "token": {
+      "missing": "认证令牌缺失",
+      "invalid_format": "无效的认证令牌格式",
+      "invalid": "无效的认证令牌"
+    },
+    "admin": {
+      "required": "需要管理员权限"
+    }
+  },
+  
+  "validation": {
+    "field": {
+      "required": "字段 {{.Field}} 不能为空",
+      "min_length": "字段 {{.Field}} 长度不能小于 {{.MinLength}}",
+      "max_length": "字段 {{.Field}} 长度不能大于 {{.MaxLength}}",
+      "email": "字段 {{.Field}} 不是有效的邮箱格式",
+      "pattern": "字段 {{.Field}} 格式不正确",
+      "not_in": "字段 {{.Field}} 的值不允许使用"
+    }
+  }
+}

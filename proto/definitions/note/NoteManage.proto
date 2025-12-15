@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+package note;
+
+import "definitions/note/NoteWord.proto";
+import "definitions/common/PdfMarkTagInfo.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/note";
+
+
+
+/**
+ * @api_path: /api/note/noteManage/summary/getList
+ * @method: POST
+ * @content-type: application/json
+ * @summary: 笔记管理TAB——总结
+ */
+message GetSummaryListReq {
+}
+
+message GetSummaryListResponse {
+  //有总结的文献数量
+  uint32  total = 1;
+  repeated NoteManageFolderInfo folderInfos = 2;
+  repeated NoteManageDocInfo unclassifiedDocInfos  = 3;
+
+}
+
+message NoteManageFolderInfo {
+  //文件夹名
+  string  name = 1;
+  //数量
+  uint32  count = 2;
+  //文件夹id
+  string  folderId = 3;
+  //子文件夹
+  repeated NoteManageFolderInfo  childrenFolders = 4;
+  //文献信息
+  repeated NoteManageDocInfo  docInfos = 5;
+  //笔记单词数量
+  uint32  noteWordCount = 6;
+  //笔记标记数量
+  uint32  noteAnnotateCount = 7;
+}
+
+message NoteManageDocInfo {
+  //文献名
+  string  docName = 1;
+  //文献id
+  string  docId = 2;
+  //笔记id
+  string noteId = 3;
+
+  //笔记单词数量
+  uint32  noteWordCount = 4;
+  //笔记标记数量
+  uint32  noteAnnotateCount = 5;
+
+  optional  uint64 modifyDate = 6;
+
+}
+
+
+/**
+ * 笔记管理TAB——根据folderId获取总结列表
+ * url: /note/noteManage/summary/getListByFolderId
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetSummaryListByFolderIdReq {
+  //全部的时候可不传
+  optional string folderId = 1;
+  int32 currentPage = 2;
+  int32 pageSize = 3;
+}
+message GetSummaryListByFolderIdResponse {
+  //数量
+  uint32  total = 1;
+  repeated NoteManageDocInfo docInfos = 2;
+}
+
+/**
+ * 笔记管理TAB——单词
+ * url: /api/note/noteManage/word/getList
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetWordListReq {
+}
+message GetWordListResponse {
+  //单词数量
+  uint32  total = 1;
+  repeated NoteManageFolderInfo folderInfos = 2;
+  repeated NoteManageDocInfo unclassifiedDocInfos  = 3;
+}
+
+/**
+ * 笔记管理TAB——根据folderId获取单词列表
+ * url: /api/note/noteManage/word/getListByFolderId
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetWordListByFolderIdReq {
+  //全部单词的时候可不传
+  optional string folderId = 1;
+  int32 currentPage = 2;
+  int32 pageSize = 3;
+}
+message GetWordListByFolderIdResponse {
+  //单词数量
+  uint32  total = 1;
+  repeated note.WordInfo words = 2;
+}
+
+
+/**
+ * 笔记管理TAB——摘录
+ * url: /api/note/noteManage/extract/getList
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetExtractListReq {
+}
+message GetExtractListResponse {
+  //数量
+  uint32  total = 1;
+  repeated NoteManageFolderInfo folderInfos = 2;
+  repeated NoteManageDocInfo unclassifiedDocInfos  = 3;
+}
+
+
+/** 
+*	接口描述:根据文件夹Id获取笔记标签列表
+ *	接口url: /api/note/noteManage/extract/getMarkTagListByFolderId
+ *	接口请求方式:POST
+ *	参数格式:application/json
+ */ 
+message GetMarkTagListByFolderIdReq {  
+  // 文件夹ID
+  string folderId=1;
+}
+
+message GetMarkTagListByFolderIdResponse {  
+  // 标签列表
+  repeated common.PdfMarkTagInfo markTagList=1;
+}

@@ -1,0 +1,231 @@
+syntax = "proto3";
+
+package doc;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/doc";
+
+
+/**
+ *	接口描述: 获取文献类型列表
+ *	接口url: /docPublic/docMetaInfo/getDocTypeList
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetDocTypeListReq {
+}
+
+message GetDocTypeListResponse {
+  repeated DocTypeInfo docTypeInfos = 1;
+}
+message DocTypeInfo {
+  string code=1;
+  string name=2;
+}
+
+
+/**
+ *	接口描述: 获取meta数据
+ *	接口url: /docPublic/docMetaInfo/getDocMetaInfo
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetDocMetaInfoReq {
+  optional string paperId = 1;
+  optional string pdfId = 2;
+  optional string docId = 3;
+}
+
+message GetDocMetaInfoResponse {
+  uint32 status=1;
+  string message=2;
+  DocMetaInfoSimpleVo data =3;
+}
+
+message DocMetaInfoSimpleVo {
+  //发布时间,毫秒值时间戳
+  uint64 publishTimestamp = 1;
+  //文献名称
+  string title = 2;
+  //收录情况
+  repeated string containerTitle = 3;
+  //页码
+  optional string page = 4;
+  //作者信息
+  repeated AuthorInfo authorList = 5;
+  //文献类型
+  string docType = 6;
+  optional string eventTitle = 7;
+  optional string eventPlace = 8;
+  repeated string eventDate = 9;
+  //doi
+  optional string doi = 10;
+  //卷次
+  optional string volume = 11;
+  //期号
+  optional string issue = 12;
+  optional string url = 13;
+  optional string language = 14;
+  //与 publishTimestamp 对应
+  optional string publishDateStr = 15;
+  //分区信息
+  optional string partition = 16;
+  //文献类型显示名称
+  optional string docTypeName = 17;
+
+}
+message AuthorInfo {
+  optional string given = 1;
+  optional string family = 2;
+  string literal = 3;
+  optional string id = 4;
+  bool isAuthentication = 5;
+}
+
+
+/**
+ *	接口描述: 引用默认格式列表
+ *	接口url: /docPublic/csl/getDefaultCslList
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message CetDefaultCslListReq {
+}
+
+message CetDefaultCslListResponse {
+  uint32 total = 1;
+  repeated CslItem list = 2;
+}
+
+
+/**
+ *	接口描述: 引用格式列表
+ *	接口url: /csl/list
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetCslListReq {
+  uint32 pageSize = 1;
+  uint32 currentPage = 2;
+  //搜索词
+  string searchContent = 3;
+}
+
+message GetCslListResponse {
+  uint32 total = 1;
+  repeated CslItem list = 2;
+}
+
+message CslItem {
+  string id = 1;
+  string title = 2;
+  //时间信息
+  string updated = 3;
+  //csl文件的cdn地址
+  string fileUrl = 4;
+  //是否添加
+  bool addedFlag =5;
+  optional string shortTitle = 6;
+  optional string customDefineTitle = 7;
+  optional string lang = 8;
+}
+
+
+/**
+ *	接口描述: 我已添加的引用格式列表
+ *	接口url: /csl/myCslList
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetMyCslListReq {
+}
+
+message GetMyCslListResponse {
+  uint32 total = 1;
+  repeated MyCslItem list = 2;
+}
+
+message MyCslItem {
+  string id = 1;
+  string title = 2;
+  optional string shortTitle = 3;
+  //csl文件的cdn地址
+  string fileUrl = 4;
+  optional string customDefineTitle = 5;
+  optional string lang = 6;
+}
+
+
+/**
+ *	接口描述: 添加格式
+ *	接口url: /csl/addCsl
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ *  响应:MyCslItem
+ */
+message AddCslReq {
+  string cslId = 1;
+}
+
+/**
+ *	接口描述: 删除格式
+ *	接口url: /csl/deleteCsl
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message DeleteCslReq {
+  string cslId = 1;
+}
+
+
+/**
+ *	接口描述: 排序
+ *	接口url: /csl/sortCsl
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message SortCslReq {
+  //排序后的格式id列表
+ repeated string cslIds = 1;
+}
+
+/**
+ *接口描述: 文档元数据处理请求
+ *接口url: /docPublic/docMetaInfo/getDocMetaInfo
+ *接口请求方式: POST
+ *参数格式:application/json
+ *响应:GetDocMetaInfoResponse
+ */
+message DocMetaInfoHandlerReq {
+  optional string paperId = 1;
+  optional string userId = 2;
+  optional string pdfId = 3;
+  optional string docId = 4;
+  optional string doi = 5;
+  optional string docName = 6;
+  optional bool cralwDataImmediately = 7; // 默认值为true
+}
+
+
+
+/**
+ *	接口描述: 通过ids导出数据
+ *	接口url: /doc/bibtex/exportByIds
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message ExportByIdsReq {
+  repeated string docIds=1;
+}
+
+/**
+ *	接口描述: 通过folderId导出数据
+ *	接口url: /doc/bibtex/exportByFolderId
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+ message ExportByFolderIdReq {
+  string folderId=1;
+}
+
+
+

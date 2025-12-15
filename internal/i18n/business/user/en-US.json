@@ -1,0 +1,12 @@
+{
+  "user_not_found": "User Not Found",
+  "user_already_exists": "User Already Exists",
+  "invalid_user_data": "Invalid User Data",
+  "user_authentication_failed": "User Authentication Failed",
+  "user_created_successfully": "User created successfully",
+  "user_updated_successfully": "User updated successfully",
+  "user_deleted_successfully": "User deleted successfully",
+  "failed_to_create_user": "Failed to create user",
+  "failed_to_update_user": "Failed to update user",
+  "failed_to_delete_user": "Failed to delete user"
+}

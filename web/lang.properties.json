@@ -1,0 +1,615 @@
+{
+  "lang": ["zh-CN", "en-US"],
+  "html": {
+    "pageTitle": {
+      "note": ["笔记页", "PDF Note Page"],
+      "forbidden": ["无权限", "Forbidden"],
+      "error": ["错误", "Error"],
+      "404": ["未找到页面", "Not Found"]
+    }
+  },
+  "wordings": {
+    "contactWechat": [
+      "请使用微信扫码添加小管家",
+      "Please use WeChat to scan the QR code to contact"
+    ]
+  },
+  "viewer": {
+    "share": ["分享", "Share"],
+    "export": ["下载", "Download"],
+    "exportPDF": ["下载PDF", "Download PDF"],
+    "exportTip": ["激活{0}后可以解锁导出", "Plan {0} to unlock export"],
+    "catalogue": ["目录", "Outline"],
+    "thumbnails": ["预览", "Thumbnails"],
+    "shortcut": ["快捷键", "Shortcuts"],
+    "goHomePage": ["去首页", "Home"],
+    "help": ["帮助", "Help"],
+    "tips": ["阅读器使用技巧", "Tips"],
+    "screenshot": [
+      "论文截图，支持截图后向AI提问、OCR翻译以及记录到笔记。\n快捷键",
+      "Screenshot to explain figures/tables, or add to annotation.\n"
+    ],
+    "findInDocument": ["全文查找", "Find in Document"],
+    "fullscreen": ["全屏", "Fullscreen"],
+    "zoomToPageWidth": ["PDF大小自适应", "Adapt to Page Size"],
+    "toggleLeftbar": ["收起/展开目录栏（左侧）", "Collapse/Expand (Left)"],
+    "toggleRightbar": ["收起/展开笔记栏（右侧）", "Collapse/Expand (Right)"],
+    "selectMultiSegment": ["多段选取", "Select Multiple Paragraphs"],
+    "pressing": ["按住", ""],
+    "expandLeftbar": ["展开目录", "Expand Table"],
+    "collapseLeftbar": ["关闭目录", "Collapse Table"],
+    "fullscreenMode": ["全屏模式", "Fullscreen"],
+    "pageWidth": ["自适应", "Page Width"],
+    "expand": ["展开", "Expand"],
+    "collapse": ["收起", "Collapse"],
+    "readMode": ["颜色模式", "Read Mode"],
+    "theme": ["主题色", "Theme"],
+    "white": ["原生", "White"],
+    "dark": ["深色", "Dark"],
+    "beige": ["米色", "Beige"],
+    "green": ["绿色", "Green"],
+    "blue": ["蓝色", "Blue"],
+    "yellow": ["黄色", "Yellow"],
+    "orange": ["橙色", "Orange"],
+    "red": ["红色", "Red"],
+    "black": ["黑色", "Black"],
+    "selectedText": ["引用原文", "Selected Text"],
+    "documentTranslate": ["全文翻译", "Full Text Translatiton"],
+    "goBack": ["回到刚才位置", "Go Back"],
+    "savePaper": ["收藏论文", "Save"],
+    "save": ["收藏", "Save"],
+    "saved": ["已收藏", "Saved"],
+    "figuresAndTables": ["图表提取", "Figures and Tables"],
+    "citations": ["被引用", "Citations"],
+    "noteCount": ["笔记数", "Notes"],
+    "references": ["参考文献", "References"],
+    "sort": ["排序", "Sort"],
+    "default": ["默认", "Default"],
+    "citationCount": ["被引用数", "Citation Count"],
+    "publishDate": ["发布时间", "Publish Date"],
+    "similar": ["查看相似", "Similar"],
+    "info": ["资料", "Info"],
+    "notes": ["笔记", "Notes"],
+    "subnotes": {
+      "summary": ["总结", "Summary"],
+      "vocabulary": ["单词/短语", "Word/Phrase"],
+      "annotation": ["摘录", "Annotation"]
+    },
+    "discussions": ["问答", "Discussions"],
+    "teams": ["小组讨论", "Groups"],
+    "aiCopilot": ["AI辅读", "AI Copilot"],
+    "tasks": ["学习任务", "Tasks"],
+    "dateLabel": ["发布时间", "Date"],
+    "label": ["标签", "Label"],
+    "tag": ["标签", "Tag"],
+    "collectionLabel": ["收录情况", "Venue"],
+    "folderLabel": ["文献位置", "Folder"],
+    "remarkLabel": ["备注", "Description"],
+    "refsAndCitesLabel": ["关联文献", "Ref/Cites"],
+    "rename": ["重命名", "Rename"],
+    "cancel": ["取消", "Cancel"],
+    "confirm": ["确定", "Confirm"],
+    "page": ["第{num}页", "Page {num}"],
+    "year": ["年", "Year"],
+    "month": ["月", "Month"],
+    "date": ["日", "Date"],
+    "editAuthorTitle": ["查看/编辑作者信息", "Author"],
+    "authorName": ["作者姓名", "Name"],
+    "add": ["添加", "Add"],
+    "delete": ["删除", "Delete"],
+    "copyToOtherFolder": ["添加到其他位置", "Copy to Other Folder"],
+    "totalVersions": ["共{num}个版本", "{num} version | {num} versions"],
+    "publicVersions": [
+      "公开版本（共{num}个版本）",
+      "Public Version ({num} in Total) | Public Versions ({num} in Total)"
+    ],
+    "expandHistoryVersions": ["展开历史{num}个版本", "{num} more"],
+    "collapseHistoryVersions": ["收起历史{num}个版本", "Collapse"],
+    "privateVersions": [
+      "个人上传（只保留最多1个版本）",
+      "Persional (Keep up to 1 versions only)"
+    ],
+    "current": ["当前", "Current"],
+    "last": ["上次使用", "Last"],
+    "myAnnotation": ["我的标记", "My Annotations"],
+    "otherAnnotation": ["他人标记", "Other's Annotations"],
+    "teamAnnotation": ["组员标记", "Group Annotations"],
+    "showAvatar": ["显示头像", "Show Avatar"],
+    "refresh": ["刷新", "Refresh"],
+    "quoteLabel": ["引用", "Cite"],
+    "citeModalTitle": ["引用论文", "Cite"],
+    "googleScholar": ["谷歌学术", "google scholar"],
+    "baiduScholar": ["百度学术", "baidu scholar"],
+    "seeMoreResults": ["查看其他结果：", "See more results on: "],
+    "certPageLoadFail": [
+      "认证页面加载失败",
+      "Dialog for verification failed to load"
+    ],
+    "hasPDF": ["有全文", "PDF"],
+    "useCase": ["案例展示", "Use Case"],
+    "rule": ["规则说明", "Rules"],
+    "startTranslation": ["开始翻译", "Start Translation"],
+    "fullTextTip1": ["当前剩余次数：{times}", "Remaining times: {times}"],
+    "fullTextTip2": [
+      "翻译中，已完成{progress}",
+      "Translation in progress, {progress} completed"
+    ],
+    "fullTextTip3": ["本周已达翻译上限", "Weekly limit Reached"],
+    "fullTextOriginal": ["显示原文", "Show Original Document"],
+    "fullTextScroll": ["双边锁定滚动", "Lock Scroll"],
+    "exportTranslatedPDF": ["导出译文PDF", "Export Translated PDF"],
+    "exportTranslatedPDFButtonText": ["导出", "Export"],
+    "fullTextWaiting": ["等待中", "Waiting"],
+    "shareDialog": {
+      "title": ["是否开放笔记权限", "Share Note"],
+      "public": ["公开", "Public"],
+      "publicTip": [
+        "获取到笔记链接的人将能看到笔记内容",
+        "Anyone with the link can view the note"
+      ],
+      "link": ["分享链接", "Link"],
+      "copyLink": ["复制链接", "Copy Link"],
+      "privateTip": [
+        "当前文献为非公开文献，对方需要验证后才能完整阅读",
+        "This document is not public. The recipient needs to verify before reading the full text."
+      ]
+    },
+    "withNote": ["（含笔记）", "(With Notes)"],
+    "exportNotes": ["下载笔记", "Download Notes"],
+    "exportNotesTip": ["导出笔记格式", "Download Notes Format"]
+  },
+  "message": {
+    "noTitle": [
+      "该文献解析失败，无法显示标题",
+      "The document parsing failed, unable to display title"
+    ],
+    "parsingCatalogue": [
+      "目录正在解析中...",
+      "Extracting Outline of this document"
+    ],
+    "failToParseCatalogue": ["目录暂时未能解析成功", "Extract failed"],
+    "pressCtrlAndScrollToZoom": [
+      "按 Cmd/Ctrl + 滚轮 缩放图片",
+      "Cmd/Ctrl + Scroll to Zoom in and out"
+    ],
+    "rollbackDataTip": [
+      "此数据已被修改，点击可重置为官方库数据",
+      "This content has been modified，click to rollback"
+    ],
+    "markdownTip": [
+      "支持Markdown语法\n支持ctrl/cmd+c/v粘贴图片",
+      "Supports Markdown\nSupports ctrl/cmd+c/v pasting images"
+    ],
+    "turnDownReadModeTip": ["颜色模式已关闭", "Read Mode is Off"],
+    "turnUpReadModeTip": ["{mode}模式已开启", "{mode} Mode is On"],
+    "doubleClickToCreateNote": [
+      "双击此处可以添加笔记",
+      "Double Click to Create Note"
+    ],
+    "savingNote": ["笔记保存中", "Note is Saving"],
+    "noNotesTip": ["暂未记录笔记", "Empty"],
+    "confirmToDeleteNoteTip": [
+      "确定删除笔记？",
+      "Are you sure to delete this note？"
+    ],
+    "confirmToDeleteAnnotationTip": [
+      "确定删除标记？",
+      "Are you sure to delete this annotation？"
+    ],
+    "parsingDocumentTip": [
+      "正在智能解析文档，请稍等",
+      "Document analysis in progress. Please wait"
+    ],
+    "parsingDocumentFinishedTip": [
+      "已解析完毕！感谢耐心等待",
+      "Analysis complete! Thank you for waiting"
+    ],
+    "acceptToparseDocumentTip": [
+      "PDF 解析服务已受理，调度资源中，请稍等",
+      "We've received your request to analyze the PDF, and we're allocating resources. Please wait a moment"
+    ],
+    "returnToLastReadingPositionTip": [
+      "已跳转到上次阅读位置",
+      "Returning to your last reading position"
+    ],
+    "pressESCToExitFullscreenTip": [
+      "按 ESC 即可退出全屏模式",
+      "Press esc to exit fullscreen mode"
+    ],
+    "currentDocumentNotClassified": [
+      "当前文献未分类",
+      "Current Paper Not Classified"
+    ],
+    "currentDocumentLocateFolders": [
+      "当前文献存在于以下{num}个位置",
+      "Document saved in the following {num} locations"
+    ],
+    "removeFromFolderTip": ["从当前位置移除", "Remove from this location"],
+    "resourceSchedulingTimeoutTip": [
+      "资源调度超时",
+      "Resource scheduling timed out."
+    ],
+    "noMetaDataTip": ["暂时没有资料", "Data Not Found"],
+    "noDataTip": ["暂时没有数据", "No Data"],
+    "failedToLoadDataTip": [
+      "数据加载出错，请稍后再试...",
+      "Data loading error, please try again later..."
+    ],
+    "inValidDataNeedToRefreshTip": [
+      "数据异常，请%%后重试",
+      "Invalid data. Please %% to retry."
+    ],
+    "inValidPaperTip": [
+      "该文献暂未入库，无法支持快捷查看",
+      "The document is not available."
+    ],
+    "versionChangedNoteDismatchedTip": [
+      "版本已切换，笔记可能会有错位",
+      "Version switched, notes may be misaligned"
+    ],
+    "remindToSavePaper": {
+      "title": ["尚未收藏论文", "Paper not saved"],
+      "content": [
+        "您写了笔记但没有收藏该论文，建议收藏该论文，否则后续将难以找回",
+        "You have added notes but haven't saved this paper. It is recommended to save the paper, otherwise it may be difficult to find later."
+      ],
+      "cancelText": ["继续关闭", "Continue to close"]
+    },
+    "noAuthorDataTip": ["暂无作者信息", "No Author Data"],
+    "resetData": {
+      "title": ["重置数据", "Reset Data"],
+      "content1": ["当前信息为：", "Current Data: "],
+      "content2": ["是否重置为：", "Reset as: "],
+      "cancelText": ["取消", "Cancel"],
+      "confirmText": ["确定", "OK"]
+    },
+    "copyToPasteboard": {
+      "failed": [
+        "复制失败，请手动复制以上链接",
+        "Copy failed, please manually copy the above link"
+      ],
+      "success": ["已复制到剪贴板", "Copied to clipboard"]
+    },
+    "allData": ["以上为全部数据", "All data above"],
+    "switchPersonal": ["已切换到个人笔记", "Switched to personal notes"],
+    "switchTeam": ["已切换到小组", "Switched to group"],
+    "annotionsTip1": [
+      "显示有多人标记过的句子， 方便快速查看重点",
+      "Show sentences that have been annotated by multiple people, making it easy to quickly view key points"
+    ],
+    "annotionsTip2": [
+      "无法查看具体是谁进行了标记， 隐私会严格保护",
+      "You cannot view who made the annotations, and privacy will be strictly protected"
+    ],
+    "annotionsTip3": [
+      "当前页暂无他人标记",
+      "No other annotations on this page"
+    ],
+    "scaleTip1": ["请输入正确的百分比", "Please enter the correct percentage"],
+    "scaleTip2": [
+      "请输入有效的百分比：不小于50%，不超过400%",
+      "Please enter a valid percentage: not less than 50%, not more than 400%"
+    ],
+    "privateNoteTip": ["笔记暂未公开", "Private Note"],
+    "searchOtherPapersTip": ["搜索其他论文", "Search other papers"],
+    "searchOtherPapersH5Tip": [
+      "移动端暂时无法支持笔记查看，请在pc端查看",
+      "Mobile devices do not support note viewing for the time being, please view on the PC"
+    ],
+    "peopleAnnotateTip": [
+      "{num}人标记了这句话",
+      "{num} people have annotated this sentence"
+    ]
+  },
+  "folder": {
+    "all_papers": ["全部文献", "All papers"],
+    "new_folder": ["新建文件夹", "New folder"],
+    "saved_to": ["添加到以下位置：", "Save to : "]
+  },
+  "note": {
+    "vocabulary": {
+      "add": ["手动添加", "Add"],
+      "addTip": [
+        "还可以通过翻译弹框的快捷按钮将翻译结果快速添加这里（超过60字符会添加到“摘录”）",
+        "You can also quickly add the translation result here through the shortcut buttons in the translation dialog (more than 60 characters will be added to \"Annotation\")"
+      ],
+      "allHighlight": ["全部高亮", "Highlight All"],
+      "noHighlight": ["不高亮", "Cancel Highlight"],
+      "singleHighlight": ["单个高亮", "Highlight"],
+      "color": ["颜色", "Color"]
+    }
+  },
+  "aiCopilot": {
+    "beta": ["内测功能", "Beta"],
+    "tip": [
+      "1、功能内测中，正式上线时间待定\n2、每人每日限制提问50次\n3、勾选原文后AI会自动为你解读;你也可以直接在下方输入框输入你想问的问题\n4、AI辅读需要约半分钟的时间，请耐心等待",
+      "1. This feature is in beta, and the official launch date is to be determined\n2. Each person is limited to 50 questions per day\n3. After selecting the original text, the AI will automatically interpret it for you; you can also directly enter the question you want to ask in the input box below\n4. AI Copilot takes about half a minute, please be patient"
+    ],
+    "useEnglish": ["使用英文回答", "Answer in English"],
+    "useChinese": ["使用中文回答", "Answer in Chinese"],
+    "changeAnswer": ["换个答案", "Try a different answer"],
+    "reportTip": [
+      "如果可以，请告诉我们你不满意的原因",
+      "If possible, please tell us the reason you are not satisfied"
+    ],
+    "continueAsk": ["继续追问", "Continue to ask"],
+    "ask": ["提问", "Ask"],
+    "deepThinking": ["深度思考(r1)", "Deep Thinking(r1)"],
+    "askTip": [
+      "有任何关于论文的问题，都可以在这里直接向AI提问（内容由AI生成，可能存在错误，请谨慎参考）",
+      "You can ask AI Copilot any questions about this paper. Enter your question here (the content is generated by AI, and there may be errors, so please refer to it cautiously)."
+    ],
+    "summaryChatButtonTextSummary": ["摘要", "Summary"],
+    "summaryChatButtonTextChat": ["对话", "Chat"],
+    "screenshotTip": [
+      "可以划选公式、表格进行解读（试验特性，内测中）",
+      "You can select formulas and tables for interpretation (experimental feature in beta)"
+    ],
+    "defaultTab": ["默认", "Default"],
+    "customTab": ["自定义", "Custom"],
+    "addEarlist": ["最早添加", "Earliest"],
+    "useMost": ["最常使用", "Most Used"],
+    "deleteTip": ["确定删除此问题？", "Are you sure to delete this question?"],
+    "waitTip": ["别急，请等AI反应一下", "Please wait for the AI to respond"],
+    "errorTip": [
+      "当前内测人数过多，AI太忙，正在加紧调配资源稳定服务，请稍后再试，感谢耐心等待",
+      "There are too many beta users at the moment, the AI is too busy, and we are working hard to allocate resources to stabilize the service. Please try again later, thank you for your patience"
+    ],
+    "joinGroup": ["问题反馈", "Feedback"],
+    "banTip1": [
+      "AI辅读属于{0}专属功能",
+      "This feature belongs to premium versions, you are not eligible."
+    ],
+    "banTip2": ["需开通{0}后使用", "Get the premium version to grant access"],
+    "ocrTip": [
+      "OCR解释功能：对圈选图片进行OCR后调用AI进行解读，可解读文本、公式、表格等。",
+      "The OCR interpretation function performs OCR on the selected pictures and then calls AI for interpretation. Can interpret text, formulas, tables, etc."
+    ],
+    "acquireVip": ["获取VIP", "Get VIP"],
+    "suggestions": ["推荐问题参考", "Suggested Questions"],
+    "optimized": ["已优化", "Optimized"],
+    "optimizedLabel": ["优化后答案：", "The optimized answer is "],
+    "optimizedLabelTip": [
+      "反馈质量将影响账号信用，信用高时获得不满意立即退豆服务。",
+      "The quality of feedback will affect the credit of the account. You are able to use refund beans if dissatisfied when your credit is high."
+    ],
+    "optimizedFeedback": ["感谢您的反馈！", "Thanks for your feedback."],
+    "confirmOptimize": [
+      "已为你自动退豆，到账时间可能有延迟",
+      "The beans have been automatically refunded for you, and the arrival time may be delayed."
+    ],
+    "confirmOptimizeTip": [
+      "为了改善体验，我们将调用更多算力再次回答当前问题，本次答案优化无需额外支付AI豆。",
+      "In order to improve the experience, we will use more computing power to answer the current question again. This answer optimization does not require additional payment of AI beans."
+    ],
+    "satisfacteAnswer": [
+      "你对这个答案的满意程度：",
+      "Satisfaction with this answer:"
+    ],
+    "excellent": ["非常好", "Excellent"],
+    "good": ["很好", "Good"],
+    "average": ["一般", "Average"],
+    "inferior": ["不好", "Inferior"],
+    "terrible": ["非常不好", "Terrible"],
+    "feedback": ["感谢您的反馈！", "Thank you for your feedback."],
+    "feedbackSucc": ["满意度提交成功", "Satisfaction submitted successfully"],
+    "better": ["更好", "better"],
+    "worse": ["更差", "worse"],
+    "almost": ["差不多", "almost"]
+  },
+  "teams": {
+    "features": ["功能介绍", "Features"],
+    "emptyTip": [
+      "该小组暂无此论文，是否将论文添加到【{team}】？",
+      "The paper is not in this group yet. Do you want to add it to [{team}] ?"
+    ],
+    "addToTeam": ["添加到该小组", "Add to the group"],
+    "createdTeams": ["我创建的小组", "Created Groups"],
+    "joinedTeams": ["我加入的小组", "Joined Groups"],
+    "thisTeam": ["本小组", "This Group"],
+    "tip1": ["确认将当前论文 ", "Confirm to add the current paper "],
+    "tip2": [" 添加到 ", "  to the group "],
+    "emptyNotesTip": [
+      "双击此处可以添加讨论内容",
+      "Double Click to Create Discussion"
+    ],
+    "inputTip": ["输入讨论内容", "Input Discussion"],
+    "reply": ["回复", "Reply"],
+    "limitTip": [
+      "单个评论字数最多2000字！",
+      "The maximum number of words per comment is 2000!"
+    ],
+    "deleteTip": ["确定删除讨论？", "Are you sure to delete this discussion?"],
+    "comments": ["评论", "comment | comments"]
+  },
+  "info": {
+    "attachments": ["附件", "Attachments"],
+    "uploadAttachments": ["上传附件", "Upload Attachments"],
+    "update": ["更新", "Update"],
+    "deleteAttachmentTip1": [
+      "确定删除这条附件？",
+      "Are you sure to delete this attachment?"
+    ],
+    "deleteAttachmentTip2": [
+      "附件删除后，我的文献收藏里的附件一并删除",
+      "After the attachment is deleted, the attachment in My Library will also be deleted."
+    ],
+    "attachmentVipTip": [
+      "请开通VIP后使用，上传附件的格式不限，更有{space}MB的储存空间",
+      "Please subscribe to VIP to use it. The format of the uploaded attachment is not limited, and there is {space}MB of storage space."
+    ],
+    "attachmentTotal": ["共{count}个文件", "{count} files in total"],
+    "attachmentSizeTip": [
+      "最多支持上传{limitCount}个附件，单个文件不超过{limitMBSize}MB",
+      "Support up to {limitCount} attachments, and each file is no more than {limitMBSize}MB"
+    ],
+    "upload": ["上传", "Upload"],
+    "manageCiteTitle": ["管理我的引文格式", "Manage My Citation Styles"]
+  },
+  "translate": {
+    "translate": ["翻译", "Translate"],
+    "translateTip": [
+      "按住{cmd}选取多段文字进行翻译",
+      "Press {cmd} to select multiple paragraphs for translation"
+    ],
+    "ocrTip": [
+      "论文截图，随后可通过OCR翻译。",
+      "Screenshot to translate by OCR."
+    ],
+    "youdao": ["有道", "Youdao"],
+    "baidu": ["百度", "Baidu"],
+    "ai": ["AI翻译", "AI Translate"],
+    "translation": ["译文", "Translation"],
+    "addToAnnotation": ["添加到摘录", "Add to Annotation"],
+    "addToWordPhrase": ["添加到单词/短语", "Add to Word/Phrase"],
+    "reportTip": ["反馈翻译不准", "Report incorrect translation"],
+    "placeholder": ["请输入要翻译的文字", "Input the text to be translated"],
+    "addToWordPhraseSuccessTip": [
+      "成功添加到单词/短语",
+      "Added to Word/Phrase"
+    ],
+    "reportSuccessTip": [
+      "上报成功，感谢您的宝贵意见",
+      "Reported successfully, thank you for your valuable feedback"
+    ],
+    "fontSize": ["字号", "Font Size"],
+    "lockTip": ["锁定到右侧栏", "Lock to the right sidebar"],
+    "unlockTip": ["弹出翻译框", "Unlock the translation popover"],
+    "emptyTip": [
+      "鼠标选中对应的句子，即可自动翻译",
+      "Select the sentence with the mouse to translate automatically"
+    ],
+    "aiTranslateTip1": ["ReadPaper团队倾力打造的EUREKA学术大模型，强大的自然语言处理能力，快速准确理解复杂的学术文献的用户输入，格式严谨，信息准确", "EUREKA Academic Large Model, developed by the ReadPaper team, has powerful natural language processing capabilities, quickly and accurately understands complex user inputs in academic literature, with rigorous formatting and accurate information"],
+    "aiTranslateTip2": ["在大模型内融入数百万专业学科术语，涵盖医疗、计算机等领域，翻译更准确，表达更流畅", "Incorporating millions of professional terms in the large model, covering fields such as medicine and computer science, for more accurate translation and smoother expression"],
+    "trialBtn": ["立即试用", "Try Now"],
+    "freeTip": ["，免豆内测中", ", Free trial in beta"]
+  },
+  "tasks": {
+    "label1": ["第一阶段：翻译摘要", "Stage 1: Translate Summary"],
+    "label2": ["第二阶段：回答十问", "Stage 2: Answer 10 Questions"],
+    "label3": ["第三阶段：同行评审", "Stage 3: Peer Review"],
+    "progress": ["进度：", "Progress: "],
+    "errorMsg": [
+      "未入库论文不支持学习任务",
+      "The document cannot be recognized as a paper and is not available for learning tasks."
+    ],
+    "retry": ["重试", "Retry"],
+    "abstract": ["摘要", "Abstract"],
+    "abstractBtn": ["添加摘要翻译", "Add Abstract Translation"],
+    "tip": [
+      "学习任务为公开内容，您的回答可能会被其他人看到。",
+      "The learning task is public content, and your answers may be seen by others."
+    ],
+    "tipLabel": ["公开内容", "Public Content"],
+    "inputPlaceholder": ["请输入...", "Input..."],
+    "expandTenQuestions": ["展开全部10个问题", "Expand all 10 questions"],
+    "collapseQuestions": ["收起问题", "Collapse questions"],
+    "inputLimitTip": [
+      "请至少输入 5 个有效字符",
+      "Please enter at least 5 valid characters"
+    ],
+    "translateSuccessTip": ["翻译成功", "Translated Successfully"],
+    "modifyTranslateTip": ["修改翻译成功", "Modified Successfully"],
+    "answersTotal": ["有 {count} 个回答", "{count} answers in total"],
+    "anonymous": ["已匿名", "Anonymous"],
+    "evaluation": ["评价", "Evaluation"],
+    "innovation": ["创新程度", "Innovativeness"],
+    "strictness": ["严谨性", "Rigor"],
+    "logic": ["条理性", "Organization"],
+    "reproducibility": ["可复现性", "Reproducibility"],
+    "highlyRecommend": ["强烈推荐", "Highly Recommend"],
+    "recommend": ["推荐", "Recommend"],
+    "accept": ["接受", "Accept"],
+    "reject": ["拒绝", "Reject"],
+    "strongReject": ["强烈拒绝", "Strong Reject"],
+    "pdfTip1": ["小组文献说明", "Group PDF Notice"],
+    "pdfTip2": [
+      "若本PDF版本不正确，则需要上传者本人或者组长/管理员，在小组内重新上传进行替换",
+      "If the PDF version is incorrect, the uploader or the group leader/administrator needs to re-upload it in the group to replace it"
+    ]
+  },
+  "source": {
+    "report": {
+      "button": ["举报", "Report"],
+      "title": ["举报PDF侵权", "Report PDF Infringement"],
+      "content": [
+        "请按如下模板格式发送举报邮件{email}，我们会在14个工作日内给您回复",
+        "Please send an email to {email} in the following template format. We will reply to you within 14 working days."
+      ],
+      "tpl1": [
+        "个人身份举报邮件模板",
+        "Personal Identity Report Email Template"
+      ],
+      "tpl2": [
+        "单位身份举报邮件模板",
+        "Company Identity Report Email Template"
+      ],
+      "close": ["关闭", "Close"]
+    },
+    "crawl": ["PDF来源：", "PDF Source: "],
+    "personal": ["PDF来源于用户上传：", "PDF uploaded by user: "]
+  },
+  "forbidden": {
+    "using": ["正在使用", " is using "],
+    "forReading": ["阅读文献", " for reading"],
+    "startReading": ["开始阅读", "Start Reading"]
+  },
+  "aiHighlighter": {
+    "name": ["AI划重点", "AI-Highliter"],
+    "popupTt": ["功能说明", "Feature description"],
+    "popupCt": [
+      "1、本功能可以让AI自动将全文当中的重点高亮出来，加速阅读效率\n2、功能当前处于内测中，仅内测用户能看见功能入口\n3、暂只支持不超过50页的论文\n4、有任何使用上的问题或者建议，可以直接联系小管家微信：readpaper888\n5、欢迎加入<a target=\"_blank\" href=\"https://docs.qq.com/doc/DVW9GUVBrWlF3TWFz\">内测群</a>",
+      "1. This function allows AI to automatically highlight the main points throughout the paper, enhancing reading efficiency.\n2. The feature is currently in beta testing and is only visible to beta testers.\n3. At present, it supports papers that are no longer than 50 pages.\n4. For any questions or suggestions regarding usage, please contact our support on WeChat at: readpaper888\n5. We invite you to join our beta testing group."
+    ],
+    "btn": ["开始", "Activate"],
+    "limited": ["本周已达上限", "Weekly limit Reached"],
+    "progress": [
+      "生成中，已完成{progress}%",
+      "Generating, {progress}% completed"
+    ],
+    "blank": [
+      "未能识别重点，请点击下方反馈问题",
+      "No highlights found, please feedback"
+    ],
+    "feedback": ["问题反馈", "Feedback"],
+    "translation": ["译文", "Translation"]
+  },
+  "toolbar": {
+    "rectangle": ["矩形框", "Rectangle"],
+    "circle": ["圆形框", "Circle"],
+    "arrow": ["箭头", "Arrow"],
+    "text": ["文本框", "Text"],
+    "share": ["分享", "Share"],
+    "export": ["下载", "Download"]
+  },
+  "glossary": {
+    "tooltip": [
+      "应用个人术语库，可自定义翻译结果",
+      "Apply personal terms, customize translation"
+    ],
+    "terms": ["术语库", "Terms"],
+    "title": ["个人术语库", "Personal terms"],
+    "addTitle": ["添加术语", "Add a Term"],
+    "editTitle": ["编辑术语", "Edit Term"],
+    "search": ["搜索术语", "Search a Term"],
+    "save": ["保存", "Save"],
+    "addSuccessTip": ["添加成功", "Added Successfully"],
+    "editSuccessTip": ["编辑成功", "Edited Successfully"],
+    "table": {
+      "original": ["原文", "Original"],
+      "isCaseSensitive": ["是否区分大小写", "Case Sensitive"],
+      "yes": ["是", "Yes"],
+      "no": ["否", "No"],
+      "caseSensitive": ["区分大小写", "Case Sensitive"],
+      "noTranslation": ["不翻译该术语", "Do not translate this term"],
+      "operation": ["操作", "Operation"],
+      "reload": ["重新加载", "Reload"],
+      "edit": ["编辑", "Edit"],
+      "deleteTip": [
+        "确定删除该术语？",
+        "Are you sure to delete this term? | Are you sure to delete these terms? "
+      ],
+      "deleteSuccessTip": ["删除成功", "Deleted Successfully"]
+    }
+  }
+}

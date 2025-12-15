@@ -1,0 +1,210 @@
+syntax = "proto3";
+
+package pdf;
+
+import "definitions/common/Base.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/pdf";
+
+// 用来描述PDF元素的位置
+message PdfBBox {
+    float x0 = 1;
+    float y0 = 2;
+    float x1 = 3;
+    float y1 = 4;
+    float originHeight = 5;
+    float originWidth = 6;
+}
+
+/**
+ * 【PDF解析】提取取图表信息
+ * url: /pdfApi/parser/getFiguresAndTables
+ * method: POST
+ */
+message GetFiguresAndTablesListRequest { // 请求
+    common.PageRequest pageReq = 1;
+    string pdfId = 2;
+}
+
+message GetFiguresAndTablesRequest { // 请求
+    common.PageRequest pageReq = 1;
+    string pdfId = 2;
+    string paperId = 3;
+}
+
+//message GetFiguresAndTablesListRequest { // 请求
+//    common.PageRequest pageReq = 1;
+//    uint64 pdfId = 2[(common.notNull) = false];
+//    uint64 paperId = 3[(common.notNull) = false];
+//}
+message PdfFigureAndTableInfo {
+    int32 pageNum = 1;
+    string desc = 2;
+    string url = 3;
+    PdfBBox bbox = 4;
+    string refIdx = 5;
+}
+message GetFiguresAndTablesListResponse { // 响应
+    common.PageResponse pageResp = 1;
+    repeated PdfFigureAndTableInfo figureAndTableList = 2;
+    bool needFetch = 3; // 提示重试
+}
+
+/**
+ *【PDF解析】提取参考信息
+ * url: /pdfApi/parser/getReference
+ * method: POST
+ */
+enum ReferenceSortType {
+    DEFAULT = 0;
+    CITATION = 1;
+    PUBLISH_DATE = 2;
+}
+message GetReferenceRequest { // 请求
+    common.PageRequest pageReq = 1;
+    string pdfId = 2;
+    ReferenceSortType sortType = 3;
+    string paperId = 4;
+    optional bool filterNoTitle = 5;
+}
+message ReferenceInfo {
+    string paperId = 1;
+    string title = 2;
+    int32 pageNum = 3;
+    PdfBBox bbox = 4;
+    string refIdx = 5;
+    int32 citationCount = 6;
+    uint64 publishDate = 7;
+    string searchKey = 8;
+    PaperMetaExtend paperMetaExtend = 9;
+}
+message GetReferenceResponse { // 响应
+    common.PageResponse pageResp = 1;
+    repeated ReferenceInfo referenceInfoList = 2;
+    int32 referenceCount = 3;
+    int32 citationCount = 4;
+    bool needFetch = 5; // 提示重试
+}
+
+message PaperMetaExtend {
+    // 没有就是0
+    string pdfId = 1;
+    repeated Author authorList = 2;
+    repeated string venueTags  = 3;
+    string publishDate = 4;
+    repeated string venues = 5;
+    uint32 noteCount = 6;
+    uint32 citationCount = 7;
+    string summary = 8;
+    string title = 9;
+    string paperId = 10;
+}
+
+message Author {
+    string name = 1;
+}
+
+/**
+ *【PDF解析】提取被引用信息
+ * url: /pdfApi/parser/getCitation
+ * method: POST
+ */
+message GetCitationRequest { // 请求
+    common.PageRequest pageReq = 1;
+    string paperId = 2;
+    ReferenceSortType sortType = 3;
+}
+message CitationInfo {
+    string paperId = 1;
+    string title = 2;
+    string citaIdx = 3;
+    int32 citationCount = 4;
+    uint64 publishDate = 5;
+    PaperMetaExtend paperMetaExtend = 6;
+}
+message GetCitationResponse { // 响应
+    common.PageResponse pageResp = 1;
+    repeated CitationInfo citationInfoList = 2;
+    int32 referenceCount = 3;
+    int32 citationCount = 4;
+    bool needFetch = 5; // 提示重试
+}
+
+/**
+ *【PDF解析】提取参考标签
+ * url: /pdfApi/parser/getReferenceMarkers
+ * method: POST
+ */
+message GetReferenceMarkersRequest { // 请求
+    string pdfId = 1;
+}
+message ReferenceMarker {
+    string refIdx = 1;
+    PdfBBox bbox = 2;
+    string paperId = 3;
+    string refContent = 4;
+    int32 pageNum = 5;
+    string refRaw = 6;
+}
+
+message FigureAndTableReferenceMarker{
+    PdfBBox bbox = 1;
+    int32 pageNum = 2;
+    string refContent = 3;
+    string refIdx = 4;
+}
+
+message GetReferenceMarkersResponse { // 响应
+    repeated ReferenceMarker markers = 1;
+    bool needFetch = 2; // 提示重试
+    repeated FigureAndTableReferenceMarker figureAndTableMarkers = 3;
+}
+
+enum ParseStatus {
+    PARSE_UNKNOW = 0;
+    PARSE_RUNNING = 1;
+    PARSE_FINISH = 2;
+}
+
+/**
+ * cv解析PDF
+ */
+message AsyncPdfCvParseRequest { // 请求
+    string url = 1;
+    string fileSHA256 = 2;
+    bool fulltext = 3;
+}
+message AsyncPdfCvParseResponse { // 响应
+    uint64 code = 1;
+    repeated PdfFigureAndTableInfo data = 2;
+    ParseStatus procStatus = 3;
+}
+
+/**
+ *【PDF解析】提取参考信息
+ * url: /pdfApi/parser/getCatalogue
+ * method: POST
+ */
+message GetCatalogueRequest {
+    string pdfId = 1;
+}
+message PdfCatalogueInfo {
+    string title = 1;
+    int32 pageNum = 2;
+    repeated PdfCatalogueInfo child = 3;
+    PdfBBox bbox = 4;
+}
+message GetCatalogueResponse {
+    bool needFetch = 1;
+    PdfCatalogueInfo pdfCatalogue = 2;
+}
+
+message PdfRefRematchReq {
+    repeated string rawStrings = 1;
+}
+
+message PdfRefRematchResp {
+    int32 statusCode = 1;
+    string errMsg = 2;
+    repeated string paperids = 3;
+}

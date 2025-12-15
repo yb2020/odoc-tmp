@@ -1,0 +1,318 @@
+name: Web Release CI
+
+on:
+  # 当创建新标签时触发构建和部署
+  push:
+    tags:
+      - 'web-v*.*.*'
+  # 当创建 GitHub Release 时触发
+  release:
+    types: [created, published]
+  # 保留手动触发选项
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: '触发构建的原因'
+        required: true
+        default: '手动触发发布流程'
+      environment:
+        description: '部署环境 (develop/staging/release)'
+        required: true
+        default: 'staging'
+      version:
+        description: '版本号 (如 web-v1.2.3)'
+        required: true
+        default: 'web-v0.0.1'
+
+# 环境变量设置
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}-web
+
+jobs:
+  # 测试作业 (可选，如果需要可以取消注释)
+  # test:
+  #   name: Test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Check out code
+  #     uses: actions/checkout@v4
+  #     with:
+  #       fetch-depth: 0  # 获取完整历史以便正确处理标签
+  #
+  #   - name: Run tests
+  #     run: |
+  #       echo "Running tests..."
+  #       # 添加测试命令
+
+  # 构建和推送 Docker 镜像作业
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    # 只在打标签或手动触发时运行构建和推送
+    if: startsWith(github.ref, 'refs/tags/web-v') || github.event_name == 'workflow_dispatch'
+    # 需要 GitHub 容器注册表权限
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      APP_ENV: ${{ steps.determine-version.outputs.APP_ENV }}
+      VERSION: ${{ steps.determine-version.outputs.VERSION }}
+      IMAGE_TAG: ${{ steps.determine-version.outputs.IMAGE_TAG }}
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    # 确定环境和版本
+    - name: Determine environment and version
+      id: determine-version
+      run: |
+        # 设置默认值
+        BASE_VERSION="web-v0.0.1"
+        APP_ENV="staging"
+        
+        # 根据事件类型确定环境和版本
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          # 手动触发时使用输入参数
+          APP_ENV="${{ github.event.inputs.environment }}"
+          BASE_VERSION="${{ github.event.inputs.version }}"
+        elif [[ "${{ github.event_name }}" == "release" ]]; then
+          # GitHub Release 触发时使用 release 标签
+          BASE_VERSION="${{ github.event.release.tag_name }}"
+          # 从 release 名称或描述中提取环境信息
+          RELEASE_INFO="${{ github.event.release.name }} ${{ github.event.release.body }}"
+          if [[ "$RELEASE_INFO" == *"release"* || "$RELEASE_INFO" == *"prod"* ]]; then
+            APP_ENV="release"
+          elif [[ "$RELEASE_INFO" == *"staging"* ]]; then
+            APP_ENV="staging"
+          elif [[ "$RELEASE_INFO" == *"develop"* || "$RELEASE_INFO" == *"dev"* ]]; then
+            APP_ENV="develop"
+          else
+            APP_ENV="staging"
+          fi
+        elif [[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == refs/tags/* ]]; then
+          # 标签推送时使用标签名称作为基础版本
+          BASE_VERSION="${{ github.ref_name }}"
+          # 从标签提取环境
+          if [[ "$BASE_VERSION" == *"-prod"* || "$BASE_VERSION" == *"-release"* ]]; then
+            APP_ENV="release"
+          elif [[ "$BASE_VERSION" == *"-staging"* ]]; then
+            APP_ENV="staging"
+          else
+            APP_ENV="develop"
+          fi
+          # 如果标签已经包含环境后缀，则移除它以获取干净的基础版本
+          BASE_VERSION=$(echo "$BASE_VERSION" | sed -E 's/-(prod|release|staging|dev|develop)$//')
+        fi
+        
+        # 构建最终版本标签格式：web-v0.0.1-develop/web-v0.0.1-staging/web-v0.0.1-release
+        VERSION="${BASE_VERSION}-${APP_ENV}"
+        
+        # 获取构建时间和提交哈希
+        BUILD_TIME=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+        GIT_COMMIT=$(git rev-parse --short HEAD)
+        
+        # 输出到环境变量供后续步骤使用
+        echo "APP_ENV=$APP_ENV" >> $GITHUB_ENV
+        echo "BASE_VERSION=$BASE_VERSION" >> $GITHUB_ENV
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "IMAGE_TAG=$VERSION" >> $GITHUB_ENV
+        echo "BUILD_TIME=$BUILD_TIME" >> $GITHUB_ENV
+        echo "GIT_COMMIT=$GIT_COMMIT" >> $GITHUB_ENV
+        
+        # 输出到步骤输出变量供下游作业使用
+        echo "APP_ENV=$APP_ENV" >> $GITHUB_OUTPUT
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        echo "IMAGE_TAG=$VERSION" >> $GITHUB_OUTPUT
+        
+        echo "::notice::Environment: $APP_ENV, Version: $VERSION, Commit: $GIT_COMMIT"
+
+    # 安装 Node.js 和 bun
+    - name: Set up Node.js
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: 'latest'
+
+    # 将 SSH URL 替换为带有 PAT 的 HTTPS URL
+    - name: Replace SSH URL with HTTPS URL
+      run: |
+        if [ -f "web/package.json" ]; then
+          # 替换 package.json 中的依赖 URL
+          sed -i 's|git+ssh://git@github.com|git+https://${{ secrets.GO_SEA_GITOPS_PAT }}@github.com|g' web/package.json
+          echo "Successfully replaced SSH URL with HTTPS+PAT URL in web/package.json"
+        fi
+        echo "Git configured to use PAT for private repositories"
+
+    # 安装依赖并构建
+    - name: Install dependencies and build
+      working-directory: web
+      run: |
+        # 安装依赖
+        bun install
+        
+        # 构建项目
+        bun run build
+        
+        # 显示构建产物
+        echo "Build artifacts:"
+        ls -la dist/
+
+    # 提取元数据用于 Docker 标签
+    - name: Extract Docker metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+        tags: |
+          type=raw,value=${{ env.VERSION }}
+          type=sha,format=short
+          type=sha
+
+    # 构建并推送 Docker 镜像
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./web
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        build-args: |
+          APP_ENV=${{ env.APP_ENV }}
+          BUILD_VERSION=${{ env.VERSION }}
+          GITHUB_PAT=${{ secrets.GO_SEA_GITOPS_PAT }}
+          SKIP_DEPS=true
+          SKIP_BUILD=true
+
+  # 更新 GitOps 配置仓库
+  update-gitops:
+    name: Update GitOps Configuration
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    # 只在打标签或手动触发时运行
+    if: startsWith(github.ref, 'refs/tags/web-v') || github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - name: Checkout GitOps repository
+      uses: actions/checkout@v4
+      with:
+        repository: yb2020/go-sea-ops
+        token: ${{ secrets.GO_SEA_GITOPS_PAT }}
+        path: gitops
+
+    - name: Update Helm values
+      run: |
+        # 使用上游作业中设置的环境变量
+        APP_ENV="${{ needs.build-and-push.outputs.APP_ENV || 'staging' }}"
+        IMAGE_TAG="${{ needs.build-and-push.outputs.IMAGE_TAG || github.ref_name }}"
+        
+        cd gitops
+        
+        # 安装 yq
+        sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+        sudo chmod +x /usr/local/bin/yq
+
+        # 确定要更新的 values 文件路径
+        BASE_PATH="charts/apps/odoc-web"
+        
+        # 直接使用环境名称匹配文件名
+        VALUES_FILE="${BASE_PATH}/values.${APP_ENV}.yaml"
+
+        echo "Updating image tag in $VALUES_FILE to $IMAGE_TAG"
+
+        # 检查文件是否存在
+        if [ -f "$VALUES_FILE" ]; then
+          # 更新镜像标签
+          yq e -i '.image.tag = "'"$IMAGE_TAG"'"' "$VALUES_FILE"
+          echo "Successfully updated image tag in $VALUES_FILE"
+        else
+          echo "Warning: Values file $VALUES_FILE not found!"
+          echo "Available files in ${BASE_PATH}:"
+          ls -la "${BASE_PATH}"
+          exit 1
+        fi
+        
+        # 显示更新后的内容
+        echo "Updated values file:"
+        cat "$VALUES_FILE"
+
+    - name: Commit and push changes
+      env:
+        APP_ENV: ${{ needs.build-and-push.outputs.APP_ENV }}
+        IMAGE_TAG: ${{ needs.build-and-push.outputs.IMAGE_TAG }}
+      run: |
+        cd gitops
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        
+        git add charts/apps/odoc-web/values.${APP_ENV}.yaml
+        
+        # 提交更改
+        git commit -m "Update odoc-web image tag to $IMAGE_TAG for $APP_ENV environment"
+        
+        # 推送更改
+        git push
+
+    - name: Notify deployment
+      if: success()
+      run: |
+        echo "::notice::GitOps configuration updated for ${{ needs.build-and-push.outputs.APP_ENV }} environment with image tag: ${{ needs.build-and-push.outputs.IMAGE_TAG }}"
+        echo "Deployment will be picked up by ArgoCD automatically"
+
+  # 清理旧的 Docker 镜像
+  cleanup-old-images:
+    name: Cleanup Old Docker Images
+    runs-on: ubuntu-latest
+    needs: [build-and-push]
+    permissions:
+      packages: write
+    # 只在成功构建和推送镜像后运行
+    if: always() && needs.build-and-push.result == 'success'
+    
+    steps:
+    - name: Check package versions count
+      id: check_versions
+      run: |
+        # 安装 GitHub CLI
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+        sudo apt update
+        sudo apt install gh
+        
+        # 登录 GitHub CLI
+        echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+        
+        # 获取包版本数量
+        PACKAGE_NAME=$(echo "${{ github.repository }}" | cut -d '/' -f 2)-web
+        echo "package_name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+        echo "Checking package: $PACKAGE_NAME"
+        PACKAGE_COUNT=$(gh api /user/packages/container/$PACKAGE_NAME/versions --paginate | jq 'length')
+        echo "Found $PACKAGE_COUNT package versions"
+        
+        # 如果数量超过5个，设置输出变量
+        if [ "$PACKAGE_COUNT" -gt 5 ]; then
+          echo "should_delete=true" >> $GITHUB_OUTPUT
+          echo "Will delete old versions, keeping newest 5"
+        else
+          echo "should_delete=false" >> $GITHUB_OUTPUT
+          echo "Not enough versions to delete (only $PACKAGE_COUNT found, minimum is 5)"
+        fi
+
+    - name: Delete old package versions
+      if: steps.check_versions.outputs.should_delete == 'true'
+      uses: actions/delete-package-versions@v4
+      with:
+        package-name: ${{ steps.check_versions.outputs.package_name }}
+        package-type: 'container'
+        min-versions-to-keep: 10
+        token: ${{ secrets.GITHUB_TOKEN }}

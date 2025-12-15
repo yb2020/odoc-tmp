@@ -1,0 +1,344 @@
+syntax = "proto3";
+
+package doc;
+
+import "definitions/oss/OSS.proto";
+import "definitions/doc/ClientDoc.proto";
+import "definitions/doc/UserDocParsedStatus.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/doc";
+
+
+/**
+ *	接口描述: 获取minio上传token
+ *	接口url: /userDoc/GetUploadToken
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetUploadTokenReq {
+  string fileSHA256 = 1;        // 文件fileSHA256值（sha256）
+  string fileName = 2;   // 文件名
+  string folderId = 3;   // 文件夹ID
+  uint64 fileSize = 4;   // 文件大小 单位（字节）
+  uint64 filePage = 5;   // 文件页数
+  string scene = 6;      // 场景标识
+}
+
+message GetUploadTokenResp {
+  //是否需要上传
+  bool needUpload = 1;
+  //上传信息
+  oss.UploadS3Info uploadInfo = 2;
+  //oss记录
+  oss.OSSS3Info ossInfo = 3;
+  //是否需要解析
+  bool needParsed = 4;
+  //上传token
+  string token = 5;
+}
+
+/**
+ *	接口描述: 获取用户上传解析pdf状态
+ *	接口url: /userDoc/GetUserDocCreateStatus
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetUserDocCreateStatusRequest {
+  string token = 1;
+}
+
+message GetUserDocCreateStatusResponse {
+  doc.UserDocParsedStatusEnum status = 1;
+  string msg = 2;
+  string token = 3;
+  MyCollectedDocInfo docInfo = 4;
+  string pdfId = 5;
+}
+
+message MyCollectedDocInfo {
+  string ownerNoteId=11;
+  string paperId=1;
+  string pdfId=2;
+  string userId=10;
+  uint32 sort=3;
+  uint32 type=4;
+  string remark=5;
+  string docName=6;
+  uint64 lastReadTime=9;
+  repeated UserDocClassifyInformation classifyInfos=7;
+  string id=8;
+  bool isLatestRead = 12;
+  string paperRepositoryStatus=13;
+  repeated string  authors = 14;
+  string  journal = 15;
+  string  conference = 16;
+  uint64  publishDate = 17;
+}
+
+message UserDocClassifyInformation {
+  string classifyId=1;
+  string classifyName=2;
+  uint32 docCount=3;
+  uint32 sort=5;
+  bool isContain=4;
+  string remark=6;
+}
+
+// 用户文献创建状态
+enum UserDocCreateStatus {
+  UPLOAD = 0;
+  PARSE = 1;
+  MATCH = 2;
+  FINISH = 3;
+  ERROR = 4;
+  CANCEL = 5;
+  CONFLICT = 6;
+  GROUP_OTHER_VERSION = 7;
+  SELF_OTHER_VERSION = 8;
+  DOC_COUNT_OVERFLOW = 9;
+  DOC_COUNT_OVERFLOW_FOR_ALL_USER = 10;
+}
+/**
+ *	接口描述: 查询用户的文献列表 文献列表左侧
+ *	接口url: /userDoc/GetDocIndex
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message GetDocIndexResponse {
+  uint32  totalDocCount = 1;
+  repeated UserDocFolderInfo folderInfos = 2;
+  repeated SimpleUserDocInfo unclassifiedDocInfos  = 3;
+}
+
+message UserDocFolderInfo {
+  //文件夹名
+  string  name = 1;
+  //文献数
+  uint32  docCount = 2;
+  //父文件夹id
+  string  parentId = 3;
+  //文件夹id
+  string  folderId = 4;
+  //文件夹层级
+  uint32  level = 5;
+  //文件夹排序
+  uint32  sort = 6;
+  //子文件夹
+  repeated UserDocFolderInfo  childrenFolders = 7;
+  //文献信息
+  repeated SimpleUserDocInfo  docInfos = 8;
+}
+
+message SimpleUserDocInfo {
+  //排序
+  uint32  sort = 1;
+  //文献名
+  string  docName = 2;
+  //文献id
+  string  docId = 3;
+  string  pdfId = 4;
+  string  paperId = 5;
+  string  noteId = 6;
+  uint64  modifyDate = 7;
+}
+
+/**
+ *	接口描述: 获取用户文献分类列表
+ *	接口url: /userDoc/getUserAllClassifyList
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message getUserAllClassifyListResp {
+  repeated UserDocClassify results = 1;
+}
+
+message UserDocClassify {
+  // 文档ID
+  string doc_id = 1;
+  
+  // 分类ID
+  string classify_id = 2;
+  
+  // 分类名称
+  string classify_name = 3;
+}
+
+/**
+ *	接口描述: 获取一个个人文献信息
+ *	接口url: /userDoc/getUserDoc
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ *	响应:doc.DocDetailInfo
+ */
+message GetUserDocRequest {
+    string id = 1;
+    string noteId = 2;
+}
+
+/**
+ *	接口描述: 处理秒传文件
+ *	接口url: /userDoc/HandleFileFastUpload
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message HandleFileFastUploadReq {
+  //是否需要上传
+  bool needUpload = 1;
+  //上传信息
+  oss.UploadS3Info uploadInfo = 2;
+  //oss记录
+  oss.OSSS3Info ossInfo = 3;
+}
+
+message HandleFileFastUploadResp {
+  uint32 status = 1;
+  string msg = 2;
+  string fileSHA256 = 3;
+  MyCollectedDocInfo docInfo = 4;
+  string pdfId = 5;
+}
+
+/**
+ * 用户手动修改个人文献的收录情况
+ * method:PUT
+ * url:/userDoc/venue
+ *
+ * venue传 null 则回滚至官方信息
+ */
+message UpdateVenueRequest {
+    string docId = 1;
+    optional string venue = 2;
+}
+message UpdateVenueResponse {
+    doc.DisplayVenue newVenue = 1;
+}
+
+/**
+ * 用户手动修改个人文献的发布时间
+ * method:PUT
+ * url:/userDoc/publishDate
+ *
+ * publishDate传 null 则回滚至官方信息
+ */
+ message UpdatePublishDateRequest {
+    string docId = 1;
+    optional string publishDate = 2;
+}
+message UpdatePublishDateResponse {
+    doc.DisplayPublishDate newPublishDate = 1;
+}
+
+/**
+ * 用户手动修改个人文献的作者
+ * method:PUT
+ * url:/userDoc/authors
+ *
+ * authors 传空列表 null 则回滚至官方信息
+ */
+message UpdateAuthorsRequest {
+    string docId = 1;
+    repeated BaseAuthorInfo authors = 2;
+}
+message UpdateAuthorsResponse {
+    DisplaySimpleAuthors newAuthor = 1;
+}
+
+/**
+ * 获取文献的作者列表
+ * method:GET
+ * url:/userDoc/authors
+ */
+message GetAuthorsRequest {
+    string docId = 1;
+}
+message GetAuthorsResponse {
+    DisplaySimpleAuthors displayAuthor = 1;
+}
+
+message DisplaySimpleAuthors {
+    repeated BaseAuthorInfo authors = 1;
+    bool rollbackEnable = 2;
+    repeated BaseAuthorInfo originAuthors = 3;
+}
+
+
+message BaseAuthorInfo {
+    string id = 1;
+    string name = 2;
+    //是否认证作者
+    bool isAuthentication=3; 
+}
+
+/**
+ * 获取最近阅读文献
+ * method:POST
+ * url:/userDoc/getLatestReadDocList
+ */
+
+message GetLatestReadDocListReq {
+    
+}
+
+message GetLatestReadDocListResp {
+    repeated LatestReadDocInfo docInfos = 1;
+    uint64 currentTime = 2;
+}
+
+
+message LatestReadDocInfo {
+  //文献名
+  string  docName = 2;
+  //文献id
+  string  docId = 3;
+  string  pdfId = 4;
+  string  paperId = 5;
+  string venue = 6;
+  string publishDate = 7;
+  string remark = 8;
+  uint64 lastReadTime = 9;
+}
+
+
+// @api {post} /api/userDoc/uploadPdfByUrlLink
+// @method post
+// @summary UploadPdfByUrlLink 通过url链接上传pdf
+message UploadPdfByUrlLinkRequest {
+    string url = 1;
+    string uploadToken = 2;
+}
+
+message UploadPdfByUrlLinkResponse {
+    
+}
+
+/**
+ * 获取解析的统一token
+ * method: POST
+ * url: /userDoc/GetParseToken
+ */
+message GetParseTokenRequest {
+    
+}
+
+message GetParseTokenResponse {
+    string token = 1;
+}
+
+/**
+ *	接口描述: 获取用户文献的状态
+ *	接口url: /userDoc/userDocStatusByIds
+ *	接口请求方式: POST
+ *	参数格式:application/json
+ */
+message UserDocStatusByIdsRequest {
+    repeated string docIds = 1;
+}
+message UserDocStatusByIdsResponse {
+    repeated UserDocStatusByIdsItem items = 1;
+}
+message UserDocStatusByIdsItem {
+    string docId = 1;
+    doc.UserDocParsedStatusEnum status = 2;
+    doc.UserDocParsedStatusEnum embeddingStatus = 3;
+}
+    

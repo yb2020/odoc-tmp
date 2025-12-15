@@ -1,0 +1,50 @@
+{
+  "system": {
+    "error": "System Error",
+    "database_error": "Database Error",
+    "cache_error": "Cache Error",
+    "internal_server_error": "Internal Server Error",
+    "service_unavailable": "Service Unavailable"
+  },
+  
+  "request": {
+    "invalid": "Invalid Request",
+    "timeout": "Request Timeout",
+    "too_many": "Too Many Requests"
+  },
+  
+  "access": {
+    "unauthorized": "Unauthorized",
+    "forbidden": "Forbidden Access",
+    "resource_not_found": "Resource Not Found",
+    "method_not_allowed": "Method Not Allowed",
+    "resource_conflict": "Resource Conflict"
+  },
+  
+  "operation": {
+    "failed": "Operation Failed",
+    "successful": "Operation Successful"
+  },
+  
+  "auth": {
+    "token": {
+      "missing": "Authentication token is missing",
+      "invalid_format": "Invalid authentication token format",
+      "invalid": "Invalid authentication token"
+    },
+    "admin": {
+      "required": "Admin privileges required"
+    }
+  },
+  
+  "validation": {
+    "field": {
+      "required": "Field {{.Field}} is required",
+      "min_length": "Field {{.Field}} must be at least {{.MinLength}} characters long",
+      "max_length": "Field {{.Field}} must be at most {{.MaxLength}} characters long",
+      "email": "Field {{.Field}} must be a valid email address",
+      "pattern": "Field {{.Field}} has an invalid format",
+      "not_in": "Field {{.Field}} contains a disallowed value"
+    }
+  }
+}

@@ -1,0 +1,903 @@
+server:
+  port: 8081
+  host: "0.0.0.0"
+  timeout: 30
+  grpc:
+    port: 50052  # 自定义GRPC端口
+    host: "0.0.0.0"
+
+debug:
+  enableRequestLogging: true
+  logRequestBody: true
+  logResponseBody: true
+  maxRequestBodySize: 4096
+
+logging:
+  level: debug
+  format: springboot
+  path: logs   # 日志文件路径
+  maxSize: 10  # 单个日志文件最大大小（MB）
+  maxAge: 30    # 日志文件保留天数
+  maxBackups: 50  # 保留的旧日志文件数量
+
+tracing:
+  enabled: true
+  serviceName: go-sea-service
+  jaegerUrl: http://localhost:14268/api/traces
+  sampleRate: 0.1
+
+metrics:
+  enabled: true
+  path: /metrics
+
+errorNotification:
+  enabled: false
+  type: slack
+  url: ""
+
+service:
+  type: local
+
+database:
+  enabled: true
+  type: sqlite       # postgres 或 sqlite
+
+  # PostgreSQL 配置
+  postgres:
+    host: 192.168.218.19
+    port: 30432
+    user: go_sea
+    password: ZtQxylAPOoCHlDiASnjw
+    dbname: go_sea
+    sslmode: disable
+    timezone: Asia/Shanghai
+    maxIdleConns: 10
+    maxOpenConns: 100
+    connMaxLifetime: 3600
+    logLevel: info
+
+  # SQLite 配置（本地版使用）
+  sqlite:
+    dbPath: ./data/app.db
+    maxIdleConns: 1
+    maxOpenConns: 1
+    connMaxLifetime: 3600
+    logLevel: info
+
+# Redis配置
+redis:
+  enabled: true
+  host: 192.168.218.19
+  port: 30379
+  password: "xLJyHaAzbXHYwmuBPL33"
+  db: 0
+  # 连接池配置
+  poolSize: 10         # 连接池大小
+  minIdleConns: 5      # 最小空闲连接数
+  dialTimeout: 5       # 连接超时时间（秒）
+  readTimeout: 3       # 读取超时时间（秒）
+  writeTimeout: 3      # 写入超时时间（秒）
+  maxConnAge: 3600     # 连接最大存活时间（秒）
+  maxRetries: 3        # 最大重试次数
+  minRetryBackoff: 8   # 最小重试间隔（毫秒）
+  maxRetryBackoff: 512 # 最大重试间隔（毫秒）
+
+# 缓存配置
+cache:
+  type: memory         # redis 或 memory（本地版使用 memory）
+  expiration: 1800     # 默认过期时间（秒），30分钟
+
+
+# 对象存储配置 - 使用S3标准
+oss:
+  local:
+    basePath: "./data/pdf_storage"  # 本地PDF存储路径
+  s3:
+    region: "us-east-1"                    # AWS区域
+    endpoint: "http://192.168.218.19:30900" # 自定义端点（用于MinIO兼容）
+    access_key_id: "minioadmin"            # 访问密钥ID
+    secret_access_key: "minioadmin"        # 密钥
+    use_ssl: false                         # S3中的定义
+    force_path_style: true                 # 强制路径样式（MinIO需要）
+    
+    # 存储桶配置
+    buckets:
+      public:
+        name: "public"
+        public: true
+        versioning: false
+        lifecycle_days: 0  # 0表示不过期
+      pdf: # bucketType
+        name: "pdf"
+        public: false
+        versioning: false
+        lifecycle_days: 0
+      temp:
+        name: "temp"
+        public: false
+        versioning: false
+        lifecycle_days: 1  # 1天后自动删除
+      full_translate_pdf:
+        name: "full-translate-pdf"
+        public: false
+        versioning: false
+        lifecycle_days: 0
+    
+    # 上传配置
+    upload:
+      public_upload_endpoint: "http://192.168.218.19:30900"
+      public_download_endpoint: "http://192.168.218.19:30900"
+      presigned_url_expires: 1800  # 预签名URL过期时间（秒）
+      max_file_size: 104857600     # 最大文件大小（100MB）
+    
+    # 回调配置
+    webhook:
+      enabled: true
+      auth_token: "readpaper-oss-minio-2025"
+
+# RocketMQ配置
+rocketmq:
+  enabled: true
+  name-server: 192.168.218.19:8081
+  grpc-address: 192.168.218.19:8081
+  access-key: "admin" # 如果需要认证，请填写
+  secret-key: "weOXf9iU62zMphjKbOnx" # 如果需要认证，请填写
+  client:
+    log-level: "ERROR"
+    request-timeout: 30000 # 请求超时时间，单位：毫秒
+    retry-times: 3 # 重试次数
+    retry-interval: 3000 # 重试间隔，单位：毫秒
+    retry-max-interval: 15000 # 最大重试间隔，单位：毫秒
+    max-message-size: 4194304 # 最大消息大小，单位：字节
+  topic:
+    upload-callback:
+      name: upload_callback
+      group: upload_callback_group_consumer
+      tag: "*"
+      # 批量拉取消息数量
+      batch-size: 5
+      # 消费失败重试次数
+      max-reconsume-times: 3
+      # 消息消费超时时间
+      consume-timeout: 60000
+      # 如果没有立即可用的消息，客户端等待服务器响应的最长时间
+      max-await-time: 5000
+      # 设置是否需要手动提交 默认不需要
+      manual-ack: false
+    parse-pdf-header:
+      name: parse_pdf_header
+      group: parse_pdf_header_group_consumer
+      tag: "*"
+       # 批量拉取消息数量
+      batch-size: 5
+      max-reconsume-times: 3
+      consume-timeout: 600000
+      max-await-time: 5000
+      manual-ack: false
+    parse-pdf-text:
+      name: parse_pdf
+      group: parse_pdf_group_consumer
+      tag: "*"
+      batch-size: 5
+      max-reconsume-times: 3
+      consume-timeout: 6000000
+      max-await-time: 5000
+      manual-ack: false
+    full-text-translate-upload-handler:
+      name: full_text_translate_upload_handler
+      group: full_text_translate_upload_handler_group_consumer
+      tag: "*"
+      batch-size: 5
+      max-reconsume-times: 3
+      consume-timeout: 600000
+      max-await-time: 5000
+      manual-ack: false
+    full-text-translate-progress:
+      name: full_text_translate_progress
+      group: full_text_translate_progress_group_consumer
+      tag: "*"
+      batch-size: 5
+      max-reconsume-times: 3
+      consume-timeout: 600000
+      max-await-time: 5000
+      manual-ack: false
+    event:
+      doc-2-dify-integration-event:
+        name: doc_2_dify_integration_event
+        group: doc_2_dify_integration_event_group_consumer
+
+
+        tag: "*"
+        batch-size: 5
+        max-reconsume-times: 3
+        consume-timeout: 600000
+        max-await-time: 5000
+        manual-ack: false
+
+# OAuth2配置
+oauth2:
+  app_id: "go-sea"  # OAuth2应用ID
+  jwt:
+    secret: "go-sea-sjdpoi2(&(*)&%290371jd-oauth2-secret"  # JWT密钥，生产环境应使用更安全的密钥
+    issuer: "go-sea"                      # JWT发行者
+    expiry: 86400                         # 访问令牌过期时间（秒），默认24小时
+    refreshExpiry: 604800                 # 刷新令牌过期时间（秒），默认7天
+  tokenStorage:
+    type: "redis"  # 存储类型，目前支持redis
+    maxTokensPerUser: 5000                   # 每个用户最多可以有多少个有效令牌
+    tokenHeaderName: "Access-Control-Request-Token"      # 令牌头名称
+    cookieTokenLabel: "%s-token"   # token cookie 标签格式
+    cookieTokenUIDLabel: "%s-UID"   # token uid cookie 标签格式
+    redisKeyPrefix:
+      token: "token:%s"               # 令牌信息的键前缀
+      accessToken: "access_token:%s"  # 访问令牌索引的键前缀
+      refreshToken: "refresh_token:%s" # 刷新令牌索引的键前缀
+      userTokens: "user_tokens:%d"    # 用户令牌集合的键前缀
+    authCode:
+      lifetime: 300 # 认证码有效期（秒）
+  RSA:
+    publicKey: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDLd1/A1PM9nXJwNpewStEsNcB126iLLPTnAnSo95QIg89J2C8mi04n+STN24QlDERVeIiBESjqImhlyhTNOdKmFaVEnPglINALaa4visQMccBwVYqCR2AebkhP83Dx0GJp0ywecJqd62kYLhSmnikDh+GYVCA/ohn80+1L4V6LhwIDAQAB" # RSA公钥
+    privateKey: "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAMt3X8DU8z2dcnA2l7BK0Sw1wHXbqIss9OcCdKj3lAiDz0nYLyaLTif5JM3bhCUMRFV4iIERKOoiaGXKFM050qYVpUSc+CUg0Atpri+KxAxxwHBVioJHYB5uSE/zcPHQYmnTLB5wmp3raRguFKaeKQOH4ZhUID+iGfzT7UvhXouHAgMBAAECgYEAjxdS5gBdWHXEJ5qdL0ROuvLKeZiTfd2OFnCprrL/DsX0IBDDiC3sNzyGX6gD1TI9VIbCKVLyHUc5eGyYGIST2SzLLNP/nYa9j2ZvCa/1c3sZ/vyyoo4GXBKW+lXkRoJZ4DTBz/6+4EzNT+glGEzOZSq/xQL9a4i+0nFg0OoiGrECQQDoXptHQ03UlMBw1Oj6tjL2asX/3Vzec7Ey//xpwHqAUR4fNhsXKbBJNLKYkW4M7Z1h+mhJQP4YlV8Ckt7UWVmdAkEA4ChQiVN508NI5+fQ9eGYeHizo9EqKSS2xBG4z6BVgWkHdW4VNYWYgmnqItT3qOPDO4x5sF37LHsOb8olAXNScwJAdLjRFwLf3aC66fKI9ScAgncv7k6rj7JdmFit2hEtd7dHgjYTdZcjTiKCc9DZjvTs0YKPT/ytpnuhthFAjTo0oQJAE6x2JRdmgeeJ5pC6DlqWfzxYx+/7u1C1mc/UYKS53HnTZcMbqW7oS8nv+s6mTfRvljJmG8yj1uuWAMnFJbNxcQJBAOIuin6vurrE4v/BFoStKSVZCb8xZBO2YHz3Y9zMgEU4x+IHue3k97j8M7uaVY5a68udBOgIyjlHbd4oSsKV5TU=" # RSA私钥
+  
+  googleOAuth2:
+    client_id: "" # Google OAuth2 Client ID yibing888@gmail.com
+    client_secret: "" # Google OAuth2 Client Secret yibing888@gmail.com
+    redirect_path: "/api/oauth2/google/callback" # Google OAuth2 Redirect Path
+    login_success_url: "http://localhost:3000" # Google OAuth2 Login Success URL yibing888@gmail.com
+    scopes:
+      - "https://www.googleapis.com/auth/userinfo.email"
+      - "https://www.googleapis.com/auth/userinfo.profile"
+  
+  # 资源保护配置
+  resourceProtection:
+    # 公开资源路径前缀，不需要验证
+    publicPaths:
+      - "/api/public"
+      - "/api/oauth2/token"
+      - "/api/oauth2/refresh"
+      - "/api/oauth2/auth_code"
+      - "/api/oauth2/sign_in"
+      - "/api/oauth2/validate"
+      - "/metrics"
+      - "/health"
+      - "/api/oss/callback"
+      # - "/services/"
+    
+    # 管理员资源路径前缀，需要管理员或运营角色
+    adminPaths:
+      - "/api/admin"
+    adminRoles:
+      - "ROLE_ADMIN"
+      - "ROLE_OPERATOR"
+
+  # 服务账户配置，用于服务间通信
+  serviceAccount:
+    # 服务令牌有效期（秒），默认30天
+    tokenExpiry: 2592000
+    # 服务令牌头名称
+    tokenHeaderName: "Access-Control-Service-Request-Token"
+    # 服务角色
+    roles:
+      - "ROLE_SERVICE"
+    # 允许的服务列表
+    services:
+      - name: "full-text-translate-service"
+        id: "full-text-translate-service-id"
+        secret: "full-text-translate-service-secret"
+      - name: "microService-app-aiKnowledge"
+        id: "microService-app-aiKnowledge-id"
+        secret: "microService-app-aiKnowledge-secret"
+    # 服务令牌存储配置
+    tokenStorage:
+      redisKeyPrefix: "service_token:"
+    # 资源保护配置
+    resourceProtection:
+      # 公开资源路径前缀，不需要验证
+      publicPaths:
+        - "/services/oauth2/authorize/token"
+        - "/services/oauth2/validate"
+
+# 翻译配置
+translate:
+  text:
+    maxLength: 2000
+    special:
+      words:
+        needreplace:
+          list:
+            - \p{Cntrl}
+            - \\u0000
+    channel:
+      youdao:
+        appId: 3b32b4416f33f420
+        appSecretKey: wns0F0fn2jkbFt7PNbOj3D4SIEyB7tfY
+        apiUrl: https://openapi.youdao.com/api
+      google:
+        baseurl: http://47.236.50.140:8090
+        token: be6f286b9feaccbaa56ddc115b4d8518
+        freeUri: /gg/trn
+        simpleFreeUri: /gg/ss
+    defaultSourceLanguage: en-US
+    defaultTargetLanguage: zh-CH
+  pronunciation:
+    crawl:
+      bd:
+        url: https://fanyi.baidu.com/v2transapi?from=en&to=zh
+      yd:
+        result:
+          url: https://dict.youdao.com/result?word=%s&lang=en
+        pronounce:
+          url: https://dict.youdao.com/dictvoice?audio=%s&type=%d
+  ocr:
+    # extractTextURL: http://192.168.218.19:8866/gradio_api
+    extractTextURL: http://192.168.218.19:30866/gradio_api
+    # 上传图片文件
+    uploadImageURL: /upload
+    # MinerU上传进度地址
+    progressURL: /upload_progress
+    # 加入解析队列
+    joinURL: /queue/join
+    # 获取解析结果
+    dataURL: /queue/data
+    # 文件地址
+    fileURL: /file=
+    # MinerU超时 单位：分钟
+    timeout: 1
+    # 文本识别结果是正确的置信度，值越大，显示出的识别结果更准确。存在漏检时，调低该值。取值范围：[0, 1.0]，默认值为0.5
+    textScore: 0.5
+    # 检测到的框是文本的概率，值越大，框中是文本的概率就越大。存在漏检时，调低该值。取值范围：[0, 1.0]，默认值为0.5
+    boxThresh: 0.5
+    # 控制文本检测框的大小，值越大，检测框整体越大。在出现框截断文字的情况，调大该值。取值范围：[1.5, 2.0]，默认值为1.6
+    unclipRatio: 1.6
+    # 如果输入图像的最大边大于max_side_len，则会按宽高比，将最大边缩放到max_side_len。默认为2000px
+    maxSideLen: 2000
+    useDet:
+      engineType: onnxruntime
+      langDet: ch
+      modelType: mobile
+      version: PP-OCRv4
+    useCls:
+      engineType: onnxruntime
+      langCls: ch
+      modelType: mobile
+      version: PP-OCRv4
+    useRec:
+      engineType: onnxruntime
+      langRec: ch
+      modelType: mobile
+      version: PP-OCRv4
+    # 是否返回单字符 Yes/No
+    returnWordBox: No
+  glossary:
+    maxSize: 1000
+    maxLength: 100
+  fullTextTranslate:
+    # translateBaseURL: http://localhost:8891   http://192.168.218.19:31891
+    translateBaseURL: http://192.168.218.19:30891
+    translateServiceURI: /translate
+    translateServiceFixURI: /retrans
+    useWatermark: true
+    historyVisibleDays: 30
+    translateTimeOut: 3600  # 单位：秒
+    duplicateDelaySeconds: 30  # 单位：秒
+    fileSizeLimit: 104857600 # 100MB
+    filePageLimit: 1000      # 文件页数限制
+    allowedLang: en-US,zh-CN # 允许被翻译语言
+    mockFailSwitch: false    # 模拟失败开关
+    internal-order-channel:
+      - GOOGLE  # google翻译: 包含 googleFree, googleSimpleFree
+      - YOUDAO
+
+# llm配置
+llm:
+  useChannel: gpt4o_mini
+  channel:
+    deepseek:
+      url: https://api.deepseek.com/v1/chat/completions
+      apiKey: 
+    gpt4o_mini:
+      url: https://azure-chatgpt-instance.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-08-01-preview
+      apiKey: 
+    qwen:
+      url: http://localhost:8080/api/v1/translate
+      apiKey: 1234567890
+# pdf相关的配置
+pdf:
+  rePattern: '^(?i)(Figure|Table)\s*(\d+(?:\.\d+)*)\.?'
+  download:
+    # pdf下载临时文件目录  pdfpath: tempDirectory + /fileSHA256/***.pdf   minerU的zip包解压目录： mineruZipPath: tempDirectory + /fileSHA256/***.json;tempDirectory + /fileSHA256/***.pdf 
+    tempDirectory: /app/go-sea/storage/temp/pdf
+    tempDownloadDirectory: /app/go-sea/storage/temp/download
+    mineruImageDirectory: /app/go-sea/storage/temp/images   # minerU的图片目录 tempDirectory + /fileSHA256/images/***.jpg
+  parse:
+    # grobid 文档地址：https://grobid.readthedocs.io/en/latest/Grobid-service/
+    grobid:
+      # url: http://192.168.218.19:8070
+      url: http://192.168.218.19:30872
+      # grobid 头部文档解析地址
+      headerDocument: /api/processHeaderDocument
+      # grobid 全文文档解析地址
+      fulltextDocument: /api/processFulltextDocument
+      # grobid 超时 单位：分钟
+      timeout: 5
+    # MinerU 
+    mineru:
+      # url: http://192.168.218.19:7861/gradio_api
+      url: http://192.168.218.19:30760/gradio_api
+      # MinerU上传地址
+      uploadURL: /upload
+      # MinerU上传进度地址
+      progressURL: /upload_progress
+      # MinerU加入解析队列
+      joinURL: /queue/join
+      # MinerU获取解析结果
+      dataURL: /queue/data
+      # MinerU文件地址
+      fileURL: /file=
+      # MinerU超时 单位：分钟
+      timeout: 10
+      # MinerU解析的最大页数
+      maxPage: 100
+
+# dify配置
+dify:
+  apiBaseUrl: "http://192.168.218.19:30011/v1"
+  httpclient:
+    timeout: 5
+    ResponseHeaderTimeout: 120
+  datasets:
+    doc-2-dify-integration-dataset:
+      id: "343d92cc-84be-44e0-8a7e-db66fd58696c"
+      name: "doc-2-dify-integration-dataset"
+      apiKey: "dataset-RMPD5v3HNVhkTYZwoJdd8nQ7"
+      meta:
+        - name: "pdf_id" # pdf id, 用于单文档提问和多文档提问
+          type: "string" # 类型：string, number, time
+        - name: "doc_id" # doc id, 用于单文档提问和多文档提问
+          type: "string" # 类型：string, number, time
+  chatflows:
+    doc-2-dify-integration-chat-workflow:
+      summary-single-paper:
+        id: "8gnlEkgM8fZPxMhP"
+        name: "summary-single-paper"
+        apiKey: "app-3Hn6jcx2IQ0quDQ4tF6fHQ5b"
+      single-paper-copilot-chat:
+        id: "f583Z6bfkYenS00G"
+        name: "single-paper-copilot-chat"
+        apiKey: "app-tWeqoEWEbo3zHQHsxe3uPbSU"
+  workflows:
+    doc-2-dify-integration-workflow:
+      name: "doc-2-dify-integration-workflow"
+      apiKey: "workflow-1234567890"
+      
+# copilot配置
+copilot:
+  summary-paper:
+    handler-version: "0.0.1"
+    handler-from: "copilot"
+    summary-handler-split-strings:
+      - "可能感兴趣的问题包括:" 
+      - "可能感兴趣的问题包括："
+      - "可能感兴趣的问题包括:" 
+      - "可能感兴趣的问题包括:" 
+      - "感兴趣的问题:" 
+      - "感兴趣的问题：" 
+      - "感兴趣的问题有：" 
+      - "感兴趣的问题有:" 
+      - "感兴趣的三个问题：" 
+      - "感兴趣的三个问题:" 
+      - "感兴趣的三个问题是：" 
+      - "感兴趣的三个问题是:" 
+      - "引发以下三个问题：" 
+      - "引发以下三个问题:" 
+      - "questions readers might be interested in:" 
+      - "questions readers might be interested:" 
+      - "questions that readers might be interested in:" 
+      - "questions that readers may be interested in:" 
+      - "questions that readers might find interesting are:"
+      - "questions that readers may find interesting are:"
+      - "Three questions that readers may find interesting are:"
+      - "Three questions that readers might be interested in:"
+      - "为您推荐以下问题："
+
+
+# 会员配置
+membership:
+  # 免费版
+  free:
+    type: 1 # 会员类型-免费版
+    name: "Free"
+    description: "Free Version"
+    isFree: true # 是否为免费版
+    base:
+      subInfo: # 订阅套餐信息
+        type: 1 # 订阅套餐类型, 对应constant.OrderType 0:Unknown, 1:Free, 2:PRO, 3:PRO_AddOnCredit
+        name: "Free"
+        price: 0 # 价格，0美元
+        originalPrice: 0 # 原始价格，0美元
+        currency: "usd" # 货币单位
+        credit: 20000 # 每月信用值,单位（0.01个）
+        originalCredit: 2500 # 原始信用值,单位（0.01个）
+        addOnCredit: 0 # 附加信用值,单位（0.01个）
+        duration: 1 # 有效期，单位（月）
+        stripePayMode: "payment" # stripe支付模式 payment: 一次性付款, subscription: 订阅
+        stripePriceId: ""
+      isEnableAddOnCredit: false # 是否允许使用附加信用值
+      isEnableSubAddOnCredit: false # 是否允许订阅附加信用值
+      maxAddOnCreditSubCountOfMonth: 0 # 每月最大附加订阅包数量
+      subAddOnCreditInfo: # 附加积分订阅套餐信息
+        type: 0 # 订阅套餐类型, 对应constant.OrderType 0:Unknown, 1:Free, 2:PRO, 3:PRO_AddOnCredit
+        name: "UNAVAILABLE"
+        price: 0 # 价格，0美元
+        currency: "usd" # 货币单位
+        credit: 100
+        addOnCredit: 0 # 附加信用值,单位（0.01个）
+        duration: 0 # 有效期，单位（月）
+        stripePayMode: "payment" # stripe支付模式 payment: 一次性付款, subscription: 订阅
+        stripePriceId: "" # stripe价格ID
+    docs:
+      maxStorageCapacity: 100 # 文献最大存储容量，单位（MB）
+      maxStorageCapacityOriginal: 20 # 原始文献最大存储容量，单位（MB）
+      docUploadMaxSize: 20 # 文献上传文件最大值，单位（MB）
+      docUploadMaxSizeOriginal: 10 # 原始文献上传文件最大值，单位（MB）
+      docUploadMaxPageCount: 100 # 文献上传文件最大页数
+      docUploadMaxPageCountOriginal: 50 # 原始文献上传文件最大页数
+    note:
+      isNoteSummary: true # 是否开启笔记总结功能
+      isNoteWord: true # 是否开启笔记单词功能
+      isNoteExtract: true # 是否开启笔记摘录功能
+      isNoteManage: true # 是否开启笔记管理功能
+      isNotePdfDownload: true # 是否开启笔记pdf下载功能
+    ai:
+      copilot:
+        isEnable: true # 是否开启AI辅读
+        models:
+          - key: "gpt-4o-mini"
+            name: "gpt 4o mini"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 50 # 模型每次消耗信用值
+          - key: "gemini-2-5-pro"
+            name: "gemini-2.5-pro"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 200 # 模型每次消耗信用值
+          - key: "claude-3-7-sonnet"
+            name: "claude 3.7 sonnet"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 200 # 模型每次消耗信用值
+          - key: "claude-sonnet-4"
+            name: "claude sonnet 4"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 400 # 模型每次消耗信用值
+          - key: "chatgpt5-fast"
+            name: "chatgpt5-fast"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 100 # 模型每次消耗信用值
+          - key: "chatgpt5-auto"
+            name: "chatgpt5-auto"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 200 # 模型每次消耗信用值
+          - key: "chatgpt5-thinking"
+            name: "chatgpt5-thinking"
+            isEnable: false # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 200 # 模型每次消耗信用值
+    translate:
+      isOcr: true # 是否开启OCR功能
+      ocrCreditCost: 100 # 每次OCR消耗信用值
+      isWordTranslate: true # 是否开启划词翻译功能
+      wordTranslateCreditCost: 100 # 每次划词翻译消耗信用值
+      isFullTextTranslate: true # 是否开启全文翻译功能
+      fullTextTranslateCreditCost: 1000 # 每次全文翻译消耗信用值
+      fullTextTranslateOriginalCreditCost: 500 # 每次全文翻译消耗原始信用值
+      fullTextTranslateMaxPageCount: 50 # 每次全文翻译最大页数
+      isAiTranslation: true # 是否开启AI翻译功能
+      aiTranslationCreditCost: 100 # 每次AI翻译消耗信用值
+  # 专业版
+  professional:
+    type: 2 # 会员类型-专业版
+    name: "Pro"
+    description: "Professional Version"
+    isFree: false # 是否为免费版
+    base:
+      subInfo: # 订阅套餐信息
+        type: 2 # 订阅套餐类型, 对应constant.OrderType 0:Unknown, 1:Free, 2:PRO, 3:PRO_AddOnCredit
+        name: "Pro"
+        price: 800 # 价格，10美元
+        originalPrice: 1500 # 原始价格，10美元
+        currency: "usd" # 货币单位
+        credit: 80000 # 每月信用值,单位（0.01个）
+        originalCredit: 50000 # 原始信用值,单位（0.01个）
+        addOnCredit: 20000 # 附加信用值,单位（0.01个）
+        duration: 1 # 有效期，单位（月）
+        stripePayMode: "subscription" # stripe支付模式 payment: 一次性付款, subscription: 订阅
+        stripePriceId: "price_1SGDL1JQcOEJnirYOVhid7mT" # stripe价格ID  price_1RWqxlJQcOEJnirYbHD3otq8
+      isEnableAddOnCredit: true # 是否允许使用附加信用值
+      isEnableSubAddOnCredit: true # 是否允许订阅附加信用值
+      maxAddOnCreditSubCountOfMonth: 6 # 每月最大附加订阅包数量
+      subAddOnCreditInfo: # 附加积分订阅套餐信息
+        type: 3 # 订阅套餐类型, 对应constant.OrderType 0:Unknown, 1:Free, 2:PRO, 3:PRO_AddOnCredit
+        name: "$10 for 250 credits"
+        price: 1000 # 价格，10美元
+        currency: "usd" # 货币单位
+        credit: 0
+        addOnCredit: 25000 # 附加信用值,单位（0.01个）
+        duration: 0 # 有效期，单位（月）
+        stripePayMode: "payment" # stripe支付模式 payment: 一次性付款, subscription: 订阅
+        stripePriceId: "" # stripe价格ID
+    docs:
+      maxStorageCapacity: 30960 # 文献最大存储容量，单位（MB）
+      maxStorageCapacityOriginal: 30960 # 原始文献最大存储容量，单位（MB）
+      docUploadMaxSize: 100 # 文献上传文件最大值，单位（MB）
+      docUploadMaxSizeOriginal: 100 # 原始文献上传文件最大值，单位（MB）
+      docUploadMaxPageCount: 100 # 文献上传文件最大页数
+      docUploadMaxPageCountOriginal: 100 # 原始文献上传文件最大页数
+    note:
+      isNoteSummary: true # 是否开启笔记总结功能
+      isNoteWord: true # 是否开启笔记单词功能
+      isNoteExtract: true # 是否开启笔记摘录功能
+      isNoteManage: true # 是否开启笔记管理功能
+      isNotePdfDownload: true # 是否开启笔记pdf下载功能
+    ai:
+      copilot:
+        isEnable: true # 是否开启AI辅读
+        models:
+          - key: "gpt-4o-mini"
+            name: "gpt 4o mini"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 25 # 模型每次消耗信用值
+          - key: "gemini-2-5-pro"
+            name: "gemini-2.5-pro"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 100 # 模型每次消耗信用值
+          - key: "claude-3-7-sonnet"
+            name: "claude 3.7 sonnet"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 100 # 模型每次消耗信用值
+          - key: "claude-sonnet-4"
+            name: "claude sonnet 4"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 200 # 模型每次消耗信用值
+          - key: "chatgpt5-fast"
+            name: "chatgpt5-fast"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 50 # 模型每次消耗信用值
+          - key: "chatgpt5-auto"
+            name: "chatgpt5-auto"
+            isEnable: true # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 100 # 模型每次消耗信用值
+          - key: "chatgpt5-thinking"
+            name: "chatgpt5-thinking"
+            isEnable: false # 是否开启功能
+            isFree: false # 是否免费
+            creditCost: 100 # 模型每次消耗信用值
+              
+    translate:
+      isOcr: true # 是否开启OCR功能
+      ocrCreditCost: 25 # 每次OCR消耗信用值
+      isWordTranslate: true # 是否开启划词翻译功能
+      wordTranslateCreditCost: 10 # 每次划词翻译消耗信用值
+      isFullTextTranslate: true # 是否开启全文翻译功能
+      fullTextTranslateCreditCost: 500 # 每次全文翻 译消耗信用值
+      fullTextTranslateOriginalCreditCost: 500 # 每次全文翻 译消耗原始信用值
+      fullTextTranslateMaxPageCount: 100 # 每次全文翻译最大页数
+      isAiTranslation: true # 是否开启AI翻译功能
+      aiTranslationCreditCost: 25 # 每次AI翻译消耗信用值
+
+  
+# 支付配置
+pay:
+  stripe:
+    isEnable: true # 是否启用
+    publishableKey: "" # 公钥
+    secretKey: "" # 私钥
+    webhookSecret: "" # Webhook密钥
+    checkoutSuccessURL: "http://localhost:8080/success" # 支付成功跳转地址
+    checkoutCancelURL: "http://localhost:8080/cancel" # 支付取消跳转地址
+
+
+# 调度器配置
+scheduler:
+  jobs:
+    # 会员过期任务
+    membership-expired-job:
+      spec: "0 * * * * *" # cron表达式，每分钟执行一次
+      key: "membership-expired-job" # job的key
+      expiry: 60 # job的锁过期时间,单位：秒
+    # 会员积分确认支付过期任务
+    credit-pay-confirm-expired-job:
+      spec: "*/10 * * * * *" # cron表达式，每10秒执行一次
+      key: "credit-pay-confirm-expired-job" # job的key
+      expiry: 10 # job的锁过期时间,单位：秒
+
+# 个人配置
+personal:
+  # 最近阅读文献数量
+  latestReadSize: 10
+
+# 网站配置
+nav:
+  website:
+    initData:
+      - name: "Google Scholar"
+        url: "https://scholar.google.com"
+        iconUrl: "https://scholar.google.com/favicon.ico"
+      - name: "Arxiv"
+        url: "https://arxiv.org"
+        iconUrl: "https://arxiv.org/static/browse/0.3.4/images/icons/favicon-32x32.png"
+      - name: "PubMed"
+        url: "https://pubmed.ncbi.nlm.nih.gov"
+        iconUrl: "https://pubmed.ncbi.nlm.nih.gov/favicon.ico"  
+      - name: "Semantic Scholar"
+        url: "https://semanticscholar.org"
+        iconUrl: "https://semanticscholar.org/favicon.ico"
+      - name: "Web of Science"
+        url: "https://clarivate.com"
+        iconUrl: "https://clarivate.com/wp-content/themes/clarivate/src/favicon/favicon-32x32.png"
+
+paperQuestion:
+  # 默认问题数量
+  defaultQuestionCount: 5
+  # 系统默认问题列表
+  defaultQuestionList:
+    - question:
+        id: 1
+        zh: "请概述每段章节的主要内容"
+        en: "Please summarize the main content of each section."
+    - question:
+        id: 2
+        zh: "论文试图解决什么问题？"
+        en: "What is the problem the paper is trying to address?"
+    - question:
+        id: 3
+        zh: "这篇文章的研究背景是什么？相关课题在这一领域的研究现状是什么？"
+        en: "What is the research context of this article? What is the current state of research in this area for related topics?"
+    - question:
+        id: 4
+        zh: "这篇文章要验证一个什么科学假设？"
+        en: "What is the scientific hypothesis that the paper is trying to verify?"
+    - question:
+        id: 5
+        zh: "这篇文章的主要研究方法是什么?"
+        en: "What is the main research method of this article?"
+    - question:
+        id: 6
+        zh: "论文中提到的解决方案之关键是什么？"
+        en: "What is the key of the proposed solution in the paper?"
+    - question:
+        id: 7
+        zh: "论文中的实验是如何设计的？详细描述各实验方法并概括总结"
+        en: "How were the experiments in the paper designed? Describe each experimental method in detail and summarize it."
+    - question:
+        id: 8
+        zh: "这篇论文的主要结论是什么?具体是怎样得出这个结论的？"
+        en: "What is the main conclusion of this essay? How exactly was this conclusion reached?"
+    - question:
+        id: 9
+        zh: "这篇论文到底有什么贡献？"
+        en: "What are the contributions of the paper?"
+    - question:
+        id: 10
+        zh: "根据这项研究，后续还有哪些可以继续深入研究的问题？"
+        en: "Based on this study, what are some of the subsequent questions that could be pursued in greater depth?"
+    - question:
+        id: 11
+        zh: "这篇文章中作者的关键观点有哪些？请列出相应的句段位置"
+        en: "Please help me extract the key points from this document"
+    - question:
+        id: 12
+        zh: "请用两行文字解释这篇文章的摘要"
+        en: "Explain Abstract of this paper in 2 lines."
+    - question:
+        id: 13
+        zh: "作者的研究思路是什么？是怎样论述和解决的？"
+        en: "What is the author's research idea? How is it addressed and resolved?"
+    - question:
+        id: 14
+        zh: "作者在哪些方面提出了新颖的见解?"
+        en: "In what aspects does the author provide novel insights?"
+    - question:
+        id: 15
+        zh: "这篇文章参考了哪些理论研究？"
+        en: "What theoretical studies are referenced in this article?"
+    - question:
+        id: 16
+        zh: "这篇文章的数据支持了哪些观点？"
+        en: "What views does the data in this article support?"
+    - question:
+        id: 17
+        zh: "作者有哪些论据来支持他的观点？"
+        en: "What arguments does the author have to support his point of view?"
+    - question:
+        id: 18
+        zh: "这篇文章描述了什么内容？最终得出了哪些结论？"
+        en: "What does this article describe? What conclusions are ultimately drawn?"
+    - question:
+        id: 19
+        zh: "本篇文章解决了这个研究领域的什么空白？"
+        en: "What gap in this research area does this article address?"
+    - question:
+        id: 20
+        zh: "这篇文章的研究对象是什么？通过哪些研究方法、得出了什么研究结果？"
+        en: "What is the subject of this article's research? What research methods were used and what findings were derived?"
+    - question:
+        id: 21
+        zh: "用于定量评估的数据集是什么？代码有没有开源？"
+        en: "What datasets are built/used for the quantitative evaluation? Is the code open sourced?"
+    - question:
+        id: 22
+        zh: "论文中的实验及结果有没有很好地支持需要验证的科学假设？"
+        en: "Is the scientific hypothesis well supported by evidence in the experiments?"
+    - question:
+        id: 23
+        zh: "这一课题在领域内值得关注的研究员有哪些？请列出他们的相关研究实例"
+        en: "Who are some of the noteworthy researchers in the field on this topic? Please list examples of their relevant research"
+    - question:
+        id: 24
+        zh: "这篇文献与同主题的其他文章相比如何?有什么优点、又有哪些局限性？"
+        en: "How does this literature compare with other articles on the same topic? What are its strengths and limitations?"
+    - question:
+        id: 25
+        zh: "这篇文章使用了哪些研究方法？具体的研究过程是什么？"
+        en: "What research methods were used in this article? What was the specific research process?"
+    - question:
+        id: 26
+        zh: "能否列出本文的关键部分，并分点总结每一部分的内容？"
+        en: "Can you list the key parts of the paper and summarize each part in points?"
+    - question:
+        id: 27
+        zh: "这项研究的影响是什么?从这篇文章可以得到什么启发？"
+        en: "What are the implications of this study? What can be learned from this article?"
+    - question:
+        id: 28
+        zh: "除了本课题，这个研究领域还有哪些相关研究？请详细列出一些值得关注的研究"
+        en: "Apart from this topic, what are the other relevant studies in this research area? Please detail some notable studies"
+    - question:
+        id: 29
+        zh: "这篇文章还有哪些不足之处可以继续改进？"
+        en: "What are some of the shortcomings of this article that can continue to be improved?"
+    - question:
+        id: 30
+        zh: "作者提出了哪些待未来进一步研究探索的问题?"
+        en: "What questions do the authors raise for further research to explore in the future?"  
+    
+
+# 代理配置 代理目前已经换成了sing-box 命令就不更改了  因为涉及到很多文件和方法的重命名
+squid:
+  proxy_url: http://192.168.218.19:31082
+  username: "proxy_mixed"
+  password: "3a%ms*@S_#BRV-G"
+  timeout: 60
+
+# 登录页面配置
+login_page:
+  is_google_login_enabled: true
+  is_username_password_login_enabled: true
+  is_register_enabled: false
+  is_forget_password_enabled: false
+
+# 文献搜索配置
+doc_meta_info_search:
+  transformDoiLanguageMapRel:
+    en: "en-US"
+  transformDoiDocTypeMapRel:
+    BOOK: "book"
+    journal-article: "article-journal"
+    proceedings-article: "paper-conference"
+    book-chapter: "chapter"
+    posted-content: "manuscript"
+  docTypeInfoListJsonDesc: '[{"code":"article-journal","name":"期刊论文"},{"code":"article-magazine","name":"杂志论文"},{"code":"article-newspaper","name":"报纸论文"},{"code":"thesis","name":"学位论文"},{"code":"paper-conference","name":"会议论文"},{"code":"book","name":"图书"},{"code":"chapter","name":"图书章节"},{"code":"patent","name":"专利"},{"code":"report","name":"报告"}]'
+  doi:
+    query_doi_info_url: https://api.crossref.org/works/
+    query_paper_doi_info_url: https://api.crossref.org/works?query.title=

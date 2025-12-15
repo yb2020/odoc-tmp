@@ -1,0 +1,162 @@
+/* 添加渐变色文本效果 */
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    #4169e1 0%,
+    #9370db 30%,
+    #ff69b4 60%,
+    #ff6347 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  display: inline-block;
+}
+
+.VPHome {
+  margin-bottom: 0px;
+}
+
+@media (min-width: 768px) {
+  .VPHome[data-v-d8beba3b] {
+      margin-bottom: 0px;
+  }
+}
+/* 为站点名称添加渐变色 */
+/* .VPNavBarTitle .title, */
+.VPHero .text {
+  background: linear-gradient(
+    90deg,
+    #4169e1 0%,
+    #9370db 30%,
+    #ff69b4 60%,
+    #ff6347 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 600;
+  white-space: normal; /*允许换行 */
+}
+
+/* Feature部分的悬停效果 */
+.VPFeature {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.VPFeature::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #5672cd;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.VPFeature:hover::before {
+  top: 0;
+  opacity: 0.9;
+}
+
+/* 调整悬停时的文字颜色 */
+.VPFeature:hover .title,
+.VPFeature:hover .details {
+  color: #ffffff !important;
+  transition: color 0.3s ease;
+}
+
+/* 确保文字在渐变背景上清晰可见 */
+.VPFeature .title,
+.VPFeature .details {
+  position: relative;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+/* 自定义语言选择器图标 */
+.VPNavBarTranslations .vpi-languages {
+  display: none !important;
+}
+
+.VPNavBarTranslations .button .text::before {
+  content: "";
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  background-image: url('/docs/language.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: middle;
+}
+
+/* 暗黑模式下的语言图标 - 反转颜色 */
+.dark .VPNavBarTranslations .button .text::before {
+  filter: invert(1);
+}
+
+/* 鼠标悬停时的语言图标颜色变化 */
+.VPNavBarTranslations .button:hover .text::before {
+  background-image: none !important;
+  background-color: var(--vp-c-brand-1);
+  mask-image: url('/docs/language.svg');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  filter: none;
+}
+
+/* 暗黑模式下鼠标悬停时的语言图标颜色变化 */
+.dark .VPNavBarTranslations .button:hover .text::before {
+  background-image: none !important;
+  background-color: var(--vp-c-brand-1);
+  mask-image: url('/docs/language.svg');
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  filter: none;
+}
+
+/* 确保下拉箭头正常显示 */
+.VPNavBarTranslations .vpi-chevron-down {
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+/* 鼠标悬停时箭头反转 */
+.VPNavBarTranslations:hover .vpi-chevron-down {
+  transform: rotate(270deg);
+}
+
+/* BEAT badge next to site title */
+.vp-site-badge {
+  display: inline-block;
+  margin-left: 4px; /* match ml-1 from main app */
+  position: relative;
+  top: -4px; /* align with main app badge */
+  padding: 2px 2px; /* py-0.5 px-1.5 */
+  font-size: 10px;
+  line-height: 1; /* leading-none */
+  font-weight: 500; /* font-medium */
+  color: #ffffff;
+  background-color: #6d6d6d; /* Tailwind blue-400 */
+  border-radius: 2px; /* rounded-sm */
+  user-select: none;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Dark mode: keep same style for consistency with main app */
+.dark .vp-site-badge {
+  color: #ffffff;
+}

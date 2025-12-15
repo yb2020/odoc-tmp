@@ -1,0 +1,117 @@
+syntax = "proto3";
+
+package user;
+
+import "definitions/validate/Validate.proto";
+import "definitions/user/User.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/user";
+
+
+
+// @api_path: /api/admin/user/getById
+// @method: GET
+// @content-type: application/json
+// @summary: 获取用户信息【仅可用的】
+message GetByIdRequest {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1
+  }];
+}
+message GetByIdResponse {
+  user.User user = 1;
+}
+
+
+// @api_path: /api/admin/user/getByIds
+// @method: GET
+// @content-type: application/json
+// @summary: 批量获取用户信息
+message GetByIdsRequest {
+  repeated string ids = 1 [(validate.rules).repeated = {
+    min_items: 1
+  }];
+}
+message GetByIdsResponse {
+  repeated user.User users = 1;
+}
+
+// @api_path: /api/admin/users/pagination
+// @method: GET
+// @content-type: application/json
+// @summary: 分页获取用户列表
+message PaginationUsersRequest {
+  int32 page = 1 [(validate.rules).int32 = {
+    gt: 0
+  }];
+  int32 size = 2 [(validate.rules).int32 = {
+    gt: 0
+  }];
+  string username = 3;
+  string email = 4;
+  string nickname = 5;
+  uint64 from_create_time = 6;
+  uint64 to_create_time = 7;
+}
+
+// PaginationUsers 响应
+message PaginationUsersResponse {
+  repeated user.User users = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 size = 4;
+}
+
+
+// @api_path: /api/admin/user/create
+// @method: POST
+// @content-type: application/json
+// @summary: 创建用户
+message CreateUserRequest {
+  User user = 1 [(validate.rules).message.required = true];
+}
+
+// CreateUser 响应
+message CreateUserResponse {
+  user.User user = 1;
+}
+
+// @api_path: /api/admin/user/update
+// @method: POST
+// @content-type: application/json
+// @summary: 更新用户
+message UpdateUserRequest {
+  user.User user = 1 [(validate.rules).message.required = true];
+}
+
+// UpdateUser 响应
+message UpdateUserResponse {
+  user.User user = 1;
+}
+
+// @api_path: /api/admin/user/deleteById
+// @method: POST
+// @content-type: application/json
+// @summary: 删除用户
+message DeleteUserByIdRequest {
+  string id = 1 [(validate.rules).string = {
+    min_len: 1
+  }];
+}
+
+// DeleteUserById 响应
+message DeleteUserByIdResponse {}
+
+
+// @api_path: /api/admin/user/deleteByIds
+// @method: POST
+// @content-type: application/json
+// @summary: 批量删除用户
+message DeleteUserByIdsRequest {
+  repeated string ids = 1 [(validate.rules).repeated = {
+    min_items: 1
+  }];
+}
+
+// DeleteUserByIds 响应
+message DeleteUserByIdsResponse {}

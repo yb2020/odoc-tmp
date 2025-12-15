@@ -1,0 +1,10 @@
+{
+  "lang": "en-US",
+  "viewer": {
+    "findInDocument": "Find in Document",
+    "page": "Page {num}"
+  },
+  "message": {
+    "totalMatches": "{num} matches in total of {keyword}"
+  }
+}

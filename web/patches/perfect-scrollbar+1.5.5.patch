@@ -1,0 +1,13 @@
+diff --git a/node_modules/perfect-scrollbar/dist/perfect-scrollbar.esm.js b/node_modules/perfect-scrollbar/dist/perfect-scrollbar.esm.js
+index 4215b17..b404f88 100644
+--- a/node_modules/perfect-scrollbar/dist/perfect-scrollbar.esm.js
++++ b/node_modules/perfect-scrollbar/dist/perfect-scrollbar.esm.js
+@@ -853,7 +853,7 @@ function wheel(i) {
+     var deltaX = ref[0];
+     var deltaY = ref[1];
+ 
+-    if (shouldBeConsumedByChild(e.target, deltaX, deltaY)) {
++    if (shouldBeConsumedByChild(e.target, deltaX, deltaY) || e.ctrlKey || e.metaKey) {
+       return;
+     }
+ 

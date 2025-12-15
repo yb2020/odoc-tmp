@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/user";
+
+// UserStatus 用户状态枚举
+enum UserStatus {
+  STATUS_UNKNOWN = 0;
+  STATUS_ACTIVE = 1;
+  STATUS_INACTIVE = 2;
+  STATUS_DELETED = 3;
+  STATUS_BANNED = 4;
+}

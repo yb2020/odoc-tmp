@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package translate;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/translate";
+
+import "definitions/translate/TranslateEnum.proto";
+import "definitions/validate/Validate.proto";
+
+
+// @api_path: /text/ocr/translate
+// @method: POST
+// @content-type: application/json
+// @summary: ocr-翻译
+// @response translate.TranslateResponse
+message OcrTranslateRequest {
+  // 图片base64
+  string picBase64=1 [(validate.rules).string = {
+    min_len: 1
+  }];
+  // pdfId
+  optional string pdfId=2;
+  // channel 翻译渠道类型常量, 新增一个渠道: AI翻译="ai"
+  translate.TranslateChannel channel=3[(validate.rules).enum = {
+    defined_only: true
+  }];
+
+  optional translate.TranslateLanguage sourceLanguage = 4;
+  optional translate.TranslateLanguage targetLanguage = 5;
+  //是否使用术语库
+  optional bool useGlossary= 6;
+}
+
+
+// @api_path: /text/ocr/remainCount
+// @method: GET
+// @content-type: application/json
+// @summary: OCR翻译剩余次数
+// @response OcrRemainCountResponse
+ message OcrRemainCountRequest {
+
+ }
+ 
+ message OcrRemainCountResponse {
+   uint32 remainCount=1;
+ }
+
+ 
+ // @api_path: /text/ocr/extractText
+ // @method: POST
+ // @content-type: application/json
+ // @summary: OCR提取文本
+ // @response OcrExtractTextResponse
+message OcrExtractTextRequest {
+  // 图片base64
+  string picBase64=1;
+  // pdfId
+  optional string pdfId=2;
+}
+
+message OcrExtractTextResponse {
+  string text=1;
+}

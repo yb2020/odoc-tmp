@@ -1,0 +1,32 @@
+{
+  "translate": {
+    "glossary": {
+      "errors": {
+        "not_found": "术语库不存在",
+        "already_exists": "术语库已存在",
+        "invalid_data": "无效的术语库数据",
+        "create_failed": "创建术语库失败",
+        "update_failed": "更新术语库失败",
+        "delete_failed": "删除术语库失败",
+        "entry_not_found": "术语条目不存在",
+        "entry_already_exists": "术语条目已存在",
+        "invalid_entry_data": "无效的术语条目数据",
+        "entry_create_failed": "创建术语条目失败",
+        "entry_update_failed": "更新术语条目失败",
+        "entry_delete_failed": "删除术语条目失败",
+        "empty_text": "文本不能为空",
+        "text_too_long": "文本过长（最大 {{.MaxLength}} 个字符）",
+        "permission_denied": "您没有权限修改此术语库",
+        "max_size_exceeded": "术语条目数量已超过最大限制（{{.MaxSize}}）"
+      },
+      "success": {
+        "created": "术语库创建成功",
+        "updated": "术语库更新成功",
+        "deleted": "术语库删除成功",
+        "entry_created": "术语条目创建成功",
+        "entry_updated": "术语条目更新成功",
+        "entry_deleted": "术语条目删除成功"
+      }
+    }
+  }
+}

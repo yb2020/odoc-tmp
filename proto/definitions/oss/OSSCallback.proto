@@ -1,0 +1,132 @@
+syntax = "proto3";
+
+package oss;
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/oss";
+
+import "google/protobuf/timestamp.proto";
+
+// MinioCallbackNotification MinIO回调通知
+message MinioCallbackNotification {
+    string eventName = 1 ;           // 事件名称，例如 "s3:ObjectCreated:Put"
+    string key = 2 ;                  // 对象完整路径，包含桶名
+    repeated MinioCallbackRecord records = 3 ;  // 记录数组
+}
+
+// MinioCallbackRecord MinIO回调记录
+message MinioCallbackRecord {
+    string eventVersion = 1 ;        // 事件版本
+    string eventSource = 2 ;         // 事件源
+    string awsRegion = 3 ;           // AWS区域
+    string eventTime = 4 ;           // 事件时间
+    string eventName = 5 ;           // 事件名称
+    MinioUserIdentity userIdentity = 6 ;  // 用户身份
+    MinioRequestParameters requestParameters = 7 ;  // 请求参数
+    MinioResponseElements responseElements = 8 ;  // 响应元素
+    MinioS3Event s3 = 9 ;            // S3事件信息
+    MinioSource source = 10 ;         // 源信息
+}
+
+// MinioUserIdentity 用户身份
+message MinioUserIdentity {
+    string principal_id = 1 ;         // 主体ID
+}
+
+// MinioRequestParameters 请求参数
+message MinioRequestParameters {
+    string principal_id = 1 ;         // 主体ID
+    string region = 2 ;               // 区域
+    string source_ip_address = 3 ;    // 源IP地址
+}
+
+// MinioResponseElements 响应元素
+message MinioResponseElements {
+    string contentLength = 1 ;       // 内容长度
+    string xAmzId2 = 2 ;           // AMZ ID
+    string xAmzRequestId = 3 ;     // AMZ 请求ID
+    string xMinioDeploymentId = 4 ; // MinIO 部署ID
+    string xMinioOriginEndpoint = 5 ; // MinIO 源端点
+}
+
+// MinioS3Event S3事件信息
+message MinioS3Event {
+    string s3SchemaVersion = 1 ;    // S3 Schema版本
+    string configurationId = 2 ;     // 配置ID
+    MinioBucket bucket = 3 ;          // 桶信息
+    MinioObject object = 4 ;          // 对象信息
+}
+
+// MinioBucket 桶信息
+message MinioBucket {
+    string name = 1 ;                 // 桶名称
+    MinioOwnerIdentity ownerIdentity = 2 ;  // 所有者身份
+    string arn = 3 ;                  // ARN
+}
+
+// MinioOwnerIdentity 所有者身份
+message MinioOwnerIdentity {
+    string principal_id = 1 ;         // 主体ID
+}
+
+// MinioObject 对象信息
+message MinioObject {
+    string key = 1 ;                  // 对象键
+    int64 size = 2 ;                 // 对象大小
+    string etag = 3 ;                // ETag
+    string contentType = 4 ;         // 内容类型
+    map<string, string> userMetadata = 5 ;  // 用户元数据
+    string sequencer = 6 ;            // 序列号
+}
+
+// MinioSource 源信息
+message MinioSource {
+    string host = 1 ;                 // 主机
+    string port = 2 ;                 // 端口
+    string userAgent = 3 ;           // 用户代理
+}
+
+// OssCallbackLog OSS回调日志
+message OssCallbackLog {
+    int64 id = 1;                   // 记录ID
+    string bucketName = 2;          // 桶名称
+    string objectKey = 3;           // 对象键
+    string eventType = 4;           // 事件类型
+    int64 size = 5;                 // 对象大小
+    string contentType = 6;         // 内容类型
+    string etag = 7;                // ETag
+    string userMetadata = 8;        // 用户元数据(JSON字符串)
+    google.protobuf.Timestamp eventTime = 9;  // 事件时间
+    string status = 10;              // 处理状态
+    string error = 11;              // 错误信息
+    google.protobuf.Timestamp createdAt = 12; // 创建时间
+    google.protobuf.Timestamp updatedAt = 13; // 更新时间
+}
+
+// 事件类型定义
+enum EventType {
+    EVENT_TYPE_UNSPECIFIED = 0;
+    EVENT_TYPE_OBJECT_CREATED = 1;   // s3:ObjectCreated:Put
+    EVENT_TYPE_OBJECT_REMOVED = 2;   // s3:ObjectRemoved:Delete
+}
+
+// 处理状态定义
+enum ProcessStatus {
+    PROCESS_STATUS_UNSPECIFIED = 0;
+    PROCESS_STATUS_NEW = 1;         // 新事件
+    PROCESS_STATUS_PROCESSING = 2;   // 处理中
+    PROCESS_STATUS_SUCCESS = 3;      // 处理成功
+    PROCESS_STATUS_FAILED = 4;       // 处理失败
+}
+
+// OssCallbackService OSS回调服务
+service OssCallbackService {
+    // HandleCallback 处理OSS回调
+    rpc HandleCallback(MinioCallbackNotification) returns (HandleCallbackResponse) {}
+}
+
+// HandleCallbackResponse 处理回调响应
+message HandleCallbackResponse {
+    bool success = 1;               // 是否成功
+    string message = 2;             // 响应消息
+    string error = 3;              // 错误信息
+}

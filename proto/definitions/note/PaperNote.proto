@@ -1,0 +1,240 @@
+syntax = "proto3";
+
+package note;
+
+import "definitions/validate/Validate.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/note";
+
+// 论文笔记模型
+message PaperNote {
+  string id = 1;
+  string paper_id = 2 [(validate.rules).string = {min_len: 1}];
+  string pdf_id = 3 [(validate.rules).string = {min_len: 1}];
+  uint32 note_count = 4 [(validate.rules).uint32 = {gte: 0}];
+  string annotation_pdf_id = 5 [(validate.rules).string = {min_len: 1}];
+}
+
+// @api_path: /api/note/paper
+// @method: POST
+// @content-type: application/json
+// @summary: 创建论文笔记
+message CreatePaperNoteRequest {
+  string paper_id = 1 [(validate.rules).string = {min_len: 1}];
+  string pdf_id = 2 [(validate.rules).string = {min_len: 1}];
+  uint32 note_count = 3 [(validate.rules).uint32 = {gte: 0}];
+  string annotation_pdf_id = 4 [(validate.rules).string = {min_len: 1}];
+}
+
+message CreatePaperNoteResponse {
+  string id = 1;
+}
+
+// @api_path: /api/note/paper
+// @method: GET
+// @content-type: application/json
+// @summary: 获取论文笔记
+message GetPaperNoteRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message GetPaperNoteResponse {
+  PaperNote note = 1;
+}
+
+// @api_path: /api/note/paper
+// @method: PUT
+// @content-type: application/json
+// @summary: 更新论文笔记
+message UpdatePaperNoteRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+  uint32 note_count = 2 [(validate.rules).uint32 = {gte: 0}];
+}
+
+message UpdatePaperNoteResponse {
+  string id = 1;
+}
+
+// @api_path: /api/note/paper
+// @method: DELETE
+// @content-type: application/json
+// @summary: 删除论文笔记
+message DeletePaperNoteRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message DeletePaperNoteResponse {
+  string id = 1;
+}
+
+// @api_path: /api/note/papers
+// @method: GET
+// @content-type: application/json
+// @summary: 列出论文笔记
+message ListPaperNotesRequest {
+  uint32 limit = 1 [(validate.rules).uint32 = {gt: 0}];
+  uint32 offset = 2 [(validate.rules).uint32 = {gte: 0}];
+}
+
+message ListPaperNotesResponse {
+  repeated PaperNote notes = 1;
+}
+
+// @api_path: /api/note/papers/count
+// @method: GET
+// @content-type: application/json
+// @summary: 获取论文笔记总数
+message CountPaperNotesRequest {
+}
+
+message CountPaperNotesResponse {
+  uint64 count = 1;
+}
+
+
+//------ 旧接口翻译扩展 ------//
+
+message UserInfoBean {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+  string nickName = 2 [(validate.rules).string = {min_len: 1}];
+  bool self = 3;
+  string showName = 4 [(validate.rules).string = {min_len: 1}];
+  string avatarUrl = 5 [(validate.rules).string = {min_len: 1}];
+  string tags = 6;
+  string description = 7;
+  string authorId = 8 [(validate.rules).string = {min_len: 1}];
+  string authorName = 9 [(validate.rules).string = {min_len: 1}];
+  bool isAuthentication = 10;
+  bool isPaperAuthor = 11;
+}
+
+// @api_path: /api/note/paperNote/getPaperNoteBaseInfoById
+// @method: POST
+// @content-type: application/json
+// @summary: 获取论文笔记基础信息By ID
+message GetPaperNoteBaseInfoByIdReq {
+  string noteId = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+// @api_path: /api/note/paperNote/getOwnerPaperNoteBaseInfo
+// @method: POST
+// @content-type: application/json
+// @summary: 获取自己的笔记基础信息
+message GetOwnerPaperNoteBaseInfoReq {
+  string pdfId = 1;
+  optional string groupId = 2;
+}
+
+message PaperNoteBaseInfoResponse { 
+  string pdfId = 1 [(validate.rules).string = {min_len: 1}];
+  string noteId = 2 [(validate.rules).string = {min_len: 1}];
+  string paperId = 3 [(validate.rules).string = {min_len: 1}];
+  string pdfContributor = 4 [(validate.rules).string = {min_len: 1}];
+  uint32 paperNoteCount = 5 [(validate.rules).uint32 = {gte: 0}];
+  bool isCollected = 6;
+  bool isUserUpload = 7;
+  bool isPrivatePaper = 8;
+  bool showAnnotation = 9;
+  string paperTitle = 10 [(validate.rules).string = {min_len: 1}];
+  string sourceMark = 11 [(validate.rules).string = {min_len: 1}];
+  string crawlUrl = 12 [(validate.rules).string = {min_len: 1}];
+  string uploadUserId = 13 [(validate.rules).string = {min_len: 1}];
+  string licenceType = 14 [(validate.rules).string = {min_len: 1}];
+  string docName = 15 [(validate.rules).string = {min_len: 1}];
+  string noteSummary = 16 [(validate.rules).string = {min_len: 1}];
+  string pdfUrl = 17 [(validate.rules).string = {min_len: 1}];
+  string modifyDate = 18 [(validate.rules).string = {min_len: 1}];
+  UserInfoBean userInfo = 19;
+  bool isPaperCollected = 20;
+  bool isLike = 21;
+  uint32 likeCount = 22 [(validate.rules).uint32 = {gte: 0}];
+  bool isGptWhite = 23;
+  string gptGrayTip = 24 [(validate.rules).string = {min_len: 1}];
+  string userDocId = 25 [(validate.rules).string = {min_len: 1}];
+  bool accessToAiAssistantReading = 26;
+}
+
+// 论文笔记访问记录模型
+message PaperNoteAccess {
+  string id = 1;
+  string note_id = 2 [(validate.rules).string = {min_len: 1}];
+  bool open_status = 3;
+}
+
+// @api_path: /api/note/paper/access
+// @method: POST
+// @content-type: application/json
+// @summary: 创建论文笔记访问记录
+message CreatePaperNoteAccessRequest {
+  string note_id = 1 [(validate.rules).string = {min_len: 1}];
+  bool open_status = 2;
+}
+
+message CreatePaperNoteAccessResponse {
+  string id = 1;
+}
+
+// @api_path: /api/note/paper/access
+// @method: GET
+// @content-type: application/json
+// @summary: 获取论文笔记访问记录
+message GetPaperNoteAccessRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message GetPaperNoteAccessResponse {
+  PaperNoteAccess access = 1;
+}
+
+// @api_path: /api/note/paper/access/by-note
+// @method: GET
+// @content-type: application/json
+// @summary: 根据笔记ID获取论文笔记访问记录
+message GetPaperNoteAccessByNoteIdRequest {
+  string note_id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message GetPaperNoteAccessByNoteIdResponse {
+  PaperNoteAccess access = 1;
+}
+
+// @api_path: /api/note/paper/access
+// @method: PUT
+// @content-type: application/json
+// @summary: 更新论文笔记访问记录
+message UpdatePaperNoteAccessRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+  bool open_status = 2;
+}
+
+message UpdatePaperNoteAccessResponse {
+  bool success = 1;
+}
+
+// @api_path: /api/note/paper/access
+// @method: DELETE
+// @content-type: application/json
+// @summary: 删除论文笔记访问记录
+message DeletePaperNoteAccessRequest {
+  string id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+message DeletePaperNoteAccessResponse {
+  bool success = 1;
+}
+
+// @api_path: /api/note/paperNote/downloadNotePdf
+// @method: GET
+// @content-type: application/json
+// @summary: 下载笔记PDF
+message DownloadNotePdfRequest {
+  string note_id = 1 [(validate.rules).string = {min_len: 1}];
+}
+
+// @api_path: /api/note/paperNote/downloadNoteMarkdown
+// @method: GET
+// @content-type: application/json
+// @summary: 下载笔记Markdown
+message DownloadNoteMarkdownRequest {
+  string note_id = 1 [(validate.rules).string = {min_len: 1}];
+}

@@ -1,0 +1,120 @@
+
+syntax = "proto3";
+
+package pdf;
+
+//import "definitions/validate/Validate.proto";
+import "definitions/note/Web.proto";
+
+option go_package = "github.com/yb2020/odoc-proto/gen/go/pdf";
+
+// @old_api_path: /pdfMark/v3/web/getByNote
+// @api_path: /api/pdf/pdfMark/v3/web/getByNote
+// @method: GET
+// @content-type: application/json
+// @summary: 获取笔记标注列表
+message GetNoteAnnotationListByNoteIdRequest {
+  string noteId = 1;
+  string groupId = 2;
+  bool handtext = 3;
+}
+
+message GetNoteAnnotationListByNoteIdResponse {
+  repeated note.WebNoteAnnotationModel annotations = 1;
+}
+
+// @old_api_path: /pdfMark/v3/web/draw/getByNote
+// @api_path: /api/pdf/pdfMark/v3/web/draw/getByNote
+// @method: GET
+// @content-type: application/json
+// @summary: 获取笔记标注列表
+message GetDrawNoteAnnotationListByNoteIdRequest {
+  string noteId = 1;
+  string groupId = 2;
+  bool fetchAll = 3;
+  bool handwrite = 4;
+}
+
+message GetDrawNoteAnnotationListByNoteIdResponse {
+  repeated note.WebNoteAnnotationModel annotations = 1;
+}
+
+// @api_path: /api/pdf/pdfMark/v2/web/hotSelect
+// @method: GET
+// @content-type: application/json
+// @summary: 获取热选笔记标注列表
+message HotSelectRequest {
+  string pdfId = 1;
+}
+
+message HotSelectResponse {
+  repeated note.WebNoteAnnotationModel annotations = 1;
+}
+
+
+/**
+ * @api_path: /api/pdf/pdfMark/v2/web/getMyNoteMarkList
+ * @method: POST
+ * @content-type: application/json
+ * @summary: 查询我的笔记列表
+ */
+message GetMyNoteMarkListReq {
+  //文件夹id
+  optional string folderId=1;
+  //标签id
+  repeated string tagIdList=2;
+  //排序
+  SortTypeEnum sortType=3;
+  int32 currentPage = 4;
+  int32 pageSize = 5;
+  //搜索内容
+  string searchContent = 6;
+  //显示规则
+  repeated uint32 styleIdList=7;
+  //文献id
+  optional string docId = 8;
+}
+
+enum SortTypeEnum {
+  //最新
+  NEWEST=0;
+  //最早
+  EARLIEST=1;
+  //默认排序: 列表时：按文献最近阅读倒序，搜索时：按搜索匹配度
+  SORT_DEFAULT=2;  // 改为 SORT_DEFAULT
+}
+
+/**
+ * @api_path: /api/pdf/pdfMark/v2/web/getMyNoteMarkList
+ * @method: POST
+ * @content-type: application/json
+ * @summary: 查询我的笔记列表
+ */
+message GetMyNoteMarkListResponse {
+ //笔记内容
+ repeated note.WebNoteAnnotationModel annotationModelList=1;
+ int32 total= 2;
+}
+
+// @api_path: /api/pdf/pdfMark/v2/web/save
+// @method post
+// @summary 保存标注笔记
+message SavePdfMarkRequest {
+  string noteId = 1;
+  string groupId = 2;
+  bool handtext = 3;
+}
+
+message SavePdfMarkResponse {
+  string uuid = 1;
+}
+
+// @api_path: /api/pdf/pdfMark/v2/web/update
+// @method post
+// @summary 更新标注笔记
+message UpdatePdfMarkRequest {
+}
+
+message UpdatePdfMarkResponse {
+  string uuid = 1;
+}
