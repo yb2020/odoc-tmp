@@ -1,0 +1,11 @@
+{
+  "name": "odoc-proto",
+  "version": "1.0.0",
+  "description": "Protocol Buffers definitions for odoc",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "dependencies": {
+    "@protobuf-ts/runtime": "^2.9.0",
+    "@protobuf-ts/runtime-rpc": "^2.9.0"
+  }
+}
