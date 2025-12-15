@@ -202,11 +202,3 @@ jobs:
           git branch -D proto-generated || true
           git push origin --delete proto-generated || true
 
-      # 调试信息
-      - name: Debug info before version bump
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Files in current directory: $(ls -la)"
-          echo "Package.json content:"
-          cat package.json
-          echo "GitHub ref: ${{ github.ref }}"
