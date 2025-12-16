@@ -6,7 +6,7 @@ import "definitions/oss/OSS.proto";
 import "definitions/doc/ClientDoc.proto";
 import "definitions/doc/UserDocParsedStatus.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/doc";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/doc";
 
 
 /**

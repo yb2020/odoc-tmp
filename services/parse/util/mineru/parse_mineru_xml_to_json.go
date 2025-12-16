@@ -10,9 +10,9 @@ import (
 	"strconv"
 	"strings"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/parsed"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/idgen"
+	pb "github.com/yb2020/odoc/proto/gen/go/parsed"
 	"github.com/yb2020/odoc/services/parse/constant"
 	"github.com/yb2020/odoc/services/parse/util"
 	"golang.org/x/text/cases"

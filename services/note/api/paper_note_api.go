@@ -11,10 +11,10 @@ import (
 
 	// "github.com/yb2020/odoc/pkg/errors" // 暂时未使用
 
-	pb "github.com/yb2020/odoc-proto/gen/go/note"
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/response"
 	"github.com/yb2020/odoc/pkg/transport"
+	pb "github.com/yb2020/odoc/proto/gen/go/note"
 	docService "github.com/yb2020/odoc/services/doc/service"
 	noteInterface "github.com/yb2020/odoc/services/note/interfaces"
 	paperService "github.com/yb2020/odoc/services/paper/service"

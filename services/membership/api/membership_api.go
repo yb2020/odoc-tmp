@@ -5,11 +5,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
-	pb "github.com/yb2020/odoc-proto/gen/go/membership"
 	"github.com/yb2020/odoc/config"
 	userContext "github.com/yb2020/odoc/pkg/context"
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/response"
+	pb "github.com/yb2020/odoc/proto/gen/go/membership"
 	"github.com/yb2020/odoc/services/membership/interfaces"
 	"github.com/yb2020/odoc/services/membership/service"
 	userService "github.com/yb2020/odoc/services/user/service"

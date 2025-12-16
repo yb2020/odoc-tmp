@@ -68,39 +68,39 @@ git config --global core.ignorecase false
 
 ```bash
 # 告诉 Go 直接从源获取，不使用代理
-export GOPRIVATE=github.com/yb2020/odoc-proto
+export GOPRIVATE=github.com/yb2020/odoc/proto
 # 永久设置到zsh
-export GOPRIVATE=github.com/yb2020/odoc-proto
+export GOPRIVATE=github.com/yb2020/odoc/proto
 source ~/.zshrc
 
 # 配置 Git 使用 SSH 而不是 HTTPS（只针对这个特定仓库）
-git config --global url."git@github.com:yb2020/go-sea-proto.git".insteadOf "https://github.com/yb2020/odoc-proto"
+git config --global url."git@github.com:yb2020/go-sea-proto.git".insteadOf "https://github.com/yb2020/odoc/proto"
 ```
 
 #### Windows 环境
 
 ```powershell
 # PowerShell 中设置环境变量
-$env:GOPRIVATE = "github.com/yb2020/odoc-proto"
+$env:GOPRIVATE = "github.com/yb2020/odoc/proto"
 # 永久设置（需要管理员权限）
-[Environment]::SetEnvironmentVariable("GOPRIVATE", "github.com/yb2020/odoc-proto", "User")
+[Environment]::SetEnvironmentVariable("GOPRIVATE", "github.com/yb2020/odoc/proto", "User")
 
 # Git 配置与 Linux/Mac 相同
-git config --global url."git@github.com:yb2020/go-sea-proto.git".insteadOf "https://github.com/yb2020/odoc-proto"
+git config --global url."git@github.com:yb2020/go-sea-proto.git".insteadOf "https://github.com/yb2020/odoc/proto"
 ```
 
 2. 在 `go.mod` 文件中添加依赖：
 
 ```go
-require github.com/yb2020/odoc-proto v0.0.3 // 使用最新版本
+require github.com/yb2020/odoc/proto v0.0.3 // 使用最新版本
 ```
 
 3. 在代码中导入：
 
 ```go
 import (
-    user "github.com/yb2020/odoc-proto/gen/go/user"
-    common "github.com/yb2020/odoc-proto/gen/go/common"
+    user "github.com/yb2020/odoc/proto/gen/go/user"
+    common "github.com/yb2020/odoc/proto/gen/go/common"
 )
 ```
 
@@ -111,7 +111,7 @@ import (
 ```json
 {
   "dependencies": {
-    "go-sea-proto": "git+ssh://git@github.com/yb2020/odoc-proto.git#v0.0.6",
+    "go-sea-proto": "git+ssh://git@github.com/yb2020/odoc/proto.git#v0.0.6",
   }
 }
 ```
@@ -130,24 +130,24 @@ import { User } from 'go-sea-proto/gen/ts/User/User';
 
 ```bash
 # 配置 Git 使用 SSH 而不是 HTTPS（只针对这个特定仓库）
-git config --global url."git@github.com:yb2020/go-sea-proto.git".insteadOf "https://github.com/yb2020/odoc-proto"
+git config --global url."git@github.com:yb2020/go-sea-proto.git".insteadOf "https://github.com/yb2020/odoc/proto"
 ```
 
 #### Windows 环境
 
 ```powershell
 # Git 配置与 Linux/Mac 相同
-git config --global url."git@github.com:yb2020/go-sea-proto.git".insteadOf "https://github.com/yb2020/odoc-proto"
+git config --global url."git@github.com:yb2020/go-sea-proto.git".insteadOf "https://github.com/yb2020/odoc/proto"
 ```
 
 2. 安装依赖（使用 pip）：
 
 ```bash
 # 安装特定版本
-pip install git+ssh://git@github.com/yb2020/odoc-proto.git@v0.0.137
+pip install git+ssh://git@github.com/yb2020/odoc/proto.git@v0.0.137
 
 # 或者在 requirements.txt 中添加
-# go-sea-proto @ git+ssh://git@github.com/yb2020/odoc-proto.git@v0.0.137
+# go-sea-proto @ git+ssh://git@github.com/yb2020/odoc/proto.git@v0.0.137
 ```
 
 3. 在代码中导入：
@@ -168,7 +168,7 @@ from common import common_pb2
 ### Go 项目
 
 ```bash
-go get -u github.com/yb2020/odoc-proto
+go get -u github.com/yb2020/odoc/proto
 ```
 
 ### TypeScript 项目
@@ -182,7 +182,7 @@ bun install
 ### Python 项目
 
 ```bash
-pip install --upgrade git+ssh://git@github.com/yb2020/odoc-proto.git@v0.0.137
+pip install --upgrade git+ssh://git@github.com/yb2020/odoc/proto.git@v0.0.137
 ``` 
 
 前端通过git拉包拉不下来时，要执行以下命令

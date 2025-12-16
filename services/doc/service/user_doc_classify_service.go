@@ -4,11 +4,11 @@ import (
 	"context"
 
 	"github.com/opentracing/opentracing-go"
-	docpb "github.com/yb2020/odoc-proto/gen/go/doc"
 	baseDao "github.com/yb2020/odoc/pkg/dao"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/idgen"
 	"github.com/yb2020/odoc/pkg/logging"
+	docpb "github.com/yb2020/odoc/proto/gen/go/doc"
 	"github.com/yb2020/odoc/services/doc/dao"
 	"github.com/yb2020/odoc/services/doc/model"
 	"gorm.io/gorm"

@@ -2,7 +2,7 @@
 syntax = "proto3";
 package copilot;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/copilot";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/copilot";
 
 // @api_path: /api/customQuestion/getList
 // @method: GET

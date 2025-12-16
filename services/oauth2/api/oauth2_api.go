@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/oauth2"
 	"github.com/yb2020/odoc/config"
 	userContext "github.com/yb2020/odoc/pkg/context"
 	"github.com/yb2020/odoc/pkg/errors"
@@ -13,6 +12,7 @@ import (
 	"github.com/yb2020/odoc/pkg/response"
 	"github.com/yb2020/odoc/pkg/transport"
 	"github.com/yb2020/odoc/pkg/utils"
+	pb "github.com/yb2020/odoc/proto/gen/go/oauth2"
 	"github.com/yb2020/odoc/services/oauth2/helper"
 	"github.com/yb2020/odoc/services/oauth2/model"
 	"github.com/yb2020/odoc/services/oauth2/service"

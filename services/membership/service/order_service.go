@@ -5,13 +5,13 @@ import (
 	"time"
 
 	"github.com/opentracing/opentracing-go"
-	msPb "github.com/yb2020/odoc-proto/gen/go/membership"
-	pb "github.com/yb2020/odoc-proto/gen/go/order"
 	"github.com/yb2020/odoc/internal/biz"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/eventbus"
 	"github.com/yb2020/odoc/pkg/idgen"
 	"github.com/yb2020/odoc/pkg/logging"
+	msPb "github.com/yb2020/odoc/proto/gen/go/membership"
+	pb "github.com/yb2020/odoc/proto/gen/go/order"
 
 	"github.com/yb2020/odoc/services/membership/dao"
 	"github.com/yb2020/odoc/services/membership/dto"

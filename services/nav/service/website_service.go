@@ -6,11 +6,11 @@ import (
 	"math"
 
 	"github.com/opentracing/opentracing-go"
-	pb "github.com/yb2020/odoc-proto/gen/go/nav"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/idgen"
 	"github.com/yb2020/odoc/pkg/logging"
+	pb "github.com/yb2020/odoc/proto/gen/go/nav"
 	"github.com/yb2020/odoc/services/nav/dao"
 	"github.com/yb2020/odoc/services/nav/model"
 	"gorm.io/gorm"

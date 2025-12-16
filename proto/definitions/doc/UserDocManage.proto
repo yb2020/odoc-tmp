@@ -4,7 +4,7 @@ package doc;
 
 import "definitions/doc/UserDocParsedStatus.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/doc";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/doc";
 
 /**
  *	接口描述: 手动更新文献引用信息

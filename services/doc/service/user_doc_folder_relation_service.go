@@ -5,11 +5,11 @@ import (
 
 	"github.com/opentracing/opentracing-go"
 	// 使用 ClientDoc.pb.go 中的定义
-	clientdocpb "github.com/yb2020/odoc-proto/gen/go/doc"
 	userContext "github.com/yb2020/odoc/pkg/context"
 	baseDao "github.com/yb2020/odoc/pkg/dao"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/logging"
+	clientdocpb "github.com/yb2020/odoc/proto/gen/go/doc"
 	"github.com/yb2020/odoc/services/doc/dao"
 	"github.com/yb2020/odoc/services/doc/model"
 	"gorm.io/gorm"

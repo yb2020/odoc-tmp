@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/membership"
 	"github.com/yb2020/odoc/config"
+	pb "github.com/yb2020/odoc/proto/gen/go/membership"
 	"github.com/yb2020/odoc/services/membership/model"
 )
 

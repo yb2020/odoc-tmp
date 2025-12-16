@@ -7,8 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/doc"
-	osspb "github.com/yb2020/odoc-proto/gen/go/oss"
 	config "github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/cache"
 	userContext "github.com/yb2020/odoc/pkg/context"
@@ -17,6 +15,8 @@ import (
 	"github.com/yb2020/odoc/pkg/response"
 	"github.com/yb2020/odoc/pkg/transport"
 	"github.com/yb2020/odoc/pkg/utils"
+	pb "github.com/yb2020/odoc/proto/gen/go/doc"
+	osspb "github.com/yb2020/odoc/proto/gen/go/oss"
 	docBean "github.com/yb2020/odoc/services/doc/bean"
 	"github.com/yb2020/odoc/services/doc/service"
 	membershipInterface "github.com/yb2020/odoc/services/membership/interfaces"

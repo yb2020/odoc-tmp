@@ -3,11 +3,11 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
-	"github.com/yb2020/odoc-proto/gen/go/translate"
 	userContext "github.com/yb2020/odoc/pkg/context"
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/response"
 	"github.com/yb2020/odoc/pkg/transport"
+	"github.com/yb2020/odoc/proto/gen/go/translate"
 	"github.com/yb2020/odoc/services/translate/service"
 )
 

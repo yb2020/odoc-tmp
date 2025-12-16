@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 
 	"github.com/opentracing/opentracing-go"
-	docPb "github.com/yb2020/odoc-proto/gen/go/doc"
-	pb "github.com/yb2020/odoc-proto/gen/go/paper"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/logging"
+	docPb "github.com/yb2020/odoc/proto/gen/go/doc"
+	pb "github.com/yb2020/odoc/proto/gen/go/paper"
 	"github.com/yb2020/odoc/services/paper/bean"
 	"github.com/yb2020/odoc/services/paper/constants"
 	"github.com/yb2020/odoc/services/paper/dao"

@@ -6,8 +6,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
-	pb "github.com/yb2020/odoc-proto/gen/go/membership"
-	"github.com/yb2020/odoc-proto/gen/go/translate"
 	"github.com/yb2020/odoc/config"
 	userContext "github.com/yb2020/odoc/pkg/context"
 	"github.com/yb2020/odoc/pkg/errors"
@@ -15,6 +13,8 @@ import (
 	"github.com/yb2020/odoc/pkg/ratelimit"
 	"github.com/yb2020/odoc/pkg/response"
 	"github.com/yb2020/odoc/pkg/transport"
+	pb "github.com/yb2020/odoc/proto/gen/go/membership"
+	"github.com/yb2020/odoc/proto/gen/go/translate"
 	"github.com/yb2020/odoc/services/membership/interfaces"
 	"github.com/yb2020/odoc/services/translate/service"
 )

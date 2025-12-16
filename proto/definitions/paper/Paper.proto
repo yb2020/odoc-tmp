@@ -5,7 +5,7 @@ package paper;
 import "definitions/validate/Validate.proto";
 import "definitions/user/AuthorBean.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/paper";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/paper";
 
 // 论文版本类型
 enum PaperVersionType {

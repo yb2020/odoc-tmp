@@ -2,9 +2,9 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	pb "github.com/yb2020/odoc-proto/gen/go/oauth2"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/middleware"
+	pb "github.com/yb2020/odoc/proto/gen/go/oauth2"
 	"github.com/yb2020/odoc/services/oauth2/model"
 )
 

@@ -4,14 +4,14 @@ import (
 	"context"
 
 	"github.com/opentracing/opentracing-go"
-	"github.com/yb2020/odoc-proto/gen/go/common"
-	pb "github.com/yb2020/odoc-proto/gen/go/pdf"
-	user_pb "github.com/yb2020/odoc-proto/gen/go/user"
 	"github.com/yb2020/odoc/config"
 	userContext "github.com/yb2020/odoc/pkg/context"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/utils"
+	"github.com/yb2020/odoc/proto/gen/go/common"
+	pb "github.com/yb2020/odoc/proto/gen/go/pdf"
+	user_pb "github.com/yb2020/odoc/proto/gen/go/user"
 	userDocService "github.com/yb2020/odoc/services/doc/interfaces"
 	docModel "github.com/yb2020/odoc/services/doc/model"
 

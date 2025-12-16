@@ -3,7 +3,7 @@ package interfaces
 import (
 	"context"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/doc"
+	pb "github.com/yb2020/odoc/proto/gen/go/doc"
 	"github.com/yb2020/odoc/services/doc/model"
 )
 

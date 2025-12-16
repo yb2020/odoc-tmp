@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package oss;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/oss";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/oss";
 
 import "google/protobuf/timestamp.proto";
 

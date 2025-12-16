@@ -7,10 +7,10 @@ import (
 	"path/filepath"
 
 	"github.com/opentracing/opentracing-go"
-	pb "github.com/yb2020/odoc-proto/gen/go/parsed"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/http_client"
 	"github.com/yb2020/odoc/pkg/logging"
+	pb "github.com/yb2020/odoc/proto/gen/go/parsed"
 	grobidUtil "github.com/yb2020/odoc/services/parse/util/grobid"
 )
 

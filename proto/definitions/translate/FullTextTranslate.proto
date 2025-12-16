@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package translate;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/translate";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/translate";
 
 import "definitions/validate/Validate.proto";
 

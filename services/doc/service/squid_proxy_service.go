@@ -11,11 +11,11 @@ import (
 	"time"
 
 	"github.com/opentracing/opentracing-go"
-	pb "github.com/yb2020/odoc-proto/gen/go/doc"
 	"github.com/yb2020/odoc/config"
 	userContext "github.com/yb2020/odoc/context"
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/squid_proxy"
+	pb "github.com/yb2020/odoc/proto/gen/go/doc"
 	ossModel "github.com/yb2020/odoc/services/oss/model"
 	userService "github.com/yb2020/odoc/services/user/service"
 )

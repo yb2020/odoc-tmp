@@ -4,7 +4,7 @@ package common;
 
 import "google/protobuf/any.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/common";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/common";
 
 // APIResponse 通用API响应结构
 message APIResponse {

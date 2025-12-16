@@ -5,7 +5,7 @@ package user;
 import "definitions/validate/Validate.proto";
 import "definitions/user/User.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/user";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/user";
 
 
 

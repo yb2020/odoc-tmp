@@ -9,7 +9,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/beevik/etree"
-	pb "github.com/yb2020/odoc-proto/gen/go/parsed"
+	pb "github.com/yb2020/odoc/proto/gen/go/parsed"
 	"github.com/yb2020/odoc/services/parse/util"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"

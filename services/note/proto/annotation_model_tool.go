@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"strconv"
 
-	common "github.com/yb2020/odoc-proto/gen/go/common"
-	pb "github.com/yb2020/odoc-proto/gen/go/note"
 	"github.com/yb2020/odoc/pkg/errors"
+	common "github.com/yb2020/odoc/proto/gen/go/common"
+	pb "github.com/yb2020/odoc/proto/gen/go/note"
 
 	pdfModel "github.com/yb2020/odoc/services/pdf/model"
 )

@@ -4,7 +4,7 @@ package user;
 
 // import "definitions/validate/Validate.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/user";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/user";
 
 // 用户封禁信息
 message UserBanInfo {

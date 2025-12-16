@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/parsed"
 	"github.com/yb2020/odoc/pkg/errors"
+	pb "github.com/yb2020/odoc/proto/gen/go/parsed"
 )
 
 // DeserializePdfMetadata 将字节数组反序列化为PDF元数据对象

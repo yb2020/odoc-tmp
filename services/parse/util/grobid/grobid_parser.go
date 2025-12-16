@@ -1,7 +1,7 @@
 package util
 
 import (
-	pb "github.com/yb2020/odoc-proto/gen/go/parsed"
+	pb "github.com/yb2020/odoc/proto/gen/go/parsed"
 	v8 "github.com/yb2020/odoc/services/parse/util/grobid/v8"
 )
 

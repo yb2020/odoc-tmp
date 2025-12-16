@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/opentracing/opentracing-go"
-	pb "github.com/yb2020/odoc-proto/gen/go/translate"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/cache"
 	userContext "github.com/yb2020/odoc/pkg/context"
@@ -18,6 +17,7 @@ import (
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/metrics"
 	"github.com/yb2020/odoc/pkg/utils"
+	pb "github.com/yb2020/odoc/proto/gen/go/translate"
 	docService "github.com/yb2020/odoc/services/doc/service"
 	membershipInterface "github.com/yb2020/odoc/services/membership/interfaces"
 	noteInterface "github.com/yb2020/odoc/services/note/interfaces"

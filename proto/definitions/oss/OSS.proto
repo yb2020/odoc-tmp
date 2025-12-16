@@ -3,7 +3,7 @@ syntax = "proto3";
 package oss;
 
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/oss";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/oss";
 
 // OSS存储桶枚举
 enum OSSBucketEnum {

@@ -1,8 +1,8 @@
 package constant
 
 import (
-	pb "github.com/yb2020/odoc-proto/gen/go/oss"
 	pkgi18n "github.com/yb2020/odoc/pkg/i18n"
+	pb "github.com/yb2020/odoc/proto/gen/go/oss"
 )
 
 var (

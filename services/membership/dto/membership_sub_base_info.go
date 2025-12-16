@@ -1,6 +1,6 @@
 package dto
 
-import pb "github.com/yb2020/odoc-proto/gen/go/order"
+import pb "github.com/yb2020/odoc/proto/gen/go/order"
 
 // MembershipSubBaseInfo 会员订阅计划
 type MembershipSubBaseInfo struct {

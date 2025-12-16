@@ -5,10 +5,10 @@ import (
 	"io"
 
 	"github.com/opentracing/opentracing-go"
-	pb "github.com/yb2020/odoc-proto/gen/go/oss"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/oss"
+	pb "github.com/yb2020/odoc/proto/gen/go/oss"
 	"github.com/yb2020/odoc/services/oss/dao"
 	"github.com/yb2020/odoc/services/oss/model"
 	paperService "github.com/yb2020/odoc/services/paper/service"

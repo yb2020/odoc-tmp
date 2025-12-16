@@ -9,11 +9,11 @@ import (
 	"time"
 
 	"github.com/opentracing/opentracing-go"
-	pb "github.com/yb2020/odoc-proto/gen/go/doc"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/cache"
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/utils"
+	pb "github.com/yb2020/odoc/proto/gen/go/doc"
 	"github.com/yb2020/odoc/services/doc/constant"
 	"github.com/yb2020/odoc/services/doc/model"
 )

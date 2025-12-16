@@ -7,7 +7,6 @@ import (
 
 	"github.com/opentracing/opentracing-go"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/user"
 	"github.com/yb2020/odoc/internal/biz"
 	"github.com/yb2020/odoc/pkg/cache"
 	userContext "github.com/yb2020/odoc/pkg/context"
@@ -20,6 +19,7 @@ import (
 	baseModel "github.com/yb2020/odoc/pkg/model"
 	"github.com/yb2020/odoc/pkg/paginate"
 	"github.com/yb2020/odoc/pkg/utils"
+	pb "github.com/yb2020/odoc/proto/gen/go/user"
 	"github.com/yb2020/odoc/services/user/bean"
 	"github.com/yb2020/odoc/services/user/dao"
 	"github.com/yb2020/odoc/services/user/event"

@@ -3,8 +3,8 @@ package interfaces
 import (
 	"context"
 
-	"github.com/yb2020/odoc-proto/gen/go/common"
-	pb "github.com/yb2020/odoc-proto/gen/go/pdf"
+	"github.com/yb2020/odoc/proto/gen/go/common"
+	pb "github.com/yb2020/odoc/proto/gen/go/pdf"
 	docModel "github.com/yb2020/odoc/services/doc/model"
 	"github.com/yb2020/odoc/services/pdf/model"
 )

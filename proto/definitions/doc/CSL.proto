@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package doc;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/doc";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/doc";
 
 
 /**

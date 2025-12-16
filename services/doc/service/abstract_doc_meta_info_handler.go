@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/opentracing/opentracing-go"
-	pb "github.com/yb2020/odoc-proto/gen/go/doc"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/logging"
+	pb "github.com/yb2020/odoc/proto/gen/go/doc"
 	"github.com/yb2020/odoc/services/doc/model"
 )
 

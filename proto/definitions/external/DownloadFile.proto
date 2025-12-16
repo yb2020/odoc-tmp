@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package external;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/external";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/external";
 
 /**
  *	接口描述: 通过url下载文件

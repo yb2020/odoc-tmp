@@ -4,7 +4,7 @@ package user;
 
 import "definitions/user/User.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/user";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/user";
 
 // UserService 定义用户服务的gRPC接口
 service UserService {

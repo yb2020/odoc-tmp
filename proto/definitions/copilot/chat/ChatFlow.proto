@@ -1,7 +1,7 @@
 syntax = "proto3";
 package copilot.chat;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/copilot/chat";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/copilot/chat";
 
 import "definitions/validate/Validate.proto";
 

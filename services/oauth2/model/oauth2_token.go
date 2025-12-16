@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
-	pb "github.com/yb2020/odoc-proto/gen/go/oauth2"
 	"github.com/yb2020/odoc/pkg/model"
+	pb "github.com/yb2020/odoc/proto/gen/go/oauth2"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
 

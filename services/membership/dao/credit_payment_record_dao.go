@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/membership"
 	baseDao "github.com/yb2020/odoc/pkg/dao"
 	"github.com/yb2020/odoc/pkg/logging"
+	pb "github.com/yb2020/odoc/proto/gen/go/membership"
 	"github.com/yb2020/odoc/services/membership/model"
 	"gorm.io/gorm"
 )

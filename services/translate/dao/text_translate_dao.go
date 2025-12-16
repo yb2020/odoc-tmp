@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 
-	"github.com/yb2020/odoc-proto/gen/go/translate"
 	baseDao "github.com/yb2020/odoc/pkg/dao"
 	"github.com/yb2020/odoc/pkg/logging"
+	"github.com/yb2020/odoc/proto/gen/go/translate"
 	"github.com/yb2020/odoc/services/translate/model"
 	"gorm.io/gorm"
 )

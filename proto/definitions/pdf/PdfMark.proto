@@ -6,7 +6,7 @@ package pdf;
 //import "definitions/validate/Validate.proto";
 import "definitions/note/Web.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/pdf";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/pdf";
 
 // @old_api_path: /pdfMark/v3/web/getByNote
 // @api_path: /api/pdf/pdfMark/v3/web/getByNote

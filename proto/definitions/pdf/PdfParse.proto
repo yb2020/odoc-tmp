@@ -4,7 +4,7 @@ package pdf;
 
 import "definitions/common/Base.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/pdf";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/pdf";
 
 // 用来描述PDF元素的位置
 message PdfBBox {

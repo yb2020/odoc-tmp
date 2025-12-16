@@ -5,7 +5,7 @@ package note;
 import "definitions/validate/Validate.proto";
 import "definitions/common/ShapeAnnotation.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/note";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/note";
 
 // @api_path: /api/note/noteShape/getList
 // @method: POST

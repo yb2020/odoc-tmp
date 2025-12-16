@@ -4,7 +4,7 @@ package membership;
 
 import "definitions/user/User.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/membership";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/membership";
 
 
 // MembershipType 会员类型

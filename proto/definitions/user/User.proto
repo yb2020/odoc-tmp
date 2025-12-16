@@ -6,7 +6,7 @@ import "definitions/validate/Validate.proto";
 import "definitions/user/UserRole.proto";
 import "definitions/user/UserStatus.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/user";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/user";
 
 
 // 用户模型

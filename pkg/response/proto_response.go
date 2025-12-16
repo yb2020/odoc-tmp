@@ -10,7 +10,7 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/anypb"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/common"
+	pb "github.com/yb2020/odoc/proto/gen/go/common"
 )
 
 // NewAPIResponse 创建一个新的 API 响应

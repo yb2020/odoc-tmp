@@ -11,8 +11,6 @@ import (
 	"path/filepath"
 
 	"github.com/opentracing/opentracing-go"
-	docpb "github.com/yb2020/odoc-proto/gen/go/doc"
-	osspb "github.com/yb2020/odoc-proto/gen/go/oss"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/cache"
 	"github.com/yb2020/odoc/pkg/errors"
@@ -20,6 +18,8 @@ import (
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/squid_proxy"
 	"github.com/yb2020/odoc/pkg/utils"
+	docpb "github.com/yb2020/odoc/proto/gen/go/doc"
+	osspb "github.com/yb2020/odoc/proto/gen/go/oss"
 	"github.com/yb2020/odoc/services/doc/model"
 	ossConstant "github.com/yb2020/odoc/services/oss/constant"
 	ossModel "github.com/yb2020/odoc/services/oss/model"

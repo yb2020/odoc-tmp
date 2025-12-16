@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/opentracing/opentracing-go"
-	pb "github.com/yb2020/odoc-proto/gen/go/oss"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/idgen"
@@ -19,6 +18,7 @@ import (
 	basemodel "github.com/yb2020/odoc/pkg/model"
 	"github.com/yb2020/odoc/pkg/oss"
 	"github.com/yb2020/odoc/pkg/utils"
+	pb "github.com/yb2020/odoc/proto/gen/go/oss"
 	"github.com/yb2020/odoc/services/oss/constant"
 	"github.com/yb2020/odoc/services/oss/dao"
 	"github.com/yb2020/odoc/services/oss/model"

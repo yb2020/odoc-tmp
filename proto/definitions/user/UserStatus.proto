@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package user;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/user";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/user";
 
 // UserStatus 用户状态枚举
 enum UserStatus {

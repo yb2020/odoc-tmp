@@ -1,8 +1,8 @@
 package model
 
 import (
-	"github.com/yb2020/odoc-proto/gen/go/translate"
 	"github.com/yb2020/odoc/pkg/model"
+	"github.com/yb2020/odoc/proto/gen/go/translate"
 )
 
 // FullTextTranslate 全文翻译历史记录

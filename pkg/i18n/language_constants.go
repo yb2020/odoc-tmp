@@ -1,7 +1,7 @@
 package i18n
 
 import (
-	langPb "github.com/yb2020/odoc-proto/gen/go/lang"
+	langPb "github.com/yb2020/odoc/proto/gen/go/lang"
 )
 
 // RFC 5646 标准语言常量 - 项目统一使用这些常量

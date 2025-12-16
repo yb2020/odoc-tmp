@@ -3,7 +3,7 @@ syntax = "proto3";
 package oauth2;
 import "definitions/validate/Validate.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/oauth2";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/oauth2";
 
 
 

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package tracker;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/tracker";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/tracker";
 
 import "definitions/validate/Validate.proto";
 

@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/parsed"
+	pb "github.com/yb2020/odoc/proto/gen/go/parsed"
 )
 
 // 标题格式类型定义

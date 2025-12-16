@@ -4,10 +4,8 @@ go 1.24
 
 toolchain go1.24.0
 
-require github.com/yb2020/odoc/proto v0.0.1
-
 // 临时本地测试
-// replace github.com/yb2020/odoc-proto => /Users/yibing/odoc/proto
+replace github.com/yb2020/odoc/proto => ./proto
 
 require (
 	github.com/PuerkitoBio/goquery v1.10.2
@@ -49,6 +47,7 @@ require (
 	github.com/signintech/gopdf v0.33.0
 	github.com/spf13/viper v1.20.1
 	github.com/unidoc/unipdf/v3 v3.69.0
+	github.com/yb2020/odoc/proto v0.0.0-00010101000000-000000000000
 	golang.org/x/oauth2 v0.25.0
 	gorm.io/driver/sqlite v1.5.0
 	gorm.io/gen v0.3.27

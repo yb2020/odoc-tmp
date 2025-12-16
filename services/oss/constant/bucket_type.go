@@ -3,8 +3,8 @@ package constant
 import (
 	"strings"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/oss"
 	"github.com/yb2020/odoc/config"
+	pb "github.com/yb2020/odoc/proto/gen/go/oss"
 )
 
 // BucketTypeToEnum 根据桶名称获取对应的枚举值

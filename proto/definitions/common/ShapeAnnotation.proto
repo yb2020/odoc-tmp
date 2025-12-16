@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package common;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/common";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/common";
 
 message ShapeAnnotation {
   string uuid = 1;

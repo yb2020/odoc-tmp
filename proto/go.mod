@@ -1,4 +1,4 @@
-module github.com/yb2020/odoc-proto
+module github.com/yb2020/odoc/proto
 
 go 1.24
 

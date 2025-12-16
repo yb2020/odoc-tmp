@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package order;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/order";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/order";
 
 import "definitions/validate/Validate.proto";
 

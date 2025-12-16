@@ -9,12 +9,12 @@ import (
 	"time"
 
 	"github.com/opentracing/opentracing-go"
-	parsepb "github.com/yb2020/odoc-proto/gen/go/parsed"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/http_client"
 	"github.com/yb2020/odoc/pkg/idgen"
 	"github.com/yb2020/odoc/pkg/logging"
+	parsepb "github.com/yb2020/odoc/proto/gen/go/parsed"
 	ossService "github.com/yb2020/odoc/services/oss/service"
 	"github.com/yb2020/odoc/services/parse/util/mineru"
 	pdfModel "github.com/yb2020/odoc/services/pdf/model"

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package parsed;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/parsed";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/parsed";
 
 import "definitions/parsed/Document.proto";
 

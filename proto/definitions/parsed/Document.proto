@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package parsed;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/parsed";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/parsed";
 
 // BBox 表示文档中元素的边界框
 message BBox {

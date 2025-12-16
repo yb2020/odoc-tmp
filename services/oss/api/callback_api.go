@@ -10,10 +10,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/oss"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/response"
+	pb "github.com/yb2020/odoc/proto/gen/go/oss"
 	"github.com/yb2020/odoc/services/oss/constant"
 	serviceModel "github.com/yb2020/odoc/services/oss/model"
 	"github.com/yb2020/odoc/services/oss/service"

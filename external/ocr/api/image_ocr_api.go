@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	parsepb "github.com/yb2020/odoc-proto/gen/go/parsed"
+	parsepb "github.com/yb2020/odoc/proto/gen/go/parsed"
 	"github.com/yb2020/odoc/config"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/http_client"

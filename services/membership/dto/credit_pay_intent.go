@@ -1,7 +1,7 @@
 package dto
 
 import (
-	pb "github.com/yb2020/odoc-proto/gen/go/membership"
+	pb "github.com/yb2020/odoc/proto/gen/go/membership"
 )
 
 // CreditPayIntent 支付积分DTO

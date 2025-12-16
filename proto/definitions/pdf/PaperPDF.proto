@@ -5,7 +5,7 @@ package pdf;
 import "definitions/validate/Validate.proto";
 import "definitions/user/AuthorBean.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/pdf";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/pdf";
 
 // 论文PDF模型
 message PaperPDF {

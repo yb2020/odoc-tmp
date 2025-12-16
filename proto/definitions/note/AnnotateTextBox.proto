@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package note;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/note";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/note";
 
 
 message AnnotateTextBox {

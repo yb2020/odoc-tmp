@@ -1,7 +1,7 @@
 package bean
 
 import (
-	docpb "github.com/yb2020/odoc-proto/gen/go/doc"
+	docpb "github.com/yb2020/odoc/proto/gen/go/doc"
 )
 
 // UserDocUpdateType 更新类型枚举

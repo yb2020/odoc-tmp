@@ -5,11 +5,11 @@ import (
 	"strings"
 
 	"github.com/opentracing/opentracing-go"
-	"github.com/yb2020/odoc-proto/gen/go/common"
-	notePb "github.com/yb2020/odoc-proto/gen/go/note"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/idgen"
 	"github.com/yb2020/odoc/pkg/logging"
+	"github.com/yb2020/odoc/proto/gen/go/common"
+	notePb "github.com/yb2020/odoc/proto/gen/go/note"
 	noteInterfaces "github.com/yb2020/odoc/services/note/interfaces"
 	proto "github.com/yb2020/odoc/services/note/proto"
 	"github.com/yb2020/odoc/services/pdf/dao"

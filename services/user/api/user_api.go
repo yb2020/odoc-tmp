@@ -8,12 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/user"
 	"github.com/yb2020/odoc/internal/biz"
 	"github.com/yb2020/odoc/pkg/i18n"
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/response"
 	"github.com/yb2020/odoc/pkg/transport"
+	pb "github.com/yb2020/odoc/proto/gen/go/user"
 	"github.com/yb2020/odoc/services/user/service"
 )
 

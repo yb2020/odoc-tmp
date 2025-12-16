@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/doc"
+	pb "github.com/yb2020/odoc/proto/gen/go/doc"
 )
 
 // CSLType 表示CSL文档类型

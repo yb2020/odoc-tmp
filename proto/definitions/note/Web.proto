@@ -10,7 +10,7 @@ import "definitions/common/Point.proto";
 import "definitions/common/DrawShapeType.proto";
 import "definitions/note/AnnotateTextBox.proto";
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/note";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/note";
 message WebNoteAnnotationModel {
     common.IDEAAnnotateType type = 1;              // 标注类型
     WebNoteRectAnnotation rect = 2;         // 图片选区标注

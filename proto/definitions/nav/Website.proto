@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package nav;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/nav";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/nav";
 
 import "definitions/validate/Validate.proto";
 

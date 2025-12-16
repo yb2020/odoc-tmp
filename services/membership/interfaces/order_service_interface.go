@@ -3,8 +3,8 @@ package interfaces
 import (
 	"context"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/order"
 	"github.com/yb2020/odoc/pkg/eventbus"
+	pb "github.com/yb2020/odoc/proto/gen/go/order"
 	"github.com/yb2020/odoc/services/membership/dto"
 	"github.com/yb2020/odoc/services/membership/model"
 )

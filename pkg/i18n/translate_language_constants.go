@@ -1,7 +1,7 @@
 package i18n
 
 import (
-	translatePb "github.com/yb2020/odoc-proto/gen/go/translate"
+	translatePb "github.com/yb2020/odoc/proto/gen/go/translate"
 )
 
 // 翻译服务语言常量和转换函数

@@ -12,7 +12,6 @@ import (
 
 	timeUtil "github.com/jinzhu/now"
 	"github.com/opentracing/opentracing-go"
-	"github.com/yb2020/odoc-proto/gen/go/translate"
 	"github.com/yb2020/odoc/config"
 	ocrExternalApi "github.com/yb2020/odoc/external/ocr/api"
 	userContext "github.com/yb2020/odoc/pkg/context"
@@ -21,6 +20,7 @@ import (
 	"github.com/yb2020/odoc/pkg/logging"
 	"github.com/yb2020/odoc/pkg/ratelimit"
 	"github.com/yb2020/odoc/pkg/utils"
+	"github.com/yb2020/odoc/proto/gen/go/translate"
 	"github.com/yb2020/odoc/services/translate/dao"
 	"github.com/yb2020/odoc/services/translate/model"
 )

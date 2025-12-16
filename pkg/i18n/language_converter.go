@@ -1,7 +1,7 @@
 package i18n
 
 import (
-	langPb "github.com/yb2020/odoc-proto/gen/go/lang"
+	langPb "github.com/yb2020/odoc/proto/gen/go/lang"
 	"strings"
 )
 

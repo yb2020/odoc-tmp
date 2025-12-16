@@ -10,7 +10,7 @@ import (
 	"github.com/yb2020/odoc/services/note/dao"
 	"github.com/yb2020/odoc/services/note/model"
 
-	commonPb "github.com/yb2020/odoc-proto/gen/go/common"
+	commonPb "github.com/yb2020/odoc/proto/gen/go/common"
 )
 
 // NoteShapeService 笔记形状服务实现

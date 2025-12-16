@@ -5,9 +5,9 @@ import (
 
 	"github.com/opentracing/opentracing-go"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/note"
 	"github.com/yb2020/odoc/pkg/errors"
 	"github.com/yb2020/odoc/pkg/logging"
+	pb "github.com/yb2020/odoc/proto/gen/go/note"
 	docInterfaces "github.com/yb2020/odoc/services/doc/interfaces"
 	"github.com/yb2020/odoc/services/note/dao"
 	noteInterfaces "github.com/yb2020/odoc/services/note/interfaces"

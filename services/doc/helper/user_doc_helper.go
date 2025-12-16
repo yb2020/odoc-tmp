@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	docpb "github.com/yb2020/odoc-proto/gen/go/doc"
+	docpb "github.com/yb2020/odoc/proto/gen/go/doc"
 	"github.com/yb2020/odoc/services/doc/model"
 	paperModel "github.com/yb2020/odoc/services/paper/model"
 )

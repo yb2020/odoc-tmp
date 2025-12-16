@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"strings"
 
-	pb "github.com/yb2020/odoc-proto/gen/go/user"
 	"github.com/yb2020/odoc/pkg/model"
 	"github.com/yb2020/odoc/pkg/utils"
+	pb "github.com/yb2020/odoc/proto/gen/go/user"
 )
 
 // UserRoles 用户角色列表类型

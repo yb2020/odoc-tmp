@@ -3,9 +3,9 @@ package proto
 import (
 	"strings"
 
-	common "github.com/yb2020/odoc-proto/gen/go/common"
-	pb "github.com/yb2020/odoc-proto/gen/go/note"
 	"github.com/yb2020/odoc/pkg/errors"
+	common "github.com/yb2020/odoc/proto/gen/go/common"
+	pb "github.com/yb2020/odoc/proto/gen/go/note"
 )
 
 /**

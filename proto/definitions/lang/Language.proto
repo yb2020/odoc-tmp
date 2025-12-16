@@ -1,7 +1,7 @@
 syntax = "proto3";
 package lang;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/lang";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/lang";
 
 // 定义支持的语言枚举类型
 enum Language {

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package pay;
 
-option go_package = "github.com/yb2020/odoc-proto/gen/go/pay";
+option go_package = "github.com/yb2020/odoc/proto/gen/go/pay";
 
 // @api_path: /api/pay/stripe-checkout/create-session
 // @method: POST
