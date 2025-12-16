@@ -1,0 +1,75 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "name": "debug server",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/cmd/server/main.go",
+            "args": ["-env", "develop"],
+            "env": {
+                "GO_DEBUG": "1"
+            },
+            "showLog": false,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "trace": "log",
+            "dlvFlags": ["--log=false"]
+        },
+
+        {
+            "name": "debug local server",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/cmd/server/main.go",
+            "args": ["-env", "local.develop"],
+            "env": {
+                "GO_DEBUG": "1"
+            },
+            "showLog": false,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "trace": "log",
+            "dlvFlags": ["--log=false"]
+        },
+        {
+            "name": "调试数据库生成工具",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/tools/db_gen.go",
+            "args": ["-config", "${workspaceFolder}/config/config.develop.yaml"],
+            "env": {
+                "GO_DEBUG": "1"
+            },
+            "showLog": false,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "trace": "log",
+            "dlvFlags": ["--log=false"]
+        },
+        {
+            "name": "调试当前文件",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${file}",
+            "env": {},
+            "args": [],
+            "dlvFlags": ["--log=false"]
+        },
+        {
+            "name": "调试测试",
+            "type": "go",
+            "request": "launch",
+            "mode": "test",
+            "program": "${fileDirname}",
+            "args": ["-test.v"],
+            "showLog": false,
+            "dlvFlags": ["--log=false"]
+        }
+    ]
+}

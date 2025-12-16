@@ -6,7 +6,7 @@
 
 # IDE 配置
 .idea/
-.vscode/
+# .vscode/
 *.swp
 *.swo
 
